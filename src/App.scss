@@ -1,0 +1,40 @@
+
+$overlay-color: rgba(52, 59, 66, 0.25);
+$bg-color: #bd7811;
+
+*{
+  font-family: 'Poppins', cursive;
+  color: ghostwhite;
+}
+
+.overlay{
+  background-color: $overlay-color;
+  padding: 0 10%;
+  height: calc(100vh - 77px);
+  overflow-y: auto;
+}
+
+.App{
+  background-color: $bg-color;
+}
+
+.App-BG {
+  height: 100vh;
+  // background-image: url('../assets/img/kwan_la_sqr.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 500;
+  color: #fff;
+  padding-bottom: 30px;
+}
+
+
+
+@media only screen and (max-width: 1020px) {
+  .overlay {
+    // height: 100%;
+    padding: 0 10% 5% 10%;
+  }
+}

@@ -1,0 +1,56 @@
+$main-color: ghostwhite;
+
+
+
+nav{
+    display: flex;
+    padding: 1rem;
+
+    &:hover{
+        a{
+            color: rgba(248,248,255,0.5);
+            &:hover{
+                color: rgba(248,248,255,1); 
+            }
+        }
+    }
+ 
+    span{
+        // .setTransition(.2s);
+
+        //Fade entire Nav on hover, and highlight a selection on focus hover
+        
+
+        a{
+            color: $main-color;
+            margin: 1em 1em;
+            text-transform: uppercase;
+            // .setTransition(.2s);
+            text-decoration: none;
+        }
+    }
+}
+
+.nav-logo{
+    height: 70px;
+    margin: 5px 15px; // to line up stroke and regular logo
+    position: absolute;
+    opacity: 1;
+    z-index: 2;
+  }
+
+.nav-div{
+    display: flex;
+    position: absolute;
+    right: 0;
+}
+
+.route-div{
+    margin: 0px;
+}
+
+@media only screen and (max-width: 480px) {
+    .nav-logo{
+      height: 40px;
+    }
+  }

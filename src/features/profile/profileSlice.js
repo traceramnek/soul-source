@@ -26,13 +26,19 @@ export const fetchProfileByIdAsync = createAsyncThunk(
     }
 );
 
+export const validateEmailAsync = createAsyncThunk(
+    'profile/fvalidateEmail',
+    async (email) => {
+        return true;
+        // const data = await axios.post();
+        // return data.data;
+    }
+);
+
 export const profileSlice = createSlice({
     name: 'profile',
     initialState,
     reducers: {
-        addCard: (state, action) => {
-
-        },
         updateName: (state, action) => {
             if (action.payload > -1 && action.payload < state.profiles.length) {
                 state.currentprofile = state.profiles[action.payload];
@@ -44,7 +50,9 @@ export const profileSlice = createSlice({
             if (action.payload !== null && action.payload !== '') {
                 state.email = action.payload;
             }
-
+        },
+        updateProfilePic: (state, action) => {
+            state.profilePicPath = action.payload;
         }
     },
     extraReducers: (builder) => {
@@ -79,7 +87,7 @@ export const profileSlice = createSlice({
     },
 });
 
-export const { changeCard } = profileSlice.actions;
+export const { updateName, updateEmail, updateProfilePic } = profileSlice.actions;
 
 export const selectprofiles = (state) => state.profiles.profiles;
 export const selectCurrentprofile = (state) => state.profiles.currentprofile;

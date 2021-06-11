@@ -1,11 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './Home.module.scss';
+import styles from './Home.scss';
 
-export default Home = () =>  {
+export default function Home() {
+
   return (
-    <div className={styles.Home} data-testid="Home">
-      Home Component
+    <div className="Home" data-testid="Home">
+      <div className="home-title">
+        Soul Source
+      </div>
     </div>
   );
 }
