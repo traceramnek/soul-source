@@ -1,11 +1,28 @@
+
+
 .Home {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 70vh;
+    justify-content: left;
+    align-items: flex-start;
+    flex-direction: column;
+    height: 100vh;
+    background-image: url('../..//assets/img/orange-gamer-bg.png');
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .home-title{
+    position: absolute;
+    top: 4rem;
+    left: 2rem;
+}
+
+.home-heading{
     font-size: 4.5rem;
     font-weight: 600;
+}
+
+.home-sub-heading{
+    font-size: 1.5rem;
+    font-weight: 400;
 }

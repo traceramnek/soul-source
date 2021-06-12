@@ -37,7 +37,7 @@ export default function Navbar() {
                         </span>
                         <span>
                             <Link className="nav-link" to="/profile">
-                                <AccountCircleIcon></AccountCircleIcon>
+                                <AccountCircleIcon/>
                             </Link>
                         </span>
                     </nav>

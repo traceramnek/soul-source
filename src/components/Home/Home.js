@@ -7,8 +7,15 @@ export default function Home() {
   return (
     <div className="Home" data-testid="Home">
       <div className="home-title">
-        Soul Source
+        <div className="home-heading">
+          Soul Source
+        </div>
+        <div className="home-sub-heading">
+          The source for content that enriches the soul
+        </div>
       </div>
+
+
     </div>
   );
 }
