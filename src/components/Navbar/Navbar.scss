@@ -32,8 +32,8 @@ nav{
 }
 
 .nav-logo{
-    height: 70px;
-    margin: 5px 15px; // to line up stroke and regular logo
+    height: 50px;
+    margin: 10px 15px; // to line up stroke and regular logo
     position: absolute;
     opacity: 1;
     z-index: 2;
@@ -43,6 +43,7 @@ nav{
     display: flex;
     position: absolute;
     right: 0;
+    z-index: 3;
 }
 
 .route-div{

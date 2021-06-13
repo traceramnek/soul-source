@@ -1,0 +1,30 @@
+[
+    {
+        "id": 1,
+        "title": "Bk Game Devs",
+        "summary": "They're a Brooklyn based twitch channel that showcases game design and development",
+        "url": "https://twitch.tv/bkgamedevs",
+        "category": "gaming"
+    },
+    {
+        "id": 2,
+        "title": "POC in Play",
+        "summary": "POC in Play is an organization dedicated to creating initiatives and paths for POC in the gaming industry",
+        "url": "https://www.pocplay.org",
+        "category": "gaming"
+    },
+    {
+        "id": 3,
+        "title": "Games by Black Devs",
+        "summary": "Games by Black develops that are available right now",
+        "url": "https://afrotech.com/10-games-by-black-developers-that-you-need-to-play-right-now",
+        "category": "gaming"
+    },
+    {
+        "id": 4,
+        "title": "Black in Gaming IGDA",
+        "summary": "A collective of Black and POC professions in the gaming space.",
+        "url": "https://igda.org/sigs/black-in-games/",
+        "category": "gaming"
+    }
+]

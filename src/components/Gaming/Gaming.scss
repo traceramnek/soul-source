@@ -1,0 +1,65 @@
+.Gaming {}
+
+.gaming-landing{
+    display: flex;
+    justify-content: left;
+    align-items: flex-start;
+    flex-direction: column;
+    height: 100vh;
+    background-image: url('../../assets/img/poc_vr.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.gaming-title{
+    position: absolute;
+    top: 4rem;
+    left: 2rem;
+}
+
+.gaming-heading{
+    font-size: 4.5rem;
+    font-weight: 600;
+}
+
+.gaming-sub-heading{
+    font-size: 1.5rem;
+    font-weight: 400;
+}
+
+.card-preview-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.card-preview{
+    padding: 15px 20px;
+    height: 33vh;
+    position: relative;
+
+    &:nth-child(odd){
+        background-color: #9f1065;
+    }
+    &:nth-child(even){
+        float: right;
+        background-color: #502d7a;
+    }
+}
+
+.card-title{
+    font-size: 2em;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.card-summary{
+    font-weight: 300;
+}
+
+.add-bookmark-icon{
+    cursor: pointer;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
