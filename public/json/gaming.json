@@ -15,27 +15,34 @@
     },
     {
         "id": 3,
+        "title": "Black Game Devs Repository",
+        "summary": "An online repository of 200+ Black game developers who can be contacted and hired",
+        "url": "https://www.blackgamedevs.com/",
+        "category": "gaming"
+    },
+    {
+        "id": 4,
         "title": "Games by Black Devs",
         "summary": "Games by Black develops that are available right now",
         "url": "https://afrotech.com/10-games-by-black-developers-that-you-need-to-play-right-now",
         "category": "gaming"
     },
     {
-        "id": 4,
+        "id": 5,
         "title": "Black in Gaming IGDA",
         "summary": "A collective of Black and POC professions in the gaming space.",
         "url": "https://igda.org/sigs/black-in-games/",
         "category": "gaming"
     },
     {
-        "id": 5,
+        "id": 6,
         "title": "Black Twitch Streamers to Watch",
         "summary": "A list of some of the best Black gaming streamers on Twitch",
         "url": "https://www.one37pm.com/gaming/streaming/best-black-twitch-streamers",
         "category": "gaming"
     },
     {
-        "id": 6,
+        "id": 7,
         "title": "Black Youtube Content Creators",
         "summary": "Black Youtubers making quality gaming content that you need to see",
         "url": "https://creatorsfortheculture.com/2019/08/26/8-black-gamers-on-youtube-you-need-to-watch/",
