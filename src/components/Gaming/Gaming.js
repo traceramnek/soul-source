@@ -33,17 +33,17 @@ export default function Gaming() {
         </div>
       </div>
 
-      <div className="card-preview-container">
+      <div className="game-card-preview-container">
         {
           gamingList.map((card, index) => (
-            <div key={'card_' + index} className="card-preview">
+            <div key={'card_' + index} className="game-card-preview">
               <span className="add-bookmark-icon" onClick={() => handleClick(card)}>
                 <AddCircle />
               </span>
-              <div className="card-title">
+              <div className="game-card-title">
                 {card.title}
               </div>
-              <div className="card-summary">
+              <div className="game-card-summary">
                 {card.summary}
               </div>
               <a href={card.url} target="_blank">Check it out</a> <Launch />

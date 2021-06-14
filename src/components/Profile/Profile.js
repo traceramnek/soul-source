@@ -1,15 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './Profile.scss';
+import BookmarkList from '../../features/bookmarks/BookmarkList';
 
-const Profile = () => (
-  <div className="Profile" data-testid="Profile">
-    Profile Component
-  </div>
-);
+export default function Profile() {
+
+  return (
+    <div className="Profile" data-testid="Profile">
+      <BookmarkList/>
+    </div>
+  )
+
+};
 
 Profile.propTypes = {};
 
 Profile.defaultProps = {};
-
-export default Profile;

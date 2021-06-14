@@ -11,10 +11,16 @@ import UpcomingEvents from '../UpcomingEvents/UpcomingEvents';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AfroIcon from '../../assets/img/afro_icon.png';
 import { SvgIcon } from '@material-ui/core';
+import Profile from '../Profile/Profile';
 
 
 export default function Navbar() {
     const portfolioLink = "https://traceramnek.github.io";
+    
+
+    const handleAuth = () => {
+        
+    };
 
     return (
         <Router>
@@ -38,7 +44,7 @@ export default function Navbar() {
                         <span>
                             <Link className="nav-link" to="/learning">Learning</Link>
                         </span>
-                        <span>
+                        <span onClick={() => handleAuth()}>
                             <Link className="nav-link" to="/profile">
                                 <AccountCircleIcon/>
                             </Link>
@@ -56,6 +62,9 @@ export default function Navbar() {
                     </Route>
                     <Route path="/events">
                         <UpcomingEvents></UpcomingEvents>
+                    </Route>
+                    <Route path="/profile">
+                        <Profile></Profile>
                     </Route>
                     <Route path="/">
                         <Home></Home>

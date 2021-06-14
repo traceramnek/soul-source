@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "title": "Game Devs of Color Expo",
+        "summary": "An Expo for game devs and gamers of color to engage, network, and have fun!",
+        "url": "https://www.gamedevsofcolorexpo.com/",
+        "category": "events"
+    },
+    {
+        "id": 2,
+        "title": "Black Nerd Expo",
+        "summary": "A space for attendees to explore and celebrate Black books, art, video games, pop culture, science, tech with like-minded individuals.",
+        "url": "https://blacknerdsexpo.com/",
+        "category": "events"
+    },
+    {
+        "id": 3,
+        "title": "Blerdcon",
+        "summary": "A celebration of Black Nerds and their contributions to comics, cartoons, anime, gaming, and more!",
+        "url": "https://blerdcon.com/",
+        "category": "events"
+    }
+]

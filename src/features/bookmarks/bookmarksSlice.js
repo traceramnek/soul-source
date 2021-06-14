@@ -5,6 +5,7 @@ import axios from 'axios';
 const initialState = {
     bookmarks: [],
     loading: false,
+    showDuplicateWarning: false,
     hasError: false,
 };
 
@@ -21,12 +22,21 @@ export const bookmarksSlice = createSlice({
     initialState,
     reducers: {
         addBookmark: (state, action) => {
-            if(state.bookmarks) {
-                state.bookmarks.push(action.payload);
+            if (state.bookmarks) {
+                let index = state.bookmarks.findIndex(elm => elm.id === action.payload.id);
+                if (index === -1) {
+                    state.bookmarks.push(action.payload);
+                } else {
+                    state.showDuplicateWarning = true;
+                }
+
             }
         },
         removeBookmark: (state, action) => {
             state.bookmarks.filter(bookmark => bookmark.id !== action.payload)
+        },
+        closeWarning: (state) => {
+            state.showDuplicateWarning = false;
         }
     },
     extraReducers: (builder) => {
@@ -47,9 +57,10 @@ export const bookmarksSlice = createSlice({
     },
 });
 
-export const { addBookmark, removeBookmark } = bookmarksSlice.actions;
+export const { addBookmark, removeBookmark, closeWarning } = bookmarksSlice.actions;
 
 export const selectBookmarks = (state) => state.bookmarks.bookmarks;
+export const selectShowDuplicateWarning = (state) => state.bookmarks.showDuplicateWarning;
 
 export default bookmarksSlice.reducer;
 

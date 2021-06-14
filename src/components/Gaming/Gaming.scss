@@ -14,7 +14,7 @@
 
 .gaming-title{
     position: absolute;
-    top: 4rem;
+    top: 8rem;
     left: 2rem;
 }
 
@@ -28,12 +28,12 @@
     font-weight: 400;
 }
 
-.card-preview-container{
+.game-card-preview-container{
     display: flex;
     flex-direction: column;
 }
 
-.card-preview{
+.game-card-preview{
     padding: 15px 20px;
     height: 33vh;
     position: relative;
@@ -47,13 +47,13 @@
     }
 }
 
-.card-title{
+.game-card-title{
     font-size: 2em;
     font-weight: 500;
     margin-bottom: 20px;
 }
 
-.card-summary{
+.game-card-summary{
     font-weight: 300;
 }
 

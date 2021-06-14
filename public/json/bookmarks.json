@@ -1,13 +1,14 @@
-{
-    "id": 1,
-    "title": "Bk Game Devs",
-    "url": "https://twitch.tv/bkgamedevs",
-    "category": "gaming"
-},
-{
-    "id": 2,
-    "title": "Play NYC",
-    "url": "https://www.play-nyc.com/",
-    "category": "events"
-}
+[
+    {
+        "id": 1,
+        "title": "Bk Game Devs",
+        "url": "https://twitch.tv/bkgamedevs",
+        "category": "gaming"
+    },
+    {
+        "id": 2,
+        "title": "Play NYC",
+        "url": "https://www.play-nyc.com/",
+        "category": "events"
+    }
 ]

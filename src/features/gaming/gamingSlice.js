@@ -20,14 +20,7 @@ export const gamingSlice = createSlice({
     name: 'gaming',
     initialState,
     reducers: {
-        addBookmark: (state, action) => {
-            if(state.gamingList) {
-                state.gamingList.push(action.payload);
-            }
-        },
-        removeBookmark: (state, action) => {
-            state.gamingList.filter(bookmark => bookmark.id !== action.payload)
-        }
+    
     },
     extraReducers: (builder) => {
         builder
@@ -47,7 +40,7 @@ export const gamingSlice = createSlice({
     },
 });
 
-export const { addBookmark, removeBookmark } = gamingSlice.actions;
+export const { } = gamingSlice.actions;
 
 export const selectGamingList = (state) => state.gaming.gamingList;
 
