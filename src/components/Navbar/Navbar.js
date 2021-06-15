@@ -41,9 +41,6 @@ export default function Navbar() {
                         <span>
                             <Link className="nav-link" to="/events">Events</Link>
                         </span>
-                        <span>
-                            <Link className="nav-link" to="/learning">Learning</Link>
-                        </span>
                         <span onClick={() => handleAuth()}>
                             <Link className="nav-link" to="/profile">
                                 <AccountCircleIcon/>

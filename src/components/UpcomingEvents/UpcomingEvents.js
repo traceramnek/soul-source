@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './UpcomingEvents.scss';
 import { fetchEventsListAsync, selectEventsList } from '../../features/events/eventsSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { Launch, AddCircle } from '@material-ui/icons';
+import { Launch, AddCircle, BookmarkBorder, Bookmark } from '@material-ui/icons';
 import { addBookmark } from '../../features/bookmarks/bookmarksSlice';
 
 export default function UpcomingEvents() {
@@ -28,7 +28,7 @@ export default function UpcomingEvents() {
             Events
           </div>
           <div className="events-sub-heading">
-            Upcoming events for Black and POC gamers and developers
+            Upcoming events for Black/POC gamers and developers
           </div>
         </div>
       </div>
@@ -38,7 +38,7 @@ export default function UpcomingEvents() {
           eventsList.map((card, index) => (
             <div key={'card_' + index} className="card-preview">
               <span className="add-bookmark-icon" onClick={() => handleClick(card)}>
-                <AddCircle />
+                <BookmarkBorder />
               </span>
               <div className="card-title">
                 {card.title}
@@ -46,7 +46,7 @@ export default function UpcomingEvents() {
               <div className="card-summary">
                 {card.summary}
               </div>
-              <a href={card.url} target="_blank">Check it out</a> <Launch />
+              <a href={card.url} target="_blank">Check it out</a> <Launch fontSize="small" />
             </div>
           ))
         }

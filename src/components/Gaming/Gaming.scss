@@ -19,7 +19,7 @@
 }
 
 .gaming-heading{
-    font-size: 4.5rem;
+    font-size: 5rem;
     font-weight: 600;
 }
 
@@ -54,7 +54,7 @@
 }
 
 .game-card-summary{
-    font-weight: 300;
+    font-weight: 400;
 }
 
 .add-bookmark-icon{
@@ -62,4 +62,26 @@
     position: absolute;
     top: 15px;
     right: 15px;
+}
+
+.see-more-container{
+    position: absolute;
+    bottom: 20px;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.see-more-button{
+    background-color: transparent;
+    border: 1px solid ghostwhite;
+    padding: 10px 15px;
+    font-size: 1.25rem;
+    border-radius: 30px;
+    color: ghostwhite;
+
+    &:hover{
+        background-color: ghostwhite;
+        color: black;
+    }
 }
