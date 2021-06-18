@@ -20,7 +20,7 @@ export default function UpcomingEvents() {
   }
 
   return (
-    <div>
+    <div className="upcoming-events">
 
       <div className="events-landing">
         <div className="events-title">

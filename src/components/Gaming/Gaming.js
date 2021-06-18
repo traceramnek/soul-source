@@ -4,34 +4,40 @@ import './Gaming.scss';
 import { fetchGamingListAsync, selectGamingList } from '../../features/gaming/gamingSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { IconButton } from '@material-ui/core';
-import { Launch, AddCircle, RemoveCircle, BookmarkBorder, Bookmark, ArrowDownward } from '@material-ui/icons';
+import { Launch, BookmarkBorder, Bookmark, ArrowDownward } from '@material-ui/icons';
 import { addBookmark, closeWarning, selectShowDuplicateWarning } from '../../features/bookmarks/bookmarksSlice';
-import Snackbar from '@material-ui/core/Snackbar';
-import Alert from '@material-ui/lab/Alert';
+import { closeSnackbar, openSnackbar } from '../../features/globalSnackbar/globalSnackbarSlice';
 
 export default function Gaming() {
   const gamingList = useSelector(selectGamingList);
   const showDuplicateWarning = useSelector(selectShowDuplicateWarning);
-  let isOpen = showDuplicateWarning;
 
   const dispatch = useDispatch();
-
 
   useEffect(() => {
     dispatch(fetchGamingListAsync('json/gaming.json'));
   }, []);
 
-  const handleClick = (bookmarkObj) => {
+  const handleClickBookmark = (bookmarkObj) => {
     console.log(bookmarkObj);
     dispatch(addBookmark(bookmarkObj));
+
+    if (showDuplicateWarning) {
+      dispatch(openSnackbar({
+        open: true,
+        message: 'That bookmark has already been saved',
+        type: 'warning',
+        duration: 7000
+      }));
+    }
   }
 
   const handleCloseSnackbar = () => {
-    dispatch(closeWarning);
+    dispatch(closeSnackbar());
   }
 
   return (
-    <div>
+    <div className="gaming">
 
       <div className="gaming-landing">
         <div className="gaming-title">
@@ -54,12 +60,9 @@ export default function Gaming() {
       <div className="game-card-preview-container">
         {
           gamingList.map((card, index) => (
-            <div key={'card_' + index} className="game-card-preview"
-              data-aos="slide-right"
-              data-aos-easing="ease-in-out"
-              data-aos-once="true">
-              <span className="add-bookmark-icon" onClick={() => handleClick(card)}>
-                <IconButton>
+            <div key={'card_' + index} className="game-card-preview">
+              <span className="add-bookmark-icon" onClick={() => handleClickBookmark(card)}>
+                <IconButton >
                   <BookmarkBorder />
                 </IconButton>
               </span>
@@ -74,14 +77,6 @@ export default function Gaming() {
           ))
         }
       </div>
-
-      <Snackbar
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        open={showDuplicateWarning} autoHideDuration={8000} onClose={handleCloseSnackbar}>
-        <Alert onClose={handleCloseSnackbar} severity="warning">
-          This item has already been bookmarked!
-        </Alert>
-      </Snackbar>
     </div>
   );
 }
