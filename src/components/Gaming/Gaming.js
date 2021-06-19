@@ -5,12 +5,13 @@ import { fetchGamingListAsync, selectGamingList } from '../../features/gaming/ga
 import { useDispatch, useSelector } from 'react-redux';
 import { IconButton } from '@material-ui/core';
 import { Launch, BookmarkBorder, Bookmark, ArrowDownward } from '@material-ui/icons';
-import { addBookmark, closeWarning, selectShowDuplicateWarning } from '../../features/bookmarks/bookmarksSlice';
+import { addBookmark, closeWarning, removeBookmark, selectBookmarks, selectShowDuplicateWarning } from '../../features/bookmarks/bookmarksSlice';
 import { closeSnackbar, openSnackbar } from '../../features/globalSnackbar/globalSnackbarSlice';
 
 export default function Gaming() {
   const gamingList = useSelector(selectGamingList);
   const showDuplicateWarning = useSelector(selectShowDuplicateWarning);
+  const savedBookmarks = useSelector(selectBookmarks);
 
   const dispatch = useDispatch();
 
@@ -18,15 +19,23 @@ export default function Gaming() {
     dispatch(fetchGamingListAsync('json/gaming.json'));
   }, []);
 
-  const handleClickBookmark = (bookmarkObj) => {
-    console.log(bookmarkObj);
-    dispatch(addBookmark(bookmarkObj));
+  let bookmarkIcon = (<BookmarkBorder style={{ fill: 'ghostwhite' }} />);
 
-    if (showDuplicateWarning) {
+  const handleClickBookmark = (bookmarkObj) => {
+    if (savedBookmarks.find(bkMark => bkMark.id === bookmarkObj.id)) {
+      dispatch(removeBookmark(bookmarkObj.id));
       dispatch(openSnackbar({
         open: true,
-        message: 'That bookmark has already been saved',
-        type: 'warning',
+        message: 'Bookmark removed!',
+        type: 'success',
+        duration: 7000
+      }));
+    } else {
+      dispatch(addBookmark(bookmarkObj));
+      dispatch(openSnackbar({
+        open: true,
+        message: 'Bookmark saved!',
+        type: 'success',
         duration: 7000
       }));
     }
@@ -64,22 +73,29 @@ export default function Gaming() {
 
       <div className="game-card-preview-container">
         {
-          gamingList.map((card, index) => (
-            <div key={'card_' + index} className="game-card-preview">
-              <span className="add-bookmark-icon" onClick={() => handleClickBookmark(card)}>
-                <IconButton >
-                  <BookmarkBorder />
-                </IconButton>
-              </span>
-              <div className="game-card-title">
-                {card.title}
+
+          gamingList.map((card, index) => {
+
+            bookmarkIcon = savedBookmarks.find(bkMark => bkMark.id === card.id) ?
+              (<Bookmark style={{ fill: 'ghostwhite' }} />) : (<BookmarkBorder style={{ fill: 'ghostwhite' }} />);
+
+            return (
+              <div key={'card_' + index} className="game-card-preview">
+                <span className="bookmark-icon" onClick={() => handleClickBookmark(card)}>
+                  <IconButton >
+                    {bookmarkIcon}
+                  </IconButton>
+                </span>
+                <div className="game-card-title">
+                  {card.title}
+                </div>
+                <div className="game-card-summary">
+                  {card.summary}
+                </div>
+                <a href={card.url} target="_blank">Check it out</a> <Launch fontSize="small" />
               </div>
-              <div className="game-card-summary">
-                {card.summary}
-              </div>
-              <a href={card.url} target="_blank">Check it out</a> <Launch fontSize="small" />
-            </div>
-          ))
+            )
+          })
         }
       </div>
     </div>

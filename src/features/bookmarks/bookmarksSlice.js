@@ -21,7 +21,7 @@ export const bookmarksSlice = createSlice({
     name: 'bookmarks',
     initialState,
     reducers: {
-        addBookmark: (state, action) => {
+        addBookmark: (state, action) => { // payload should be a new bookmark object
             if (state.bookmarks) {
                 let index = state.bookmarks.findIndex(elm => elm.id === action.payload.id);
                 if (index === -1) {
@@ -29,13 +29,12 @@ export const bookmarksSlice = createSlice({
                 } else {
                     state.showDuplicateWarning = true;
                 }
-
             }
         },
-        removeBookmark: (state, action) => {
-            state.bookmarks.filter(bookmark => bookmark.id !== action.payload)
+        removeBookmark: (state, action) => { // payload should be the id
+            state.bookmarks = state.bookmarks.filter(bookmark => bookmark.id !== action.payload);
         },
-        closeWarning: (state) => {
+        closeWarning: (state) => { 
             state.showDuplicateWarning = false;
         }
     },

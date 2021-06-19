@@ -18,6 +18,7 @@ export default function UpcomingEvents() {
     console.log(bookmarkObj);
     dispatch(addBookmark(bookmarkObj));
   }
+  
 
   return (
     <div className="upcoming-events">
