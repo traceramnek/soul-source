@@ -40,7 +40,12 @@ export default function Gaming() {
     <div className="gaming">
 
       <div className="gaming-landing">
-        <div className="gaming-title">
+        <div className="gaming-title"
+          data-aos="fade-right"
+          data-aos-delay="250"
+          data-aos-easing="ease-in-out"
+          data-aos-once="true"
+        >
           <div className="gaming-heading">
             Gaming
           </div>

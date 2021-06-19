@@ -7,7 +7,12 @@ export default function Home() {
   return (
     <div>
       <div className="Home" data-testid="Home">
-        <div className="home-title">
+        <div className="home-title"
+          data-aos="fade-right"
+          data-aos-delay="250"
+          data-aos-easing="ease-in-out"
+          data-aos-once="true"
+        >
           <div className="home-heading">
             Soul Source
           </div>

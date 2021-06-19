@@ -23,7 +23,12 @@ export default function UpcomingEvents() {
     <div className="upcoming-events">
 
       <div className="events-landing">
-        <div className="events-title">
+        <div className="events-title"
+          data-aos="fade-right"
+          data-aos-delay="250"
+          data-aos-easing="ease-in-out"
+          data-aos-once="true"
+        >
           <div className="events-heading">
             Events
           </div>
