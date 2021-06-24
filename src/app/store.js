@@ -12,5 +12,5 @@ export const store = configureStore({
     events: eventsReducer,
     bookmarks: bookmarksReducer,
     ui: globalSnackbarReducer
-  },
+  }
 });

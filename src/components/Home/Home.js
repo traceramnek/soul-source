@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
+import Login from '../Login/Login';
 import PropTypes from 'prop-types';
 import styles from './Home.scss';
+import { getFirebase } from 'react-redux-firebase';
+import firebase from 'firebase/app';
 
 export default function Home() {
 
@@ -21,7 +24,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-
     </div>
   );
 }

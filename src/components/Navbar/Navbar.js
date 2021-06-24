@@ -12,6 +12,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AfroIcon from '../../assets/img/afro_icon.png';
 import { SvgIcon } from '@material-ui/core';
 import Profile from '../Profile/Profile';
+import Login from '../Login/Login';
 
 
 export default function Navbar() {
@@ -42,7 +43,7 @@ export default function Navbar() {
                             <Link className="nav-link" to="/events">Events</Link>
                         </span>
                         <span onClick={() => handleAuth()}>
-                            <Link className="nav-link" to="/profile">
+                            <Link className="nav-link" to="/login">
                                 <AccountCircleIcon/>
                             </Link>
                         </span>
@@ -54,14 +55,14 @@ export default function Navbar() {
             renders the first one that matches the current URL. */}
             <div className="route-div">
                 <Switch>
-                    <Route path="/gaming">
-                        <Gaming></Gaming>
+                    <Route path="/gaming" component={Gaming}>
+                        {/* <Gaming></Gaming> */}
                     </Route>
                     <Route path="/events">
                         <UpcomingEvents></UpcomingEvents>
                     </Route>
-                    <Route path="/profile">
-                        <Profile></Profile>
+                    <Route path="/login">
+                        <Login/>
                     </Route>
                     <Route path="/">
                         <Home></Home>

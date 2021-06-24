@@ -26,7 +26,7 @@ export default function Gaming() {
       dispatch(removeBookmark(bookmarkObj.id));
       dispatch(openSnackbar({
         open: true,
-        message: 'Bookmark removed!',
+        message: `${bookmarkObj.title} removed from bookmarks!`,
         type: 'success',
         duration: 7000
       }));
@@ -34,7 +34,7 @@ export default function Gaming() {
       dispatch(addBookmark(bookmarkObj));
       dispatch(openSnackbar({
         open: true,
-        message: 'Bookmark saved!',
+        message: `${bookmarkObj.title} saved to bookmarks!`,
         type: 'success',
         duration: 7000
       }));
