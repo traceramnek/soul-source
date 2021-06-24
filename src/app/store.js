@@ -4,6 +4,7 @@ import bookmarksReducer from '../features/bookmarks/bookmarksSlice';
 import gamingReducer from '../features/gaming/gamingSlice';
 import eventsReducer from '../features/events/eventsSlice';
 import globalSnackbarReducer from '../features/globalSnackbar/globalSnackbarSlice';
+import loginReducer from '../features/login/loginSlice';
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     gaming: gamingReducer,
     events: eventsReducer,
     bookmarks: bookmarksReducer,
-    ui: globalSnackbarReducer
+    ui: globalSnackbarReducer,
+    login: loginReducer
   }
 });
