@@ -34,6 +34,9 @@ export const gamingSlice = createSlice({
             })
             .addCase(fetchGamingListAsync.fulfilled, (state, action) => {
                 state.gamingList = action.payload;
+                state.gamingList.forEach((gameItem, index) =>{
+                    gameItem['id'] = `${gameItem.title}_uuid${index}`;
+                });
                 state.loading = false;
                 state.hasError = false;
             })

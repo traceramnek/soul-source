@@ -1,6 +1,8 @@
 import { AcUnitOutlined } from '@material-ui/icons';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { v4 as uuidv4 } from "uuid";
+
 
 const initialState = {
     bookmarks: [],
@@ -34,7 +36,7 @@ export const bookmarksSlice = createSlice({
         removeBookmark: (state, action) => { // payload should be the id
             state.bookmarks = state.bookmarks.filter(bookmark => bookmark.id !== action.payload);
         },
-        closeWarning: (state) => { 
+        closeWarning: (state) => {
             state.showDuplicateWarning = false;
         }
     },
@@ -50,6 +52,11 @@ export const bookmarksSlice = createSlice({
             })
             .addCase(fetchBookmarksAsync.fulfilled, (state, action) => {
                 state.bookmarks = action.payload;
+                //set ids on load
+                state.bookmarks.forEach((bookmark, index) =>{
+                    bookmark['id'] = `${bookmark.title}_uuid${index}`;
+                });
+               
                 state.loading = false;
                 state.hasError = false;
             })

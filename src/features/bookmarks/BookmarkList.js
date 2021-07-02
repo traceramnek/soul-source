@@ -1,9 +1,10 @@
 import React from 'react';
 import './BookmarkList.scss';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from "react-router-dom";
 
 import { removeBookmark, selectBookmarks, } from '../profile/profileSlice';
-import { Cancel, CancelOutlined } from '@material-ui/icons';
+import { Cancel, CancelOutlined, Launch } from '@material-ui/icons';
 import { IconButton } from '@material-ui/core';
 import { openSnackbar } from '../../features/globalSnackbar/globalSnackbarSlice';
 
@@ -38,23 +39,28 @@ export default function BookmarkList() {
             <div className="bookmark-container">
                 {
                     bookmarks.map((bookmark, index) => (
-                        <div className="bookmark" key={'bookmark_' + index} 
+                        <div className="bookmark" key={'bookmark_' + index}
                             data-aos="fade-right"
                             data-aos-delay="250"
                             data-aos-easing="ease-in-out"
                             data-aos-once="true">
                             <span className="remove-icon" onClick={() => handleRemoveBookmark(bookmark)}>
                                 <IconButton
-                                 onMouseEnter={ () => handleHover(true) }
-                                 onMouseLeave={ () => handleHover(false) }
-                                 >
+                                    onMouseEnter={() => handleHover(true)}
+                                    onMouseLeave={() => handleHover(false)}
+                                >
                                     {hovering ? removeIcon : removeIconHover}
                                 </IconButton>
+                            </span>
+                            <span className="launch-icon" onClick={() => handleRemoveBookmark(bookmark)}>
+                                <a className="nav-link" href={bookmark.url} target="_blank">
+                                    <Launch style={{ color: 'ghostwhite' }} />
+                                </a>
                             </span>
                             <div className="bookmark-title">
                                 {bookmark.title}
                             </div>
-                            <div className="bookmark-summary"> 
+                            <div className="bookmark-summary">
                                 {bookmark.summary}
                             </div>
                         </div>

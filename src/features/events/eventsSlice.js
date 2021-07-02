@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { v4 as uuidv4 } from "uuid";
+
 
 const initialState = {
     eventsList: [],
@@ -33,6 +35,10 @@ export const eventsSlice = createSlice({
             })
             .addCase(fetchEventsListAsync.fulfilled, (state, action) => {
                 state.eventsList = action.payload;
+                //set ids on load
+                state.eventsList.forEach((event, index) =>{
+                    event['id'] = `${event.title}_uuid${index}`;
+                });
                 state.loading = false;
                 state.hasError = false;
             })
