@@ -2,7 +2,7 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link
+    Link, Redirect
 } from "react-router-dom";
 import './Navbar.scss';
 import Home from '../Home/Home';
@@ -13,11 +13,13 @@ import AfroIcon from '../../assets/img/afro_icon.png';
 import { SvgIcon } from '@material-ui/core';
 import Profile from '../Profile/Profile';
 import Login from '../Login/Login';
+import { useSelector } from 'react-redux';
+import { selectIsLoggedIn } from "../../features/login/loginSlice";
 
 
 export default function Navbar() {
     const portfolioLink = "https://traceramnek.github.io";
-    
+    const isLoggedIn = useSelector(selectIsLoggedIn);
 
     const handleAuth = () => {
         
@@ -43,7 +45,7 @@ export default function Navbar() {
                             <Link className="nav-link" to="/events">Events</Link>
                         </span>
                         <span onClick={() => handleAuth()}>
-                            <Link className="nav-link" to="/login">
+                            <Link className="nav-link" to={!isLoggedIn ? '/login' : '/profile'}>
                                 <AccountCircleIcon/>
                             </Link>
                         </span>
@@ -61,8 +63,11 @@ export default function Navbar() {
                     <Route path="/events">
                         <UpcomingEvents></UpcomingEvents>
                     </Route>
-                    <Route path="/login">
-                        <Login/>
+                    <Route path="/login" render={() => ( !isLoggedIn ? <Login /> : <Redirect to='/profile' /> )}>
+                        
+                    </Route>
+                    <Route path="/profile">
+                        <Profile/>
                     </Route>
                     <Route path="/">
                         <Home></Home>

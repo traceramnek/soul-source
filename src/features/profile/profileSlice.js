@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { isNullOrUndefined } from '../../services/utils';
 
 const initialState = {
-    profiles: [],
-    currentprofile: {
+    currentProfile: {
         name: '',
         email: '',
         profilePicPath: '',
@@ -39,11 +39,18 @@ export const profileSlice = createSlice({
     name: 'profile',
     initialState,
     reducers: {
+        updateCurrentProfile: (state, action) => {
+
+            state.currentProfile.name = action.payload.displayName;
+            state.currentProfile.email = action.payload.email;
+            state.currentProfile.profilePicPath = action.payload.photoURL;
+
+        },
         updateName: (state, action) => {
-            if (action.payload > -1 && action.payload < state.profiles.length) {
-                state.currentprofile = state.profiles[action.payload];
+            if (action.payload !== '' && !isNullOrUndefined(action.payload)) {
+                state.currentProfile = state.profiles[action.payload];
             } else {
-                state.currentprofile = state.profiles[0];
+                state.currentProfile = state.profiles[0];
             }
         },
         updateEmail: (state, action) => {
@@ -66,7 +73,7 @@ export const profileSlice = createSlice({
                 state.hasError = true;
             })
             .addCase(fetchProfileByIdAsync.fulfilled, (state, action) => {
-                state.currentprofile = action.payload;
+                state.currentProfile = action.payload;
                 //set it to the first itme  in the list
                 state.loading = false;
                 state.hasError = false;
@@ -87,10 +94,9 @@ export const profileSlice = createSlice({
     },
 });
 
-export const { updateName, updateEmail, updateProfilePic } = profileSlice.actions;
+export const { updateName, updateEmail, updateProfilePic, updateCurrentProfile } = profileSlice.actions;
 
-export const selectprofiles = (state) => state.profiles.profiles;
-export const selectCurrentprofile = (state) => state.profiles.currentprofile;
+export const selectCurrentprofile = (state) => state.profiles.currentProfile;
 
 export default profileSlice.reducer;
 

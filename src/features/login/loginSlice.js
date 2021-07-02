@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { firebaseAuth } from '../../services/firebase';
-
-
+import { useDispatch } from 'react-redux';
+import { updateCurrentProfile } from '../profile/profileSlice';
 
 const initialState = {
     isLoggedIn: false
@@ -9,13 +9,17 @@ const initialState = {
 
 export const loginUserAsync = createAsyncThunk(
     'login/authenticateUser',
-    async (provider) => {
-        firebaseAuth.signInWithRedirect(provider).then(function (result) {
+    async (provider, thunkAPI) => {
+        // const response = await firebaseAuth.signInWithPopup(provider);
+        let token;
+
+        const resp = await firebaseAuth.signInWithPopup(provider).then(function (result) {
             // The firebase.User instance:
             var user = result.user;
             // The Facebook firebase.auth.AuthCredential containing the Facebook
             // access token:
-            var credential = result.credential;
+            token = user.getIdToken();
+            thunkAPI.dispatch(updateCurrentProfile(user));
         }, function (error) {
             // The provider's account email, can be used in case of
             // auth/account-exists-with-different-credential to fetch the providers
@@ -24,6 +28,7 @@ export const loginUserAsync = createAsyncThunk(
             // The provider's credential:
             var credential = error.credential;
         });
+
     }
 );
 
@@ -31,7 +36,7 @@ export const loginSlice = createSlice({
     name: 'login',
     initialState,
     reducers: {
-    
+
     },
     extraReducers: (builder) => {
         builder
@@ -47,7 +52,7 @@ export const loginSlice = createSlice({
     },
 });
 
-export const {} = loginSlice.actions;
+export const { } = loginSlice.actions;
 
 export const selectIsLoggedIn = (state) => state.login.isLoggedIn;
 
