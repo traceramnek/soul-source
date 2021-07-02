@@ -11,7 +11,6 @@ export const store = configureStore({
     profile: profileReducer,
     gaming: gamingReducer,
     events: eventsReducer,
-    bookmarks: bookmarksReducer,
     ui: globalSnackbarReducer,
     login: loginReducer
   }

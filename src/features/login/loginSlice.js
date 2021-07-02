@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { firebaseAuth } from '../../services/firebase';
-import { useDispatch } from 'react-redux';
 import { updateCurrentProfile } from '../profile/profileSlice';
 
 const initialState = {
@@ -10,7 +9,6 @@ const initialState = {
 export const loginUserAsync = createAsyncThunk(
     'login/authenticateUser',
     async (provider, thunkAPI) => {
-        // const response = await firebaseAuth.signInWithPopup(provider);
         let token;
 
         const resp = await firebaseAuth.signInWithPopup(provider).then(function (result) {

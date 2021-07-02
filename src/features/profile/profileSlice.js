@@ -8,8 +8,9 @@ const initialState = {
         email: '',
         profilePicPath: '',
         bookmarks: [],
-        bookmarkLists: []
+        bookmarkLists: [],
     },
+    showDuplicateWarning: false,
     loading: false,
     hasError: false,
 };
@@ -40,11 +41,9 @@ export const profileSlice = createSlice({
     initialState,
     reducers: {
         updateCurrentProfile: (state, action) => {
-
             state.currentProfile.name = action.payload.displayName;
             state.currentProfile.email = action.payload.email;
             state.currentProfile.profilePicPath = action.payload.photoURL;
-
         },
         updateName: (state, action) => {
             if (action.payload !== '' && !isNullOrUndefined(action.payload)) {
@@ -60,6 +59,22 @@ export const profileSlice = createSlice({
         },
         updateProfilePic: (state, action) => {
             state.profilePicPath = action.payload;
+        },
+        addBookmark: (state, action) => { // payload should be a new bookmark object
+            if (state.currentProfile.bookmarks) {
+                let index = state.currentProfile.bookmarks.findIndex(elm => elm.id === action.payload.id);
+                if (index === -1) {
+                    state.currentProfile.bookmarks.push(action.payload);
+                } else {
+                    state.showDuplicateWarning = true;
+                }
+            }
+        },
+        removeBookmark: (state, action) => { // payload should be the id
+            state.currentProfile.bookmarks = state.currentProfile.bookmarks.filter(bookmark => bookmark.id !== action.payload);
+        },
+        closeWarning: (state) => { 
+            state.showDuplicateWarning = false;
         }
     },
     extraReducers: (builder) => {
@@ -94,9 +109,12 @@ export const profileSlice = createSlice({
     },
 });
 
-export const { updateName, updateEmail, updateProfilePic, updateCurrentProfile } = profileSlice.actions;
+export const { updateName, updateEmail, updateProfilePic, updateCurrentProfile,
+    addBookmark, removeBookmark, closeWarning } = profileSlice.actions;
 
-export const selectCurrentprofile = (state) => state.profiles.currentProfile;
+export const selectCurrentprofile = (state) => state.profile.currentProfile;
+export const selectBookmarks = (state) => state.profile.currentProfile.bookmarks;
+export const selectShowDuplicateWarning = (state) => state.profile.showDuplicateWarning;
 
 export default profileSlice.reducer;
 

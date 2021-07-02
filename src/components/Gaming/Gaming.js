@@ -1,16 +1,17 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
 import './Gaming.scss';
 import { fetchGamingListAsync, selectGamingList } from '../../features/gaming/gamingSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { IconButton } from '@material-ui/core';
-import { Launch, BookmarkBorder, Bookmark, ArrowDownward } from '@material-ui/icons';
-import { addBookmark, closeWarning, removeBookmark, selectBookmarks, selectShowDuplicateWarning } from '../../features/bookmarks/bookmarksSlice';
-import { closeSnackbar, openSnackbar } from '../../features/globalSnackbar/globalSnackbarSlice';
+import { Launch, BookmarkBorder, Bookmark } from '@material-ui/icons';
+import { addBookmark, removeBookmark, selectBookmarks } from '../../features/profile/profileSlice';
+import { openSnackbar } from '../../features/globalSnackbar/globalSnackbarSlice';
+import { selectIsLoggedIn } from "../../features/login/loginSlice";
+
 
 export default function Gaming() {
   const gamingList = useSelector(selectGamingList);
-  const showDuplicateWarning = useSelector(selectShowDuplicateWarning);
+  const isLoggedIn = useSelector(selectIsLoggedIn)
   const savedBookmarks = useSelector(selectBookmarks);
 
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ export default function Gaming() {
   }, []);
 
   let bookmarkIcon = (<BookmarkBorder style={{ fill: 'ghostwhite' }} />);
+  let bookmarkSpan = (<span></span>);
 
   const handleClickBookmark = (bookmarkObj) => {
     if (savedBookmarks.find(bkMark => bkMark.id === bookmarkObj.id)) {
@@ -39,10 +41,6 @@ export default function Gaming() {
         duration: 7000
       }));
     }
-  }
-
-  const handleCloseSnackbar = () => {
-    dispatch(closeSnackbar());
   }
 
   return (
@@ -79,13 +77,23 @@ export default function Gaming() {
             bookmarkIcon = savedBookmarks.find(bkMark => bkMark.id === card.id) ?
               (<Bookmark style={{ fill: 'ghostwhite' }} />) : (<BookmarkBorder style={{ fill: 'ghostwhite' }} />);
 
-            return (
-              <div key={'card_' + index} className="game-card-preview">
+            if (isLoggedIn) {
+              bookmarkSpan = (
                 <span className="bookmark-icon" onClick={() => handleClickBookmark(card)}>
                   <IconButton >
                     {bookmarkIcon}
                   </IconButton>
                 </span>
+              )
+            } else {
+              bookmarkSpan = (
+                <span></span>
+              );
+            }
+
+            return (
+              <div key={'card_' + index} className="game-card-preview">
+                {bookmarkSpan}
                 <div className="game-card-title">
                   {card.title}
                 </div>
@@ -101,8 +109,4 @@ export default function Gaming() {
     </div>
   );
 }
-
-Gaming.propTypes = {};
-
-Gaming.defaultProps = {};
 
