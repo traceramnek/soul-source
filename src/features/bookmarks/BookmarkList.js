@@ -44,7 +44,7 @@ export default function BookmarkList() {
                             data-aos-delay="250"
                             data-aos-easing="ease-in-out"
                             data-aos-once="true">
-                            <span className="remove-icon" onClick={() => handleRemoveBookmark(bookmark)}>
+                            <span className="remove-icon" title="Remove Bookmark" onClick={() => handleRemoveBookmark(bookmark)}>
                                 <IconButton
                                     onMouseEnter={() => handleHover(true)}
                                     onMouseLeave={() => handleHover(false)}
@@ -52,7 +52,7 @@ export default function BookmarkList() {
                                     {hovering ? removeIcon : removeIconHover}
                                 </IconButton>
                             </span>
-                            <span className="launch-icon" onClick={() => handleRemoveBookmark(bookmark)}>
+                            <span className="launch-icon" title={bookmark.title} onClick={() => handleRemoveBookmark(bookmark)}>
                                 <a className="nav-link" href={bookmark.url} target="_blank">
                                     <Launch style={{ color: 'ghostwhite' }} />
                                 </a>
