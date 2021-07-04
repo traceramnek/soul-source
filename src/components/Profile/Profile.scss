@@ -2,6 +2,7 @@ $overlay-color: rgba(134, 48, 131, 0.35);
 
 
 .profile {
+    min-height: 100vh;
     background-color: rgb(125, 70, 196);
     color: ghostwhite;
     background-image: url('../../assets/img/profile-gamer.jpg');
@@ -11,7 +12,7 @@ $overlay-color: rgba(134, 48, 131, 0.35);
 
 .overlay{
     padding: 80px 30px 20px 30px;
-    width: 100%;
+    // height: 100%;
     background-color: $overlay-color;
 }
 

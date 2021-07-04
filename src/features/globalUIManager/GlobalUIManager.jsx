@@ -9,18 +9,18 @@ import {
 import { Snackbar, Backdrop, CircularProgress } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import React from 'react';
-
+import './GlobalUIManager.scss';
 import { makeStyles } from '@material-ui/core/styles';
 import { classes } from 'istanbul-lib-coverage';
 import { findByLabelText } from '@testing-library/react';
 
 const useStyles = makeStyles((theme) => ({
-  backdrop: {
-    zIndex: theme.zIndex.drawer + 1,
-    color: '#fff',
-    display: 'flex',
-    flexDirection: 'column'
-  },
+    backdrop: {
+        zIndex: theme.zIndex.drawer + 1,
+        color: '#fff',
+        display: 'flex',
+        flexDirection: 'column'
+    },
 }));
 
 export default function GlobalUIManager() {
@@ -42,8 +42,8 @@ export default function GlobalUIManager() {
     return (
         <div>
             {/* Snackbar */}
-            <div ref={wrapper}>
-                <Snackbar
+            <div >
+                <Snackbar ref={wrapper}
                     anchorOrigin={{
                         vertical: "top",
                         horizontal: "right"
@@ -58,12 +58,18 @@ export default function GlobalUIManager() {
 
 
             {/* Loader */}
-            <div ref={wrapper}>
-                <Backdrop className={classes.backdrop} open={loaderOpen} >
-                    <CircularProgress color="secondary" />
-                    <h3>{loaderMessage}</h3>
-                </Backdrop>
-            </div>
+            {loaderOpen &&
+                <div>
+                    <div className="loader-overlay">
+                        <CircularProgress color="secondary" />
+                        <h3>{loaderMessage}</h3>
+                    </div>
+                </div>
+            }
+
+
+
+
 
         </div>
     );

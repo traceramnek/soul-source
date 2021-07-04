@@ -1,0 +1,15 @@
+$overlay-color: rgba(52, 59, 66, 0.5);
+
+.loader-overlay{
+    z-index: 3;
+    position: absolute;
+    top: 0;
+    color: ghostwhite;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: $overlay-color;
+}

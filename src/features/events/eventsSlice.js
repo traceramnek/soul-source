@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 import { firebaseDB } from '../../services/firebase';
+import { closeLoader, openLoader } from '../globalUIManager/globalUIManagerSlice';
 
 const initialState = {
     eventsList: [],
@@ -11,12 +12,16 @@ const initialState = {
 
 export const fetchEventsListAsync = createAsyncThunk(
     'events/fetchEventsList',
-    async (pathToResource) => {
+    async (event, thunkAPI) => {
         // const response = await axios.get(pathToResource);
         // return response.data;
 
-        const eventsResp = firebaseDB.ref('gaming');
+        thunkAPI.dispatch(openLoader('Loading latest event sources...'));
+        const eventsResp = firebaseDB.ref('events');
         const snapshot = await eventsResp.once('value');
+
+        thunkAPI.dispatch(closeLoader());
+
 
         return snapshot.val();
     }
@@ -41,7 +46,7 @@ export const eventsSlice = createSlice({
             .addCase(fetchEventsListAsync.fulfilled, (state, action) => {
                 state.eventsList = action.payload;
                 //set ids on load
-                state.eventsList.forEach((event, index) =>{
+                state.eventsList.forEach((event, index) => {
                     event['id'] = `${event.title}_uuid${index}`;
                 });
                 state.loading = false;
