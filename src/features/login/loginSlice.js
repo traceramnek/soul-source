@@ -14,10 +14,10 @@ export const loginUserAsync = createAsyncThunk(
 
         const resp = await firebaseAuth.signInWithPopup(provider).then(function (result) {
             // The firebase.User instance:
-            var user = result.user;
+            var user = result.additionalUserInfo.profile;
             // The Facebook firebase.auth.AuthCredential containing the Facebook
             // access token:
-            token = user.getIdToken();
+            // token = user.getIdToken();
             thunkAPI.dispatch(updateCurrentProfile(user));
         }, function (error) {
             // The provider's account email, can be used in case of

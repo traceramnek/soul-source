@@ -1,14 +1,14 @@
 import React from 'react';
 import './App.scss';
 import Navbar from './components/Navbar/Navbar';
-import GlobalSnackbar from './features/globalSnackbar/GlobalSnackbar';
+import GlobalUIManager from './features/globalUIManager/GlobalUIManager';
 
 
 function App() {
   return (
     <div className="App">
       <Navbar></Navbar>
-      <GlobalSnackbar></GlobalSnackbar>
+      <GlobalUIManager></GlobalUIManager>
     </div>
   );
 }

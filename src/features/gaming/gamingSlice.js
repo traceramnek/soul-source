@@ -3,6 +3,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { firebaseDB } from '../../services/firebase';
 import { isNullOrUndefined } from '../../util/utils';
+import { openSnackbar, openLoader, closeLoader } from '../../features/globalUIManager/globalUIManagerSlice';
+
 
 const initialState = {
     gamingList: [],
@@ -12,12 +14,14 @@ const initialState = {
 
 export const fetchGamingListAsync = createAsyncThunk(
     'gaming/fetchGamingList',
-    async () => {
+    async (event, thunkAPI) => {
         // const response = await axios.get(pathToResource);
         // return response.data;
-
+        thunkAPI.dispatch(openLoader('Loading latest gaming sources...'));
         const gamingResp = firebaseDB.ref('gaming');
         const snapshot = await gamingResp.once('value');
+
+        thunkAPI.dispatch(closeLoader());
 
         return snapshot.val();
 

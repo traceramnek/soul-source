@@ -41,9 +41,9 @@ export const profileSlice = createSlice({
     initialState,
     reducers: {
         updateCurrentProfile: (state, action) => {
-            state.currentProfile.name = action.payload.displayName;
+            state.currentProfile.name = action.payload.name;
             state.currentProfile.email = action.payload.email;
-            state.currentProfile.profilePicPath = action.payload.photoURL;
+            state.currentProfile.profilePicPath = action.payload.picture;
         },
         updateName: (state, action) => {
             if (action.payload !== '' && !isNullOrUndefined(action.payload)) {

@@ -5,9 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { IconButton } from '@material-ui/core';
 import { Launch, BookmarkBorder, Bookmark } from '@material-ui/icons';
 import { addBookmark, removeBookmark, selectBookmarks } from '../../features/profile/profileSlice';
-import { openSnackbar } from '../../features/globalSnackbar/globalSnackbarSlice';
+import { openSnackbar, openLoader, closeLoader } from '../../features/globalUIManager/globalUIManagerSlice';
 import { selectIsLoggedIn } from "../../features/login/loginSlice";
-import { GAMING_URL } from '../../util/constants';
 import { isNullOrUndefined } from '../../util/utils';
 
 
@@ -29,7 +28,7 @@ export default function Gaming() {
     if (savedBookmarks.find(bkMark => bkMark.id === bookmarkObj.id)) {
       dispatch(removeBookmark(bookmarkObj.id));
       dispatch(openSnackbar({
-        open: true,
+        snackbarOpen: true,
         message: `${bookmarkObj.title} removed from bookmarks!`,
         type: 'success',
         duration: 7000
@@ -37,7 +36,7 @@ export default function Gaming() {
     } else {
       dispatch(addBookmark(bookmarkObj));
       dispatch(openSnackbar({
-        open: true,
+        snackbarOpen: true,
         message: `${bookmarkObj.title} saved to bookmarks!`,
         type: 'success',
         duration: 7000
@@ -72,7 +71,7 @@ export default function Gaming() {
       </div>
 
       <div className="game-card-preview-container">
-        { !isNullOrUndefined(gamingList) &&
+        {!isNullOrUndefined(gamingList) &&
 
           gamingList.map((card, index) => {
 

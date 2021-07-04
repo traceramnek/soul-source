@@ -5,9 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Launch, BookmarkBorder, Bookmark } from '@material-ui/icons';
 import { addBookmark, removeBookmark, selectBookmarks } from '../../features/profile/profileSlice';
 import { selectIsLoggedIn } from '../../features/login/loginSlice';
-import { openSnackbar } from '../../features/globalSnackbar/globalSnackbarSlice';
+import { openSnackbar } from '../../features/globalUIManager/globalUIManagerSlice';
 import { IconButton } from '@material-ui/core';
-import { EVENTS_URL } from '../../util/constants';
 
 export default function UpcomingEvents() {
   const eventsList = useSelector(selectEventsList);
@@ -26,7 +25,7 @@ export default function UpcomingEvents() {
     if (savedBookmarks.find(bkMark => bkMark.id === bookmarkObj.id)) {
       dispatch(removeBookmark(bookmarkObj.id));
       dispatch(openSnackbar({
-        open: true,
+        snackbarOpen: true,
         message: `${bookmarkObj.title} removed from bookmarks!`,
         type: 'success',
         duration: 7000
@@ -34,7 +33,7 @@ export default function UpcomingEvents() {
     } else {
       dispatch(addBookmark(bookmarkObj));
       dispatch(openSnackbar({
-        open: true,
+        snackbarOpen: true,
         message: `${bookmarkObj.title} saved to bookmarks!`,
         type: 'success',
         duration: 7000
@@ -84,17 +83,17 @@ export default function UpcomingEvents() {
             }
             return (
               <div key={'card_' + index} className="card-preview">
-              {bookmarkSpan}
-              <div className="card-title">
-                {card.title}
+                {bookmarkSpan}
+                <div className="card-title">
+                  {card.title}
+                </div>
+                <div className="card-summary">
+                  {card.summary}
+                </div>
+                <a href={card.url} target="_blank">Check it out</a> <Launch fontSize="small" />
               </div>
-              <div className="card-summary">
-                {card.summary}
-              </div>
-              <a href={card.url} target="_blank">Check it out</a> <Launch fontSize="small" />
-            </div>
             )
-        
+
           })
         }
       </div>

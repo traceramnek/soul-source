@@ -3,8 +3,6 @@ import axios from 'axios';
 
 import { firebaseDB } from '../../services/firebase';
 
-
-
 const initialState = {
     eventsList: [],
     loading: false,
