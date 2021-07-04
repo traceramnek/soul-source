@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { isNullOrUndefined } from '../../services/utils';
+import { isNullOrUndefined } from '../../util/utils';
 
 const initialState = {
     currentProfile: {

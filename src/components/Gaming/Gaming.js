@@ -7,6 +7,8 @@ import { Launch, BookmarkBorder, Bookmark } from '@material-ui/icons';
 import { addBookmark, removeBookmark, selectBookmarks } from '../../features/profile/profileSlice';
 import { openSnackbar } from '../../features/globalSnackbar/globalSnackbarSlice';
 import { selectIsLoggedIn } from "../../features/login/loginSlice";
+import { GAMING_URL } from '../../util/constants';
+import { isNullOrUndefined } from '../../util/utils';
 
 
 export default function Gaming() {
@@ -17,7 +19,7 @@ export default function Gaming() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchGamingListAsync('json/gaming.json'));
+    dispatch(fetchGamingListAsync());
   }, []);
 
   let bookmarkIcon = (<BookmarkBorder style={{ fill: 'ghostwhite' }} />);
@@ -70,7 +72,7 @@ export default function Gaming() {
       </div>
 
       <div className="game-card-preview-container">
-        {
+        { !isNullOrUndefined(gamingList) &&
 
           gamingList.map((card, index) => {
 

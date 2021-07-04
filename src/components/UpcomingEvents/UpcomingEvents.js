@@ -7,6 +7,7 @@ import { addBookmark, removeBookmark, selectBookmarks } from '../../features/pro
 import { selectIsLoggedIn } from '../../features/login/loginSlice';
 import { openSnackbar } from '../../features/globalSnackbar/globalSnackbarSlice';
 import { IconButton } from '@material-ui/core';
+import { EVENTS_URL } from '../../util/constants';
 
 export default function UpcomingEvents() {
   const eventsList = useSelector(selectEventsList);
@@ -18,7 +19,7 @@ export default function UpcomingEvents() {
   let bookmarkSpan = (<span></span>);
 
   useEffect(() => {
-    dispatch(fetchEventsListAsync('json/events.json'));
+    dispatch(fetchEventsListAsync());
   }, []);
 
   const handleClickBookmark = (bookmarkObj) => {

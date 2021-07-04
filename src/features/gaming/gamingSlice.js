@@ -1,6 +1,8 @@
 import { AcUnitOutlined } from '@material-ui/icons';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { firebaseDB } from '../../services/firebase';
+import { isNullOrUndefined } from '../../util/utils';
 
 const initialState = {
     gamingList: [],
@@ -10,9 +12,15 @@ const initialState = {
 
 export const fetchGamingListAsync = createAsyncThunk(
     'gaming/fetchGamingList',
-    async (pathToResource) => {
-        const response = await axios.get(pathToResource);
-        return response.data;
+    async () => {
+        // const response = await axios.get(pathToResource);
+        // return response.data;
+
+        const gamingResp = firebaseDB.ref('gaming');
+        const snapshot = await gamingResp.once('value');
+
+        return snapshot.val();
+
     }
 );
 
@@ -20,7 +28,7 @@ export const gamingSlice = createSlice({
     name: 'gaming',
     initialState,
     reducers: {
-    
+        
     },
     extraReducers: (builder) => {
         builder
@@ -33,12 +41,15 @@ export const gamingSlice = createSlice({
                 state.hasError = true;
             })
             .addCase(fetchGamingListAsync.fulfilled, (state, action) => {
-                state.gamingList = action.payload;
-                state.gamingList.forEach((gameItem, index) =>{
-                    gameItem['id'] = `${gameItem.title}_uuid${index}`;
-                });
-                state.loading = false;
-                state.hasError = false;
+                if (!isNullOrUndefined(action.payload)) {
+                    state.gamingList = action.payload;
+                    state.gamingList.forEach((gameItem, index) => {
+                        gameItem['id'] = `${gameItem.title}_uuid${index}`;
+                    });
+                    state.loading = false;
+                    state.hasError = false;
+                }
+
             })
     },
 });

@@ -15,6 +15,12 @@ $overlay-color: rgba(134, 48, 131, 0.35);
     background-color: $overlay-color;
 }
 
+.profile-toggle{
+    ToggleButton{
+        color: ghostwhite;
+    }
+}
+
 .profile-bookmark-title{
     margin-left: 15px;
     font-weight: 500;
@@ -25,3 +31,4 @@ $overlay-color: rgba(134, 48, 131, 0.35);
     font-weight: 600;
     margin-left: 10px;
 }
+

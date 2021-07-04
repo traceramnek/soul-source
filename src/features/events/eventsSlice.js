@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { v4 as uuidv4 } from "uuid";
+
+import { firebaseDB } from '../../services/firebase';
+
 
 
 const initialState = {
@@ -12,8 +14,13 @@ const initialState = {
 export const fetchEventsListAsync = createAsyncThunk(
     'events/fetchEventsList',
     async (pathToResource) => {
-        const response = await axios.get(pathToResource);
-        return response.data;
+        // const response = await axios.get(pathToResource);
+        // return response.data;
+
+        const eventsResp = firebaseDB.ref('gaming');
+        const snapshot = await eventsResp.once('value');
+
+        return snapshot.val();
     }
 );
 

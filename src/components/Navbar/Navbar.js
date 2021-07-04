@@ -2,7 +2,7 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link, Redirect
+    Link, Redirect, useHistory
 } from "react-router-dom";
 import './Navbar.scss';
 import Home from '../Home/Home';
@@ -10,19 +10,36 @@ import Gaming from '../Gaming/Gaming';
 import UpcomingEvents from '../UpcomingEvents/UpcomingEvents';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AfroIcon from '../../assets/img/afro_icon.png';
-import { SvgIcon } from '@material-ui/core';
+import { Dialog } from '@material-ui/core';
 import Profile from '../Profile/Profile';
 import Login from '../Login/Login';
 import { useSelector } from 'react-redux';
 import { selectIsLoggedIn } from "../../features/login/loginSlice";
+import { useState } from "react";
+
 
 
 export default function Navbar() {
     const portfolioLink = "https://traceramnek.github.io";
     const isLoggedIn = useSelector(selectIsLoggedIn);
+    const [dialogOpen, setDialogOpen] = useState(false);
+    const history = useHistory();
+
+
+    const handleOpenDialog = () => {
+        setDialogOpen(true);
+    };
+
+    const handleClose = () => {
+        setDialogOpen(false);
+    };
 
     const handleAuth = () => {
-        
+        if (!isLoggedIn) {
+            handleOpenDialog();
+        } else {
+            history.push('/profile');
+        }
     };
 
     return (
@@ -44,9 +61,10 @@ export default function Navbar() {
                         <span>
                             <Link className="nav-link" to="/events">Events</Link>
                         </span>
-                        <span onClick={() => handleAuth()}>
+                        <span >
                             <Link className="nav-link" to={!isLoggedIn ? '/login' : '/profile'}>
-                                <AccountCircleIcon/>
+                            {/* <Link className="nav-link" onClick={() => handleAuth()}> */}
+                                <AccountCircleIcon />
                             </Link>
                         </span>
                     </nav>
@@ -63,17 +81,21 @@ export default function Navbar() {
                     <Route path="/events">
                         <UpcomingEvents></UpcomingEvents>
                     </Route>
-                    <Route path="/login" render={() => ( !isLoggedIn ? <Login /> : <Redirect to='/profile' /> )}>
-                        
+                    <Route path="/login" render={() => (!isLoggedIn ? <Login /> : <Redirect to='/profile' />)}>
+
                     </Route>
-                    <Route path="/profile">
-                        <Profile/>
+                    <Route path="/profile" render={() => (!isLoggedIn ? <Redirect to='/home' /> : <Redirect to='/profile' />)}>
+                        <Profile />
                     </Route>
                     <Route path="/">
                         <Home></Home>
                     </Route>
                 </Switch>
             </div>
+
+            <Dialog open={dialogOpen} onClose={handleClose}>
+                <Login />
+            </Dialog>
 
         </Router>
 

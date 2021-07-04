@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { firebaseAuth } from '../../services/firebase';
 import { updateCurrentProfile } from '../profile/profileSlice';
 
+
 const initialState = {
     isLoggedIn: false
 };
