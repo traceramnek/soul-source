@@ -17,8 +17,10 @@ export default function Profile() {
   const [searchValue, setSearchValue] = useState('');
   const profile = useSelector(selectCurrentprofile);
 
-  const handleToggleChange = (event, newValue) => {
-    setFilterValue(newValue);
+  const handleToggleChange = (newValue) => {
+    if (newValue !== filterValue) {
+      setFilterValue(newValue);
+    }
   }
 
   return (
@@ -35,25 +37,21 @@ export default function Profile() {
         </div>
 
         <div>
-          <RadioGroup row
-            value={filterValue}
-            onChange={handleToggleChange}>
-            <FormControlLabel value={ALL_BOOKMARKS} control={<Radio />}
-              aria-label="All Bookmarks"
-              label="All Bookmarks"
-              labelPlacement="end" />
-            <FormControlLabel value={BOOKMARK_LISTS} control={<Radio />}
-              aria-label="Bookmark Lists"
-              label="Bookmark Lists"
-              labelPlacement="end" />
-          </RadioGroup>
+          <span className={"profile-option " + (filterValue === ALL_BOOKMARKS ? 'active' : 'non-active')}
+           onClick={() => handleToggleChange(ALL_BOOKMARKS)} >
+            Bookmarks
+          </span>
+          <span className="profile-option"> | </span>
+          <span className={"profile-option " + (filterValue === BOOKMARK_LISTS ? 'active' : 'non-active')}
+           onClick={() => handleToggleChange(BOOKMARK_LISTS)} >
+            Bookmark Lists
+          </span>
         </div>
 
         {
           filterValue === ALL_BOOKMARKS && // if filter is all bookmarks, show this div
           (
             <div>
-              <div className="profile-bookmark-title">Bookmarks</div>
               <BookmarkList />
             </div>
           )
@@ -63,8 +61,7 @@ export default function Profile() {
           filterValue === BOOKMARK_LISTS &&
           (
             <div>
-              <div className="profile-bookmark-title">Bookmark Lists</div>
-
+              <h4>Temp List</h4>
             </div>
           )
 

@@ -11,7 +11,7 @@ $overlay-color: rgba(134, 48, 131, 0.35);
 }
 
 .overlay{
-    padding: 80px 30px 20px 30px;
+    padding: 80px 40px 20px 40px;
     // height: 100%;
     background-color: $overlay-color;
 }
@@ -22,14 +22,25 @@ $overlay-color: rgba(134, 48, 131, 0.35);
     }
 }
 
-.profile-bookmark-title{
-    margin-left: 15px;
+.profile-option{
     font-weight: 500;
     font-size: 1.5rem;
+
+    &:hover{
+        cursor: pointer;
+        color: rgb(229, 229, 233);
+    }
+
+    &.active{
+        color: ghostwhite;
+    }
+
+    &.non-active{
+        color: rgb(128, 128, 128);
+    }
 }
 .user-name{
     font-size: 5rem;
     font-weight: 600;
-    margin-left: 10px;
 }
 
