@@ -50,7 +50,7 @@ export const addBookmarkAsync = createAsyncThunk(
         const profile = thunkAPI.getState().profile.currentProfile;
 
         if (profile.bookmarks) {
-            if (profile.bookmarks[bookmarkObj.id]) {
+            if (!profile.bookmarks[bookmarkObj.id]) {
                 const bookmarkRef = firebaseDB.ref('users/' + profile.id + '/bookmarks');
                 const snapshot = await bookmarkRef.update({
                     [bookmarkObj.id]: bookmarkObj
@@ -134,7 +134,7 @@ export const profileSlice = createSlice({
             })
             .addCase(addBookmarkAsync.fulfilled, (state, action) => {
                 if (state.currentProfile.bookmarks) {
-                    if (state.currentProfile.bookmarks[action.payload.id]) {
+                    if (!state.currentProfile.bookmarks[action.payload.id]) {
                         state.currentProfile.bookmarks[action.payload.id] = action.payload;
                     }
                 } else {
