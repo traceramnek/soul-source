@@ -3,7 +3,7 @@ import './BookmarkList.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from "react-router-dom";
 
-import { removeBookmark, selectBookmarks, } from '../profile/profileSlice';
+import { removeBookmark, removeBookmarkAsync, selectBookmarks, } from '../profile/profileSlice';
 import { Cancel, CancelOutlined, Launch } from '@material-ui/icons';
 import { IconButton } from '@material-ui/core';
 import { openSnackbar } from '../../features/globalUIManager/globalUIManagerSlice';
@@ -19,8 +19,8 @@ export default function BookmarkList() {
     const removeIconHover = <Cancel style={{ color: 'ghostwhite' }} />;
 
     const handleRemoveBookmark = (bookmarkObj) => {
-        if (bookmarks.find(bkMark => bkMark.id === bookmarkObj.id)) {
-            dispatch(removeBookmark(bookmarkObj.id));
+        if (!isNullOrUndefined(bookmarks) && bookmarks[bookmarkObj.id]) {
+            dispatch(removeBookmarkAsync(bookmarkObj.id));
             dispatch(openSnackbar({
                 open: true,
                 message: `${bookmarkObj.title} removed from bookmarks!`,
@@ -53,7 +53,7 @@ export default function BookmarkList() {
                                     {hovering ? removeIcon : removeIconHover}
                                 </IconButton>
                             </span>
-                            <span className="launch-icon" title={bookmark.title} onClick={() => handleRemoveBookmark(bookmark)}>
+                            <span className="launch-icon" title={bookmark.title} >
                                 <a className="nav-link" href={bookmark.url} target="_blank">
                                     <Launch style={{ color: 'ghostwhite' }} />
                                 </a>

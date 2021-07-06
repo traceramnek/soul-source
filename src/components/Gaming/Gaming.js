@@ -4,7 +4,7 @@ import { fetchGamingListAsync, selectGamingList } from '../../features/gaming/ga
 import { useDispatch, useSelector } from 'react-redux';
 import { IconButton } from '@material-ui/core';
 import { Launch, BookmarkBorder, Bookmark } from '@material-ui/icons';
-import { addBookmark, addBookmarkAsync, removeBookmark, selectBookmarks } from '../../features/profile/profileSlice';
+import { addBookmark, addBookmarkAsync, removeBookmark, removeBookmarkAsync, selectBookmarks } from '../../features/profile/profileSlice';
 import { openSnackbar, openLoader, closeLoader } from '../../features/globalUIManager/globalUIManagerSlice';
 import { selectIsLoggedIn } from "../../features/login/loginSlice";
 import { isNullOrUndefined } from '../../util/utils';
@@ -26,7 +26,7 @@ export default function Gaming() {
 
   const handleClickBookmark = (bookmarkObj) => {
     if (!isNullOrUndefined(savedBookmarks) && savedBookmarks[bookmarkObj.id]) {
-      dispatch(removeBookmark(bookmarkObj.id));
+      dispatch(removeBookmarkAsync(bookmarkObj.id));
       dispatch(openSnackbar({
         snackbarOpen: true,
         message: `${bookmarkObj.title} removed from bookmarks!`,

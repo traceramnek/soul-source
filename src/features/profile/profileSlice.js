@@ -43,7 +43,7 @@ export const validateEmailAsync = createAsyncThunk(
 );
 
 export const addBookmarkAsync = createAsyncThunk(
-    'login/updateBookmarks',
+    'login/addBookmark',
     async (bookmarkObj, thunkAPI) => {
         thunkAPI.dispatch(openLoader('Adding Bokmark...'));
 
@@ -69,6 +69,32 @@ export const addBookmarkAsync = createAsyncThunk(
 
         thunkAPI.dispatch(closeLoader());
         return bookmarkObj;
+
+    }
+);
+
+export const removeBookmarkAsync = createAsyncThunk(
+    'login/removeBookmark',
+    async (id, thunkAPI) => {
+        thunkAPI.dispatch(openLoader('Removing Bokmark...'));
+
+        const profile = thunkAPI.getState().profile.currentProfile;
+
+        if (profile.bookmarks) {
+            if (profile.bookmarks[id]) {
+                const bookmarkRef = firebaseDB.ref('users/' + profile.id + '/bookmarks');
+                const snapshot = await bookmarkRef.update({
+                    [id]: null // delete from db
+                });
+            }
+        }
+
+        const usersResp = firebaseDB.ref('users/' + profile.id);
+        const snapshot = await usersResp.once('value');
+        const user = snapshot.val();
+
+        thunkAPI.dispatch(closeLoader());
+        return id;
 
     }
 );
@@ -145,6 +171,18 @@ export const profileSlice = createSlice({
                         }
                     }
                 }
+            })
+            .addCase(removeBookmarkAsync.pending, (state) => {
+                state.loading = true;
+                state.hasError = false;
+            })
+            .addCase(removeBookmarkAsync.rejected, (state) => {
+                state.loading = false;
+                state.hasError = true;
+            })
+            .addCase(removeBookmarkAsync.fulfilled, (state, action) => {
+                //delete bookmark obj
+                delete state.currentProfile.bookmarks[action.payload];
             })
     },
 });
