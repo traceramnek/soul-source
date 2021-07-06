@@ -7,6 +7,7 @@ import { removeBookmark, selectBookmarks, } from '../profile/profileSlice';
 import { Cancel, CancelOutlined, Launch } from '@material-ui/icons';
 import { IconButton } from '@material-ui/core';
 import { openSnackbar } from '../../features/globalUIManager/globalUIManagerSlice';
+import { isNullOrUndefined } from '../../util/utils';
 
 
 export default function BookmarkList() {
@@ -37,8 +38,8 @@ export default function BookmarkList() {
     return (
         <div>
             <div className="bookmark-container">
-                {
-                    bookmarks.map((bookmark, index) => (
+                { !isNullOrUndefined(bookmarks) && 
+                    Object.entries(bookmarks).map(([id, bookmark], index) => (
                         <div className="bookmark" key={'bookmark_' + index}
                             data-aos="fade-right"
                             data-aos-delay="250"

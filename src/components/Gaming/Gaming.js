@@ -4,7 +4,7 @@ import { fetchGamingListAsync, selectGamingList } from '../../features/gaming/ga
 import { useDispatch, useSelector } from 'react-redux';
 import { IconButton } from '@material-ui/core';
 import { Launch, BookmarkBorder, Bookmark } from '@material-ui/icons';
-import { addBookmark, removeBookmark, selectBookmarks } from '../../features/profile/profileSlice';
+import { addBookmark, addBookmarkAsync, removeBookmark, selectBookmarks } from '../../features/profile/profileSlice';
 import { openSnackbar, openLoader, closeLoader } from '../../features/globalUIManager/globalUIManagerSlice';
 import { selectIsLoggedIn } from "../../features/login/loginSlice";
 import { isNullOrUndefined } from '../../util/utils';
@@ -25,7 +25,7 @@ export default function Gaming() {
   let bookmarkSpan = (<span></span>);
 
   const handleClickBookmark = (bookmarkObj) => {
-    if (savedBookmarks.find(bkMark => bkMark.id === bookmarkObj.id)) {
+    if (!isNullOrUndefined(savedBookmarks) && savedBookmarks[bookmarkObj.id]) {
       dispatch(removeBookmark(bookmarkObj.id));
       dispatch(openSnackbar({
         snackbarOpen: true,
@@ -34,7 +34,7 @@ export default function Gaming() {
         duration: 7000
       }));
     } else {
-      dispatch(addBookmark(bookmarkObj));
+      dispatch(addBookmarkAsync(bookmarkObj));
       dispatch(openSnackbar({
         snackbarOpen: true,
         message: `${bookmarkObj.title} saved to bookmarks!`,
@@ -75,7 +75,7 @@ export default function Gaming() {
 
           gamingList.map((card, index) => {
 
-            bookmarkIcon = savedBookmarks.find(bkMark => bkMark.id === card.id) ?
+            bookmarkIcon = (!isNullOrUndefined(savedBookmarks) && savedBookmarks[card.id]) ?
               (<Bookmark style={{ fill: 'ghostwhite' }} />) : (<BookmarkBorder style={{ fill: 'ghostwhite' }} />);
 
             if (isLoggedIn) {

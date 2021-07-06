@@ -48,7 +48,7 @@ export const gamingSlice = createSlice({
                 if (!isNullOrUndefined(action.payload)) {
                     state.gamingList = action.payload;
                     state.gamingList.forEach((gameItem, index) => {
-                        gameItem['id'] = `${gameItem.title}_uuid${index}`;
+                        gameItem['id'] = `${gameItem.title.split(' ').join('').toLowerCase()}_uuid${index}`;
                     });
                     state.loading = false;
                     state.hasError = false;

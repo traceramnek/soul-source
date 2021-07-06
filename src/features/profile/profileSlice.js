@@ -1,14 +1,17 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { firebaseDB } from '../../services/firebase';
 import { isNullOrUndefined } from '../../util/utils';
+import { closeLoader, openLoader } from '../globalUIManager/globalUIManagerSlice';
 
 const initialState = {
     currentProfile: {
+        id: '',
         name: '',
         email: '',
         profilePicPath: '',
-        bookmarks: [],
-        bookmarkLists: [],
+        bookmarks: {},
+        bookmarkLists: {},
     },
     showDuplicateWarning: false,
     loading: false,
@@ -18,12 +21,15 @@ const initialState = {
 export const fetchProfileByIdAsync = createAsyncThunk(
     'profile/fetchProfileById',
     async (id) => {
-        const data = await axios.get(`firebase/api/${id}`);
-        return data.data;
-        // const response = await fetch(pathToFetchFrom);
-        // const json = await response.json();
+        // const data = await axios.get(`firebase/api/${id}`);
+        // return data.data;
 
-        // return json;
+        const usersResp = firebaseDB.ref('users/' + id);
+        const snapshot = await usersResp.once('value');
+        const user = snapshot.val();
+
+        return user;
+
     }
 );
 
@@ -33,6 +39,37 @@ export const validateEmailAsync = createAsyncThunk(
         return true;
         // const data = await axios.post();
         // return data.data;
+    }
+);
+
+export const addBookmarkAsync = createAsyncThunk(
+    'login/updateBookmarks',
+    async (bookmarkObj, thunkAPI) => {
+        thunkAPI.dispatch(openLoader('Adding Bokmark...'));
+
+        const profile = thunkAPI.getState().profile.currentProfile;
+
+        if (profile.bookmarks) {
+            if (profile.bookmarks[bookmarkObj.id]) {
+                const bookmarkRef = firebaseDB.ref('users/' + profile.id + '/bookmarks');
+                const snapshot = await bookmarkRef.update({
+                    [bookmarkObj.id]: bookmarkObj
+                });
+            }
+        } else {
+
+            const result = await firebaseDB.ref('users/' + profile.id + '/bookmarks').set({
+                [bookmarkObj.id]: bookmarkObj
+            });
+        }
+
+        const usersResp = firebaseDB.ref('users/' + profile.id);
+        const snapshot = await usersResp.once('value');
+        const user = snapshot.val();
+
+        thunkAPI.dispatch(closeLoader());
+        return bookmarkObj;
+
     }
 );
 
@@ -61,19 +98,12 @@ export const profileSlice = createSlice({
             state.profilePicPath = action.payload;
         },
         addBookmark: (state, action) => { // payload should be a new bookmark object
-            if (state.currentProfile.bookmarks) {
-                let index = state.currentProfile.bookmarks.findIndex(elm => elm.id === action.payload.id);
-                if (index === -1) {
-                    state.currentProfile.bookmarks.push(action.payload);
-                } else {
-                    state.showDuplicateWarning = true;
-                }
-            }
+            
         },
         removeBookmark: (state, action) => { // payload should be the id
             state.currentProfile.bookmarks = state.currentProfile.bookmarks.filter(bookmark => bookmark.id !== action.payload);
         },
-        closeWarning: (state) => { 
+        closeWarning: (state) => {
             state.showDuplicateWarning = false;
         }
     },
@@ -93,18 +123,28 @@ export const profileSlice = createSlice({
                 state.loading = false;
                 state.hasError = false;
             })
-            // Validate email starts here
-            .addCase(validateEmailAsync.pending, (state) => {
+            // Add bookmark
+            .addCase(addBookmarkAsync.pending, (state) => {
                 state.loading = true;
                 state.hasError = false;
             })
-            .addCase(validateEmailAsync.rejected, (state) => {
+            .addCase(addBookmarkAsync.rejected, (state) => {
                 state.loading = false;
                 state.hasError = true;
-                // TODO: Write code to show materlial UI alert saying the email is already used by another account
             })
-            .addCase(validateEmailAsync.fulfilled, (state, action) => {
-                // call updte email or update email here
+            .addCase(addBookmarkAsync.fulfilled, (state, action) => {
+                if (state.currentProfile.bookmarks) {
+                    if (state.currentProfile.bookmarks[action.payload.id]) {
+                        state.currentProfile.bookmarks[action.payload.id] = action.payload;
+                    }
+                } else {
+                    state.currentProfile = {
+                        ...state.currentProfile,
+                        bookmarks: {
+                            [action.payload.id]: action.payload
+                        }
+                    }
+                }
             })
     },
 });

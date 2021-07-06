@@ -38,12 +38,12 @@ export default function Profile() {
 
         <div>
           <span className={"profile-option " + (filterValue === ALL_BOOKMARKS ? 'active' : 'non-active')}
-           onClick={() => handleToggleChange(ALL_BOOKMARKS)} >
+            onClick={() => handleToggleChange(ALL_BOOKMARKS)} >
             Bookmarks
           </span>
           <span className="profile-option"> | </span>
           <span className={"profile-option " + (filterValue === BOOKMARK_LISTS ? 'active' : 'non-active')}
-           onClick={() => handleToggleChange(BOOKMARK_LISTS)} >
+            onClick={() => handleToggleChange(BOOKMARK_LISTS)} >
             Bookmark Lists
           </span>
         </div>
@@ -66,16 +66,6 @@ export default function Profile() {
           )
 
         }
-
-        {/* <div>
-        <form noValidate autoComplete="off">
-          <div>
-            <TextField id="outlined-basic" label="Name" variant="outlined" />
-            <TextField id="outlined-basic" label="Email" variant="outlined" />
-          </div>
-
-        </form>
-      </div> */}
       </div>
 
     </div>
