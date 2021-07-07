@@ -4,4 +4,71 @@
     -ms-transition: $transitionTime;
     -o-transition: $transitionTime;
     transition: $transitionTime;
-  }
+}
+
+@mixin transform($string){
+	-webkit-transform: $string;
+	-moz-transform: 	 $string;
+	-ms-transform: 		 $string;
+	-o-transform: 		 $string;
+}
+
+@mixin scale ($factor) {
+	-webkit-transform: scale($factor);
+	-moz-transform: 	 scale($factor);
+	-ms-transform: 		 scale($factor);
+	-o-transform: 		 scale($factor);
+}
+/* NOTE: Add background-position: bottom left 
+	to the hover state of the apecified element
+*/ 
+@mixin slide-from-left($start-color, $end-color){
+	background-image: linear-gradient(to left, $start-color 50%, $end-color 50%);
+    background-size: 205% 100%;
+    background-repeat: no-repeat;
+    background-position: bottom right;
+}
+
+/* NOTE: Add background-position: bottom right
+	to the hover state of the apecified element
+*/ 
+@mixin slide-from-right($start-color, $end-color){
+	background-image: linear-gradient(to right, $start-color 50%, $end-color 50%);
+    background-size: 205% 100%;
+    background-repeat: no-repeat;
+    background-position: bottom left;
+}
+
+@mixin parallax-section($height: 100vh) {
+	position: relative;
+    /* The height of the container. Must be set, but it doesn't really matter what the value is. */
+    height: $height;
+
+    /* For text formatting. */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+@mixin parallax($zTranslate: -1px, $scale: 2) {
+	&::after{
+		/* Display and position the pseudo-element */
+		content: " ";
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+
+		/* Move the pseudo-element back away from the camera,
+			* then scale it back up to fill the viewport.
+			* Because the pseudo-element is further away, it appears to move more slowly, like in real life. */
+		transform: translateZ($zTranslate) scale($scale);
+		/* Force the background image to fill the whole element. */
+		background-size: 100%;
+		/* Keep the image from overlapping sibling elements. */
+		z-index: -1;
+	}
+    
+}
