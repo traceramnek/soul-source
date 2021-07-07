@@ -7,6 +7,7 @@ import { addBookmark, removeBookmark, selectBookmarks } from '../../features/pro
 import { selectIsLoggedIn } from '../../features/login/loginSlice';
 import { openSnackbar } from '../../features/globalUIManager/globalUIManagerSlice';
 import { IconButton } from '@material-ui/core';
+import { isNullOrUndefined } from '../../util/utils';
 
 export default function UpcomingEvents() {
   const eventsList = useSelector(selectEventsList);
@@ -22,7 +23,7 @@ export default function UpcomingEvents() {
   }, []);
 
   const handleClickBookmark = (bookmarkObj) => {
-    if (savedBookmarks.find(bkMark => bkMark.id === bookmarkObj.id)) {
+    if (!isNullOrUndefined(savedBookmarks) && savedBookmarks[bookmarkObj.id]) {
       dispatch(removeBookmark(bookmarkObj.id));
       dispatch(openSnackbar({
         snackbarOpen: true,
@@ -65,7 +66,7 @@ export default function UpcomingEvents() {
         {
           eventsList.map((card, index) => {
 
-            bookmarkIcon = savedBookmarks.find(bkMark => bkMark.id === card.id) ?
+            bookmarkIcon = (!isNullOrUndefined(savedBookmarks) && savedBookmarks[card.id]) ?
               (<Bookmark style={{ fill: 'ghostwhite' }} />) : (<BookmarkBorder style={{ fill: 'ghostwhite' }} />);
 
             if (isLoggedIn) {

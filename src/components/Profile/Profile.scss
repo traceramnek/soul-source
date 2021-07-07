@@ -1,4 +1,5 @@
 $overlay-color: rgba(134, 48, 131, 0.35);
+@import '../../assets/stylesheets/mixins.scss';
 
 
 .profile {
@@ -25,7 +26,8 @@ $overlay-color: rgba(134, 48, 131, 0.35);
 .profile-option{
     font-weight: 500;
     font-size: 1.5rem;
-
+    @include setTransition(.5s);
+;
     &:hover{
         cursor: pointer;
         color: rgb(229, 229, 233);
