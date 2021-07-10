@@ -9,13 +9,37 @@ import { useSelector } from 'react-redux';
 import { selectCurrentprofile } from '../../features/profile/profileSlice';
 import { ALL_BOOKMARKS, BOOKMARK_LISTS } from '../../util/constants';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-import { RadioGroup, Radio, FormControlLabel } from '@material-ui/core';
+import { Fab, Dialog, Tooltip } from '@material-ui/core';
+import BookmarkListForm from '../../features/bookmarks/BookmarkListForm';
+import AddIcon from '@material-ui/icons/Add';
 
+
+const useStyles = makeStyles(() => ({
+  arrow: {
+    color: '#a31455',
+  },
+  tooltip: {
+    backgroundColor: '#a31455',
+    fontWeight: 700,
+    fontSize: 14
+  },
+}));
 
 export default function Profile() {
   const [filterValue, setFilterValue] = useState(ALL_BOOKMARKS);
   const [searchValue, setSearchValue] = useState('');
   const profile = useSelector(selectCurrentprofile);
+  const [dialogOpen, setDialogOpen] = useState(false);
+
+  const classes = useStyles();
+
+  const handleOpenDialog = () => {
+    setDialogOpen(true);
+  };
+
+  const handleClose = () => {
+    setDialogOpen(false);
+  };
 
   const handleToggleChange = (newValue) => {
     if (newValue !== filterValue) {
@@ -39,7 +63,7 @@ export default function Profile() {
         <div>
           <span className={"profile-option " + (filterValue === ALL_BOOKMARKS ? 'active' : 'non-active')}
             onClick={() => handleToggleChange(ALL_BOOKMARKS)} >
-            Bookmarks
+            All Bookmarks
           </span>
           <span className="profile-option"> | </span>
           <span className={"profile-option " + (filterValue === BOOKMARK_LISTS ? 'active' : 'non-active')}
@@ -61,7 +85,21 @@ export default function Profile() {
           filterValue === BOOKMARK_LISTS &&
           (
             <div>
-              <h4>Temp List</h4>
+              <div className="fab-button">
+                <Tooltip arrow classes={classes}
+                  title="Create Bookmark List"
+                  placement="left">
+                  <Fab style={{ backgroundColor: '#a31455', color: 'ghostwhite' }}
+                    aria-label="Create Bookmark List"
+                    onClick={() => handleOpenDialog()}>
+                    <AddIcon />
+                  </Fab>
+                </Tooltip>
+              </div>
+              <Dialog className="form-dialog" open={dialogOpen} onClose={handleClose}>
+                <BookmarkListForm />
+              </Dialog>
+
             </div>
           )
 

@@ -99,6 +99,33 @@ export const removeBookmarkAsync = createAsyncThunk(
     }
 );
 
+
+export const createBookmarkListAsync = createAsyncThunk(
+    'login/createBookmarkList',
+    async (bkList, thunkAPI) => {
+        thunkAPI.dispatch(openLoader('Creating List...'));
+
+        const profile = thunkAPI.getState().profile.currentProfile;
+
+        if (profile.bookmarkLists) {
+            if (profile.bookmarkLists[bkList.id]) {
+                const bookmarkRef = firebaseDB.ref('users/' + profile.id + '/bookmarkLists');
+                const snapshot = await bookmarkRef.update({
+                    [bkList.id]: bkList // add new bookmark list to db
+                });
+            }
+        }
+
+        const usersResp = firebaseDB.ref('users/' + profile.id);
+        const snapshot = await usersResp.once('value');
+        const user = snapshot.val();
+
+        thunkAPI.dispatch(closeLoader());
+        return bkList;
+
+    }
+);
+
 export const profileSlice = createSlice({
     name: 'profile',
     initialState,
@@ -183,6 +210,28 @@ export const profileSlice = createSlice({
             .addCase(removeBookmarkAsync.fulfilled, (state, action) => {
                 //delete bookmark obj
                 delete state.currentProfile.bookmarks[action.payload];
+            })
+            .addCase(createBookmarkListAsync.pending, (state) => {
+                state.loading = true;
+                state.hasError = false;
+            })
+            .addCase(createBookmarkListAsync.rejected, (state) => {
+                state.loading = false;
+                state.hasError = true;
+            })
+            .addCase(createBookmarkListAsync.fulfilled, (state, action) => {
+                if (state.currentProfile.bookmarkLists) {
+                    if (!state.currentProfile.bookmarkLists[action.payload.id]) {
+                        state.currentProfile.bookmarkLists[action.payload.id] = action.payload;
+                    }
+                } else {
+                    state.currentProfile = {
+                        ...state.currentProfile,
+                        bookmarkLists: {
+                            [action.payload.id]: action.payload
+                        }
+                    }
+                }
             })
     },
 });

@@ -1,0 +1,78 @@
+@import '../../assets/stylesheets/variables.scss';
+
+.bookmark-form-container{
+    display: flex;
+    padding: 50px;
+    background-color: #424242;
+}
+
+.bookmark-form-input{
+    background-color: transparent;
+    color: ghostwhite;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 2px solid ghostwhite;
+    margin-bottom: 15px;
+}
+
+.bookmark-form-select{
+    background-color: transparent;
+    color: ghostwhite;
+    margin-bottom: 15px;
+}
+
+.bkList-form-buttons{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.field-section{
+    display: flex;
+    flex-direction: column;
+
+    label{
+        color: ghostwhite;
+    }
+}
+
+.cancel-button{
+    // background-color: transparent;
+    // border: 1px solid ghostwhite;
+    padding: 10px 15px;
+    // border-radius: 30px;
+    color: ghostwhite;
+
+    &:hover{
+        color: $bookmark-card-color;
+        text-decoration: underline;
+    }
+}
+
+.create-button{
+    background-color: $bookmark-card-color;
+    padding: 10px 15px;
+    border-radius: 30px;
+    color: ghostwhite;
+    font-weight: 600;
+
+    &:hover{
+        background-color: ghostwhite;
+        color: $bookmark-card-color;
+    }
+}
+
+.form-title{
+    background-color: $bookmark-card-color;
+    height: 60px;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    color: ghostwhite;
+    padding-left: 15px;
+
+    label{
+        font-weight: 600;
+        font-size: 1.25rem;
+    }
+}
