@@ -28,12 +28,23 @@ const customStyles = {
         backgroundColor: 'transparent',
         display: 'flex'
     }),
-    menu: (provided, state) => ({
-        backgroundColor: 'transparent'
+    // menu: (provided, state) => ({
+    //     ...provided,
+    //     zIndex: 5,
+    //     maxHeight: 100,
+    //     overflowY: 'scroll',
+    //     backgroundColor: '#a31455'
+    // }),
+    menuList: (provided, state) => ({
+        ...provided,
+        zIndex: 5,
+        maxHeight: 100,
+        backgroundColor: '#a31455'
     }),
     option: (provided, state) => ({
+        ...provided,
         backgroundColor: state.isFocused ? 'ghostwhite' : 'transparent',
-        color: state.isFocused ? '#333' : 'ghostwhite',
+        color: state.isFocused ? '#a31455' : 'ghostwhite',
         padding: '2px 8px'
     })
     // singleValue: (provided, state) => {

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { firebaseDB } from '../../services/firebase';
 import { isNullOrUndefined } from '../../util/utils';
 import { closeLoader, openLoader } from '../globalUIManager/globalUIManagerSlice';
+import { SoulSourceService } from '../../services/SoulSourceService';
 
 const initialState = {
     currentProfile: {
@@ -20,25 +21,17 @@ const initialState = {
 
 export const fetchProfileByIdAsync = createAsyncThunk(
     'profile/fetchProfileById',
-    async (id) => {
+    async (id, thunkAPI) => {
         // const data = await axios.get(`firebase/api/${id}`);
         // return data.data;
 
-        const usersResp = firebaseDB.ref('users/' + id);
-        const snapshot = await usersResp.once('value');
-        const user = snapshot.val();
+        thunkAPI.dispatch(openLoader('Fetching profile details...'));
+        const user = SoulSourceService.fetchProfileById(id);
+        thunkAPI.dispatch(closeLoader());
 
         return user;
 
-    }
-);
 
-export const validateEmailAsync = createAsyncThunk(
-    'profile/fvalidateEmail',
-    async (email) => {
-        return true;
-        // const data = await axios.post();
-        // return data.data;
     }
 );
 
@@ -46,28 +39,10 @@ export const addBookmarkAsync = createAsyncThunk(
     'login/addBookmark',
     async (bookmarkObj, thunkAPI) => {
         thunkAPI.dispatch(openLoader('Adding Bokmark...'));
-
         const profile = thunkAPI.getState().profile.currentProfile;
-
-        if (profile.bookmarks) {
-            if (!profile.bookmarks[bookmarkObj.id]) {
-                const bookmarkRef = firebaseDB.ref('users/' + profile.id + '/bookmarks');
-                const snapshot = await bookmarkRef.update({
-                    [bookmarkObj.id]: bookmarkObj
-                });
-            }
-        } else {
-
-            const result = await firebaseDB.ref('users/' + profile.id + '/bookmarks').set({
-                [bookmarkObj.id]: bookmarkObj
-            });
-        }
-
-        const usersResp = firebaseDB.ref('users/' + profile.id);
-        const snapshot = await usersResp.once('value');
-        const user = snapshot.val();
-
+        SoulSourceService.addBookmark(profile, bookmarkObj);
         thunkAPI.dispatch(closeLoader());
+
         return bookmarkObj;
 
     }
@@ -77,25 +52,11 @@ export const removeBookmarkAsync = createAsyncThunk(
     'login/removeBookmark',
     async (id, thunkAPI) => {
         thunkAPI.dispatch(openLoader('Removing Bokmark...'));
-
         const profile = thunkAPI.getState().profile.currentProfile;
-
-        if (profile.bookmarks) {
-            if (profile.bookmarks[id]) {
-                const bookmarkRef = firebaseDB.ref('users/' + profile.id + '/bookmarks');
-                const snapshot = await bookmarkRef.update({
-                    [id]: null // delete from db
-                });
-            }
-        }
-
-        const usersResp = firebaseDB.ref('users/' + profile.id);
-        const snapshot = await usersResp.once('value');
-        const user = snapshot.val();
-
+        SoulSourceService.removeBookmark(profile, id);
         thunkAPI.dispatch(closeLoader());
-        return id;
 
+        return id;
     }
 );
 
