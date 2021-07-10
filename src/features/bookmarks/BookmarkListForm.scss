@@ -37,26 +37,26 @@
 }
 
 .cancel-button{
-    // background-color: transparent;
-    // border: 1px solid ghostwhite;
-    padding: 10px 15px;
-    // border-radius: 30px;
+    margin: 10px 15px;
     color: ghostwhite;
 
     &:hover{
         color: $bookmark-card-color;
         text-decoration: underline;
+        cursor: pointer;
     }
 }
 
 .create-button{
     background-color: $bookmark-card-color;
-    padding: 10px 15px;
+    margin: 5px 0 5px 10px;
+    padding: 5px 10px;
     border-radius: 30px;
     color: ghostwhite;
     font-weight: 600;
 
     &:hover{
+        cursor: pointer;
         background-color: ghostwhite;
         color: $bookmark-card-color;
     }

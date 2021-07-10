@@ -16,10 +16,11 @@ import AddIcon from '@material-ui/icons/Add';
 
 const useStyles = makeStyles(() => ({
   arrow: {
-    color: '#a31455',
+    color: 'ghostwhite',
   },
   tooltip: {
-    backgroundColor: '#a31455',
+    backgroundColor: 'ghostwhite',
+    color: '#a31455',
     fontWeight: 700,
     fontSize: 14
   },
@@ -89,7 +90,7 @@ export default function Profile() {
                 <Tooltip arrow classes={classes}
                   title="Create Bookmark List"
                   placement="left">
-                  <Fab style={{ backgroundColor: '#a31455', color: 'ghostwhite' }}
+                  <Fab style={{ backgroundColor: 'ghostwhite', color: '#a31455' }}
                     aria-label="Create Bookmark List"
                     onClick={() => handleOpenDialog()}>
                     <AddIcon />
