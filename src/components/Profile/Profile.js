@@ -97,7 +97,7 @@ export default function Profile() {
                 </Tooltip>
               </div>
               <Dialog className="form-dialog" open={dialogOpen} onClose={handleClose}>
-                <BookmarkListForm />
+                <BookmarkListForm handleClose={handleClose} />
               </Dialog>
 
             </div>

@@ -44,7 +44,7 @@ const customStyles = {
     // }
 }
 
-export default function BookmarkListForm() {
+export default function BookmarkListForm(props) {
     const bookmarks = useSelector(selectBookmarks);
     const bookmarkArray = Object.entries(bookmarks).map(([key, value]) => {
         return { value: value, label: value.title }
@@ -94,7 +94,7 @@ export default function BookmarkListForm() {
                             </div>
 
                             <div className="bkList-form-buttons">
-                                <div className="cancel-button">
+                                <div className="cancel-button" onClick={props.handleClose}>
                                     Cancel
                                 </div>
                                 <div className="create-button">
