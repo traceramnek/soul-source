@@ -10,59 +10,55 @@ import { openSnackbar } from '../../features/globalUIManager/globalUIManagerSlic
 import { isNullOrUndefined } from '../../util/utils';
 
 
-export default function BookmarkList() {
-    const bookmarks = useSelector(selectBookmarks);
+export default function BookmarkList(props) {
+    const bookmarkList = props.bookmarkList;
     const dispatch = useDispatch();
     let hovering = false;
 
     const removeIcon = <CancelOutlined style={{ color: 'ghostwhite' }} />;
     const removeIconHover = <Cancel style={{ color: 'ghostwhite' }} />;
 
-    const handleRemoveBookmark = (bookmarkObj) => {
-        if (!isNullOrUndefined(bookmarks) && bookmarks[bookmarkObj.id]) {
-            dispatch(removeBookmarkAsync(bookmarkObj.id));
+    const handleRemoveBookmarkList = (listObj) => {
+        if (!isNullOrUndefined(bookmarkList) && bookmarkList[listObj.id]) {
+            // dispatch(removeBookmarkListAsync(listObj.id));
             dispatch(openSnackbar({
                 open: true,
-                message: `${bookmarkObj.title} removed from bookmarks!`,
+                message: `${listObj.title} removed from your lists!`,
                 type: 'success',
                 duration: 7000
             }));
         }
     }
 
-    const handleHover = (value) => {
-        hovering = value;
-    }
-
-
     return (
         <div>
-            <div className="bookmark-container">
-                { !isNullOrUndefined(bookmarks) && 
-                    Object.entries(bookmarks).map(([id, bookmark], index) => (
-                        <div className="bookmark" key={'bookmark_' + index}
-                            data-aos="fade-right"
-                            data-aos-delay="250"
-                            data-aos-easing="ease-in-out"
-                            data-aos-once="true">
-                            <span className="remove-icon" title="Remove Bookmark" onClick={() => handleRemoveBookmark(bookmark)}>
-                                <IconButton
-                                    onMouseEnter={() => handleHover(true)}
-                                    onMouseLeave={() => handleHover(false)}
-                                >
-                                    {hovering ? removeIcon : removeIconHover}
-                                </IconButton>
-                            </span>
-                            <span className="launch-icon" title={bookmark.title} >
-                                <a className="nav-link" href={bookmark.url} target="_blank">
-                                    <Launch style={{ color: 'ghostwhite' }} />
-                                </a>
-                            </span>
-                            <div className="bookmark-title">
-                                {bookmark.title}
-                            </div>
-                            <div className="bookmark-summary">
-                                {bookmark.summary}
+            <div className="bookmark-list-container">
+                <div>{bookmarkList.title}</div>
+                {!isNullOrUndefined(bookmarkList.bookmarks) &&
+                    Object.entries(bookmarkList.bookmarks).map(([id, bookmark], index) => (
+                        <div>
+                            <div className="bookmark-list-item" key={'bookmark_' + index}
+                                data-aos="fade-right"
+                                data-aos-delay="250"
+                                data-aos-easing="ease-in-out"
+                                data-aos-once="true">
+                                <span className="remove-icon" title="Remove Bookmark" onClick={() => handleRemoveBookmarkList(bookmark)}>
+                                    <IconButton>
+                                        {hovering ? removeIcon : removeIconHover}
+                                    </IconButton>
+                                </span>
+                                <span className="launch-icon" title={bookmark.title} >
+                                    <a className="nav-link" href={bookmark.url} target="_blank">
+                                        <Launch style={{ color: 'ghostwhite' }} />
+                                    </a>
+                                </span>
+
+                                <div className="bookmark-list-item-title">
+                                    {bookmark.title}
+                                </div>
+                                <div className="bookmark-list-item-summary">
+                                    {bookmark.summary}
+                                </div>
                             </div>
                         </div>
 

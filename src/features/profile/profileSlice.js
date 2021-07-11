@@ -75,6 +75,10 @@ export const createBookmarkListAsync = createAsyncThunk(
                     [bkList.id]: bkList // add new bookmark list to db
                 });
             }
+        } else {
+            const result = await firebaseDB.ref('users/' + profile.id + '/bookmarkLists').set({
+                [bkList.id]: bkList
+            });
         }
 
         const usersResp = firebaseDB.ref('users/' + profile.id);

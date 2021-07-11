@@ -12,6 +12,8 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { Fab, Dialog, Tooltip } from '@material-ui/core';
 import BookmarkListForm from '../../features/bookmarks/BookmarkListForm';
 import AddIcon from '@material-ui/icons/Add';
+import BookmarkItem from '../../features/bookmarks/BookmarkItem';
+import { isNullOrUndefined } from '../../util/utils';
 
 
 const useStyles = makeStyles(() => ({
@@ -77,7 +79,14 @@ export default function Profile() {
           filterValue === ALL_BOOKMARKS && // if filter is all bookmarks, show this div
           (
             <div>
-              <BookmarkList />
+              <div className="bookmark-container">
+                {!isNullOrUndefined(profile.bookmarks) &&
+                  Object.entries(profile.bookmarks).map(([id, bookmark], index) => (
+                    <BookmarkItem key={'bk_' + index} bookmark={bookmark} />
+                  ))
+                }
+              </div>
+
             </div>
           )
         }
@@ -86,6 +95,13 @@ export default function Profile() {
           filterValue === BOOKMARK_LISTS &&
           (
             <div>
+              {!isNullOrUndefined(profile.bookmarkLists) &&
+                  Object.entries(profile.bookmarkLists).map(([id, bookmarkList], index) => (
+                    <BookmarkList bookmarkList={bookmarkList} />
+                  ))
+                }
+              
+
               <div className="fab-button">
                 <Tooltip arrow classes={classes}
                   title="Create Bookmark List"
@@ -97,7 +113,7 @@ export default function Profile() {
                   </Fab>
                 </Tooltip>
               </div>
-              <Dialog className="form-dialog" open={dialogOpen} onClose={handleClose}>
+              <Dialog open={dialogOpen} onClose={handleClose}>
                 <BookmarkListForm handleClose={handleClose} />
               </Dialog>
 

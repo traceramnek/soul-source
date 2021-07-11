@@ -10,32 +10,3 @@ $bookmark-card-color: #a31455;
     display: flex;
 }
 
-.bookmark{
-    background-color: $bookmark-card-color;
-    position: relative;
-    max-width: 40%;
-    border-radius: 5px;
-    padding: 25px 20px;
-    margin: 15px 30px 15px 0;
-}
-
-.bookmark-title{
-    font-weight: 500;
-    font-size: 2rem;
-}
-
-.bookmark-summary{
-    font-size: 1.25rem;
-}
-
-.remove-icon{
-    position: absolute;
-    top: 0;
-    right: 0;
-}
-
-.launch-icon{
-    position: absolute;
-    top: 12px;
-    right: 40px;
-}

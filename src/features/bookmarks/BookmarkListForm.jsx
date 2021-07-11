@@ -2,8 +2,10 @@ import React from 'react';
 import './BookmarkListForm.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 
-import { removeBookmark, removeBookmarkAsync, selectBookmarks, } from '../profile/profileSlice';
+
+import { createBookmarkListAsync, removeBookmark, removeBookmarkAsync, selectBookmarks, } from '../profile/profileSlice';
 import { Cancel, CancelOutlined, Launch } from '@material-ui/icons';
 import { IconButton } from '@material-ui/core';
 import { openSnackbar } from '../../features/globalUIManager/globalUIManagerSlice';
@@ -28,13 +30,6 @@ const customStyles = {
         backgroundColor: 'transparent',
         display: 'flex'
     }),
-    // menu: (provided, state) => ({
-    //     ...provided,
-    //     zIndex: 5,
-    //     maxHeight: 100,
-    //     overflowY: 'scroll',
-    //     backgroundColor: '#a31455'
-    // }),
     menuList: (provided, state) => ({
         ...provided,
         zIndex: 5,
@@ -47,12 +42,6 @@ const customStyles = {
         color: state.isFocused ? '#a31455' : 'ghostwhite',
         padding: '2px 8px'
     })
-    // singleValue: (provided, state) => {
-    //     const opacity = state.isDisabled ? 0.5 : 1;
-    //     const transition = 'opacity 300ms';
-
-    //     return { ...provided, opacity, transition };
-    // }
 }
 
 export default function BookmarkListForm(props) {
@@ -61,7 +50,10 @@ export default function BookmarkListForm(props) {
         return { value: value, label: value.title }
     });
     const [listName, setListName] = useState('');
-    const newList = {};
+    let newList = {
+        id: uuidv4(),
+        bookmarks: {}
+    };
     const dispatch = useDispatch();
 
     const handleNameChange = (event) => {
@@ -70,9 +62,49 @@ export default function BookmarkListForm(props) {
     const handleMultiselectChange = (newArr) => {
         // newList = {};
         newArr.forEach(elem => {
-            newList[elem.value.id] = elem.value
+            newList.bookmarks[elem.value.id] = elem.value
         });
     };
+
+    const handleCreateList = () => {
+        if (validateList()) {
+            newList = {
+                ...newList,
+                title: listName,
+            };
+
+            dispatch(createBookmarkListAsync(newList));
+            // console.log(newList);
+            props.handleClose();
+        }
+
+    }
+
+    const validateList = () => {
+        let isValid = true;
+
+        if (isNullOrUndefined(listName) || listName === '') {
+            dispatch(openSnackbar({
+                snackbarOpen: true,
+                message: `Your list needs a name!`,
+                type: 'error',
+                duration: 5000
+            }));
+            isValid = false;
+        }
+
+        if (isNullOrUndefined(newList) || Object.keys(newList.bookmarks).length < 1) {
+            dispatch(openSnackbar({
+                snackbarOpen: true,
+                message: `Your list must contain at least one bookmark!`,
+                type: 'error',
+                duration: 5000
+            }));
+            isValid = false;
+        }
+
+        return isValid;
+    }
 
     return (
         <div>
@@ -108,7 +140,7 @@ export default function BookmarkListForm(props) {
                                 <div className="cancel-button" onClick={props.handleClose}>
                                     Cancel
                                 </div>
-                                <div className="create-button">
+                                <div className="create-button" onClick={handleCreateList}>
                                     Create List
                                 </div>
                             </div>
