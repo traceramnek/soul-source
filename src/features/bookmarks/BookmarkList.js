@@ -32,16 +32,20 @@ export default function BookmarkList(props) {
 
     return (
         <div>
-            <div className="bookmark-list-container">
-                <div>{bookmarkList.title}</div>
+            <div className="bookmark-list-container"
+                data-aos="fade-right"
+                data-aos-delay="250"
+                data-aos-easing="ease-in-out"
+                data-aos-once="true">
+                <div className="bookmark-list-title">
+                    {bookmarkList.title}
+                </div>
+
                 {!isNullOrUndefined(bookmarkList.bookmarks) &&
                     Object.entries(bookmarkList.bookmarks).map(([id, bookmark], index) => (
                         <div>
                             <div className="bookmark-list-item" key={'bookmark_' + index}
-                                data-aos="fade-right"
-                                data-aos-delay="250"
-                                data-aos-easing="ease-in-out"
-                                data-aos-once="true">
+                            >
                                 <span className="remove-icon" title="Remove Bookmark" onClick={() => handleRemoveBookmarkList(bookmark)}>
                                     <IconButton>
                                         {hovering ? removeIcon : removeIconHover}
@@ -55,9 +59,6 @@ export default function BookmarkList(props) {
 
                                 <div className="bookmark-list-item-title">
                                     {bookmark.title}
-                                </div>
-                                <div className="bookmark-list-item-summary">
-                                    {bookmark.summary}
                                 </div>
                             </div>
                         </div>

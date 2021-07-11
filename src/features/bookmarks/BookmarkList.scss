@@ -1,12 +1,34 @@
 $bookmark-card-color: #a31455;
 
-.bookmark-container{
-    display: flex;
-    flex-wrap: wrap;
-    color: ghostwhite;
+.bookmark-list-container{
+    max-width: 350px;
+    background-color: $bookmark-card-color;
+    border-radius: 8px;
+    margin: 15px 30px 15px 0;
 }
 
-.bookmark-list{
+.bookmark-list-title{
+    font-weight: 600;
+    font-size: 1.25rem;
+    padding: 10px 15px 10px 15px;
+    background-color: ghostwhite;
+    color: $bookmark-card-color;
     display: flex;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    justify-content: center;
 }
 
+.bookmark-list-item{
+    padding: 15px;
+    position: relative;
+    border-bottom: 1px solid ghostwhite;
+
+    // &:last-child{
+    //     border-bottom: none;
+    // }
+}
+
+.bookmark-list-item-title{
+    font-weight: 500;
+}
