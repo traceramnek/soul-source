@@ -3,8 +3,8 @@ import './BookmarkList.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from "react-router-dom";
 
-import { removeBookmark, removeBookmarkAsync, selectBookmarks } from '../profile/profileSlice';
-import { Cancel, CancelOutlined, Launch, Edit } from '@material-ui/icons';
+import { removeBookmark, removeBookmarkAsync, removeBookmarkListAsync, selectBookmarks } from '../profile/profileSlice';
+import { Cancel, CancelOutlined, Launch, Edit, Delete } from '@material-ui/icons';
 import { IconButton, Dialog } from '@material-ui/core';
 import { openSnackbar } from '../../features/globalUIManager/globalUIManagerSlice';
 import { isNullOrUndefined } from '../../util/utils';
@@ -23,12 +23,24 @@ export default function BookmarkList(props) {
     const removeIcon = <CancelOutlined style={{ color: 'ghostwhite' }} />;
     const removeIconHover = <Cancel style={{ color: 'ghostwhite' }} />;
 
-    const handleRemoveBookmarkList = (listObj) => {
-        if (!isNullOrUndefined(bookmarkList) && bookmarkList[listObj.id]) {
-            // dispatch(removeBookmarkListAsync(listObj.id));
+    const handleRemoveBookmarkList = () => {
+        if (!isNullOrUndefined(bookmarkList)) {
+            dispatch(removeBookmarkListAsync(bookmarkList.id));
             dispatch(openSnackbar({
                 open: true,
-                message: `${listObj.title} removed from your lists!`,
+                message: `${bookmarkList.title} removed from your lists!`,
+                type: 'success',
+                duration: 7000
+            }));
+        }
+    }
+
+    const handleRemoveBookmark = (bookmarkObj) => {
+        if (!isNullOrUndefined(bookmarkList) && bookmarkList[bookmarkObj.id]) {
+            dispatch(removeBookmarkAsync(bookmarkObj.id));
+            dispatch(openSnackbar({
+                open: true,
+                message: `${bookmarkObj.title} removed from ${bookmarkList.title}!`,
                 type: 'success',
                 duration: 7000
             }));
@@ -36,7 +48,7 @@ export default function BookmarkList(props) {
     }
 
     const handleOpenDialog = () => {
-        if(!isNullOrUndefined(bookmarks) && Object.keys(bookmarks).length > 0){
+        if (!isNullOrUndefined(bookmarks) && Object.keys(bookmarks).length > 0) {
             setDialogOpen(true);
         } else {
             dispatch(openSnackbar({
@@ -66,6 +78,11 @@ export default function BookmarkList(props) {
                             <Edit style={{ color: '#a31455' }} />
                         </span>
                     </span>
+                    <span className="delete-icon" onClick={() => handleRemoveBookmarkList()}>
+                        <span>
+                            <Delete style={{ color: '#a31455' }} />
+                        </span>
+                    </span>
                 </div>
 
                 {!isNullOrUndefined(bookmarkList.bookmarks) &&
@@ -73,7 +90,7 @@ export default function BookmarkList(props) {
                         <div>
                             <div className="bookmark-list-item" key={'bookmark_' + index}
                             >
-                                <span className="remove-icon" title="Remove Bookmark" onClick={() => handleRemoveBookmarkList(bookmark)}>
+                                <span className="remove-icon" title="Remove Bookmark" onClick={() => handleRemoveBookmark(bookmark)}>
                                     <IconButton>
                                         {hovering ? removeIcon : removeIconHover}
                                     </IconButton>

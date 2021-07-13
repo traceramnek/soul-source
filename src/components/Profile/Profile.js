@@ -87,8 +87,7 @@ export default function Profile() {
           </span>
         </div>
 
-        {
-          filterValue === ALL_BOOKMARKS && // if filter is all bookmarks, show this div
+        {filterValue === ALL_BOOKMARKS && // if filter is all bookmarks, show this div
           (
             <div>
               <div className="bookmark-container">
@@ -103,8 +102,7 @@ export default function Profile() {
           )
         }
 
-        {
-          filterValue === BOOKMARK_LISTS &&
+        {filterValue === BOOKMARK_LISTS &&
           (
             <div>
               {!isNullOrUndefined(profile.bookmarkLists) &&
@@ -132,16 +130,8 @@ export default function Profile() {
               </Dialog>
 
             </div>
-          )
-
-        }
+          )}
       </div>
-
     </div>
   )
-
 };
-
-Profile.propTypes = {};
-
-Profile.defaultProps = {};

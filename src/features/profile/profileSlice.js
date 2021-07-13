@@ -44,7 +44,7 @@ export const addBookmarkAsync = createAsyncThunk(
 export const removeBookmarkAsync = createAsyncThunk(
     'login/removeBookmark',
     async (id, thunkAPI) => {
-        thunkAPI.dispatch(openLoader('Removing Bokmark...'));
+        thunkAPI.dispatch(openLoader('Removing Bookmark...'));
         const profile = thunkAPI.getState().profile.currentProfile;
         SoulSourceService.removeBookmark(profile, id);
         thunkAPI.dispatch(closeLoader());
@@ -75,6 +75,19 @@ export const updateBookmarkListAsync = createAsyncThunk(
         thunkAPI.dispatch(closeLoader());
 
         return bkList;
+    }
+);
+
+
+export const removeBookmarkListAsync = createAsyncThunk(
+    'login/removeBookmarkList',
+    async (id, thunkAPI) => {
+        thunkAPI.dispatch(openLoader('Removing Bookmark List...'));
+        const profile = thunkAPI.getState().profile.currentProfile;
+        SoulSourceService.removeBookmarkList(profile, id);
+        thunkAPI.dispatch(closeLoader());
+
+        return id;
     }
 );
 
@@ -165,6 +178,14 @@ export const profileSlice = createSlice({
                         }
                     }
                 }
+            })
+            .addCase(removeBookmarkListAsync.pending, (state) => {
+            })
+            .addCase(removeBookmarkListAsync.rejected, (state) => {
+            })
+            .addCase(removeBookmarkListAsync.fulfilled, (state, action) => {
+                //delete bookmark obj
+                delete state.currentProfile.bookmarkLists[action.payload];
             })
     },
 });
