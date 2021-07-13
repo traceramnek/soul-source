@@ -1,6 +1,4 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
-
 import { firebaseDB } from '../../services/firebase';
 import { closeLoader, openLoader } from '../globalUIManager/globalUIManagerSlice';
 
@@ -55,7 +53,7 @@ export const eventsSlice = createSlice({
     },
 });
 
-export const { } = eventsSlice.actions;
+// export const { } = eventsSlice.actions;
 
 export const selectEventsList = (state) => state.events.eventsList;
 

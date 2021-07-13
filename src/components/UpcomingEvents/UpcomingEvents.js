@@ -91,7 +91,7 @@ export default function UpcomingEvents() {
                 <div className="card-summary">
                   {card.summary}
                 </div>
-                <a href={card.url} target="_blank">Check it out</a> <Launch fontSize="small" />
+                <a href={card.url} target="_blank" rel="noreferrer">Check it out</a> <Launch fontSize="small" />
               </div>
             )
 

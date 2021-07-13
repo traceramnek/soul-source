@@ -1,7 +1,4 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
-import { firebaseDB } from '../../services/firebase';
-import { isNullOrUndefined } from '../../util/utils';
 import { closeLoader, openLoader } from '../globalUIManager/globalUIManagerSlice';
 import { SoulSourceService } from '../../services/SoulSourceService';
 

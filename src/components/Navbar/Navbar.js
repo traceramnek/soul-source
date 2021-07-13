@@ -2,7 +2,7 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link, Redirect, useHistory
+    Link, Redirect
 } from "react-router-dom";
 import './Navbar.scss';
 import Home from '../Home/Home';
@@ -23,24 +23,24 @@ export default function Navbar() {
     const portfolioLink = "https://traceramnek.github.io";
     const isLoggedIn = useSelector(selectIsLoggedIn);
     const [dialogOpen, setDialogOpen] = useState(false);
-    const history = useHistory();
+    // const history = useHistory();
 
 
-    const handleOpenDialog = () => {
-        setDialogOpen(true);
-    };
+    // const handleOpenDialog = () => {
+    //     setDialogOpen(true);
+    // };
 
     const handleClose = () => {
         setDialogOpen(false);
     };
 
-    const handleAuth = () => {
-        if (!isLoggedIn) {
-            handleOpenDialog();
-        } else {
-            history.push('/profile');
-        }
-    };
+    // const handleAuth = () => {
+    //     if (!isLoggedIn) {
+    //         handleOpenDialog();
+    //     } else {
+    //         history.push('/profile');
+    //     }
+    // };
 
     return (
         <Router>

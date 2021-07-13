@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import './Profile.scss';
 import BookmarkList from '../../features/bookmarks/BookmarkList';
-import TextField from '@material-ui/core/TextField';
-import ToggleButton from '@material-ui/lab/ToggleButton';
-import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectCurrentprofile, selectBookmarks } from '../../features/profile/profileSlice';
 import { ALL_BOOKMARKS, BOOKMARK_LISTS } from '../../util/constants';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { Fab, Dialog, Tooltip } from '@material-ui/core';
 import BookmarkListForm from '../../features/bookmarks/BookmarkListForm';
 import AddIcon from '@material-ui/icons/Add';
@@ -31,7 +27,7 @@ const useStyles = makeStyles(() => ({
 
 export default function Profile() {
   const [filterValue, setFilterValue] = useState(ALL_BOOKMARKS);
-  const [searchValue, setSearchValue] = useState('');
+  // const [searchValue, setSearchValue] = useState('');
   const profile = useSelector(selectCurrentprofile);
   const [dialogOpen, setDialogOpen] = useState(false);
   const bookmarks = useSelector(selectBookmarks);

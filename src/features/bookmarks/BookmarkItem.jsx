@@ -1,9 +1,7 @@
 import React from 'react';
 import './BookmarkItem.scss';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link } from "react-router-dom";
-
-import { removeBookmark, removeBookmarkAsync, selectBookmarks, } from '../profile/profileSlice';
+import { useDispatch } from 'react-redux';
+import { removeBookmarkAsync } from '../profile/profileSlice';
 import { Cancel, CancelOutlined, Launch } from '@material-ui/icons';
 import { IconButton } from '@material-ui/core';
 import { openSnackbar } from '../globalUIManager/globalUIManagerSlice';
@@ -52,7 +50,7 @@ export default function BookmarkItem(props) {
                     </IconButton>
                 </span>
                 <span className="launch-icon" title={bookmark.title} >
-                    <a className="nav-link" href={bookmark.url} target="_blank">
+                    <a className="nav-link" href={bookmark.url} target="_blank" rel="noreferrer">
                         <Launch style={{ color: 'ghostwhite' }} />
                     </a>
                 </span>

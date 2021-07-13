@@ -1,18 +1,11 @@
 import React from 'react';
 import './BookmarkListForm.scss';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-
-
-import { createBookmarkListAsync, removeBookmark, removeBookmarkAsync, selectBookmarkLists, selectBookmarks, updateBookmarkList, updateBookmarkListAsync } from '../profile/profileSlice';
-import { Cancel, CancelOutlined, Launch } from '@material-ui/icons';
-import { IconButton } from '@material-ui/core';
+import { createBookmarkListAsync, selectBookmarkLists, selectBookmarks, updateBookmarkList, updateBookmarkListAsync } from '../profile/profileSlice';
 import { openSnackbar } from '../../features/globalUIManager/globalUIManagerSlice';
 import { isNullOrUndefined } from '../../util/utils';
-import { TextField, Input, InputLabel, MenuItem, Chip, FormControl } from '@material-ui/core';
-import { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { useState } from 'react';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 
@@ -68,6 +61,7 @@ export default function BookmarkListForm(props) {
             if (!keys.includes(key)) {
                 return { value: value, label: value.title }
             }
+            return {};
         });
     } else {
         bookmarkArray = Object.entries(bookmarks).map(([key, value]) => {

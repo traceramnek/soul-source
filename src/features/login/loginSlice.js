@@ -1,8 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { firebaseAuth, firebaseDB } from '../../services/firebase';
 import { closeLoader, openLoader } from '../globalUIManager/globalUIManagerSlice';
-import { updateCurrentProfile, fetchProfileByIdAsync } from '../profile/profileSlice';
-import { isNullOrUndefined } from '../../util/utils';
+import { fetchProfileByIdAsync } from '../profile/profileSlice';
 
 
 const initialState = {
@@ -12,10 +11,10 @@ const initialState = {
 export const loginUserAsync = createAsyncThunk(
     'login/authenticateUser',
     async (provider, thunkAPI) => {
-        let token;
+        // let token;
         thunkAPI.dispatch(openLoader('Logging in...'));
 
-        const resp = await firebaseAuth.signInWithPopup(provider).then(function (result) {
+        await firebaseAuth.signInWithPopup(provider).then(function (result) {
             // The firebase.User instance:
             const user = result.additionalUserInfo.profile;
             // token = user.getIdToken();
@@ -34,6 +33,7 @@ export const loginUserAsync = createAsyncThunk(
             var email = error.email;
             // The provider's credential:
             var credential = error.credential;
+            return {email, credential};
         });
 
     }
@@ -96,7 +96,7 @@ export const loginSlice = createSlice({
     },
 });
 
-export const { } = loginSlice.actions;
+// export const { } = loginSlice.actions;
 
 export const selectIsLoggedIn = (state) => state.login.isLoggedIn;
 

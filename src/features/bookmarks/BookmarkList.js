@@ -1,11 +1,9 @@
 import React from 'react';
 import './BookmarkList.scss';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from "react-router-dom";
-
-import { removeBookmark, removeBookmarkAsync, removeBookmarkListAsync, selectBookmarks } from '../profile/profileSlice';
-import { Cancel, CancelOutlined, Launch, Edit, Delete } from '@material-ui/icons';
-import { IconButton, Dialog } from '@material-ui/core';
+import {removeBookmarkListAsync, selectBookmarks } from '../profile/profileSlice';
+import { Launch, Edit, Delete } from '@material-ui/icons';
+import { Dialog } from '@material-ui/core';
 import { openSnackbar } from '../../features/globalUIManager/globalUIManagerSlice';
 import { isNullOrUndefined } from '../../util/utils';
 import BookmarkListForm from './BookmarkListForm';
@@ -17,11 +15,6 @@ export default function BookmarkList(props) {
     const bookmarks = useSelector(selectBookmarks);
     const dispatch = useDispatch();
     const [dialogOpen, setDialogOpen] = useState(false);
-
-    let hovering = false;
-
-    const removeIcon = <CancelOutlined style={{ color: 'ghostwhite' }} />;
-    const removeIconHover = <Cancel style={{ color: 'ghostwhite' }} />;
 
     const handleRemoveBookmarkList = () => {
         if (!isNullOrUndefined(bookmarkList)) {
@@ -79,7 +72,7 @@ export default function BookmarkList(props) {
                             <div className="bookmark-list-item" key={'bookmark_' + index}
                             >
                                 <span className="launch-icon right" title={bookmark.title} >
-                                    <a className="nav-link" href={bookmark.url} target="_blank">
+                                    <a className="nav-link" href={bookmark.url} target="_blank" rel="noreferrer">
                                         <Launch style={{ color: 'ghostwhite' }} />
                                     </a>
                                 </span>

@@ -6,22 +6,10 @@ import {
     selectSnackbarMessage,
     selectSnackbarOpen, selectSnackbarType, selectLoaderOpen, selectLoaderMessage
 } from './globalUIManagerSlice';
-import { Snackbar, Backdrop, CircularProgress } from '@material-ui/core';
+import { Snackbar, CircularProgress } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import React from 'react';
 import './GlobalUIManager.scss';
-import { makeStyles } from '@material-ui/core/styles';
-import { classes } from 'istanbul-lib-coverage';
-import { findByLabelText } from '@testing-library/react';
-
-const useStyles = makeStyles((theme) => ({
-    backdrop: {
-        zIndex: theme.zIndex.drawer + 1,
-        color: '#fff',
-        display: 'flex',
-        flexDirection: 'column'
-    },
-}));
 
 export default function GlobalUIManager() {
     const dispatch = useDispatch();
@@ -33,7 +21,6 @@ export default function GlobalUIManager() {
     const loaderMessage = useSelector(selectLoaderMessage);
 
     const wrapper = React.createRef();
-    const classes = useStyles();
 
     function handleClose() {
         dispatch(closeSnackbar());
@@ -66,11 +53,6 @@ export default function GlobalUIManager() {
                     </div>
                 </div>
             }
-
-
-
-
-
         </div>
     );
 }

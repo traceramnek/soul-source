@@ -14,12 +14,12 @@ export class SoulSourceService {
         if (profile.bookmarks) {
             if (!profile.bookmarks[bookmarkObj.id]) {
                 const bookmarkRef = firebaseDB.ref('users/' + profile.id + '/bookmarks');
-                const snapshot = await bookmarkRef.update({
+                await bookmarkRef.update({
                     [bookmarkObj.id]: bookmarkObj
                 });
             }
         } else {
-            const result = await firebaseDB.ref('users/' + profile.id + '/bookmarks').set({
+            await firebaseDB.ref('users/' + profile.id + '/bookmarks').set({
                 [bookmarkObj.id]: bookmarkObj
             });
         }
@@ -29,7 +29,7 @@ export class SoulSourceService {
         if (profile.bookmarks) {
             if (profile.bookmarks[id]) {
                 const bookmarkRef = firebaseDB.ref('users/' + profile.id + '/bookmarks');
-                const snapshot = await bookmarkRef.update({
+                await bookmarkRef.update({
                     [id]: null // delete from db
                 });
             }
@@ -44,7 +44,7 @@ export class SoulSourceService {
                 let bkList = profile.bookmarkLists[listId]
                 if (bkList.bookmarks && bkList.bookmarks[id]) {
                     const bookmarkRef = firebaseDB.ref('users/' + profile.id + '/bookmarkLists/' + listId + '/bookmarks');
-                    const snapshot = await bookmarkRef.update({
+                    await bookmarkRef.update({
                         [id]: null // delete from db
                     });
                 }
@@ -56,11 +56,11 @@ export class SoulSourceService {
         //if bookmark list
         if (profile.bookmarkLists) {
             const bookmarkRef = firebaseDB.ref('users/' + profile.id + '/bookmarkLists');
-            const snapshot = await bookmarkRef.update({
+            await bookmarkRef.update({
                 [bkList.id]: bkList // add new bookmark list to db
             });
         } else {
-            const result = await firebaseDB.ref('users/' + profile.id + '/bookmarkLists').set({
+            await firebaseDB.ref('users/' + profile.id + '/bookmarkLists').set({
                 [bkList.id]: bkList
             });
         }
@@ -69,7 +69,7 @@ export class SoulSourceService {
     static async removeBookmarkList(profile, id) {
         if (profile.bookmarks && profile.bookmarkLists[id]) {
             const bookmarkRef = firebaseDB.ref('users/' + profile.id + '/bookmarkLists');
-            const snapshot = await bookmarkRef.update({
+            await bookmarkRef.update({
                 [id]: null // delete from db
             });
         }
@@ -78,7 +78,7 @@ export class SoulSourceService {
     static async updateBookmarkList(bkList, profile) {
         if (profile.bookmarkLists && profile.bookmarkLists[bkList.id]) {
             const bookmarkRef = firebaseDB.ref('users/' + profile.id + '/bookmarkLists');
-            const snapshot = await bookmarkRef.update({
+            await bookmarkRef.update({
                 [bkList.id]: bkList // add new bookmark list to db
             });
         }

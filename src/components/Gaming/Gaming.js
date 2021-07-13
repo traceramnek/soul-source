@@ -4,11 +4,10 @@ import { fetchGamingListAsync, selectGamingList } from '../../features/gaming/ga
 import { useDispatch, useSelector } from 'react-redux';
 import { IconButton } from '@material-ui/core';
 import { Launch, BookmarkBorder, Bookmark } from '@material-ui/icons';
-import { addBookmark, addBookmarkAsync, removeBookmark, removeBookmarkAsync, selectBookmarks } from '../../features/profile/profileSlice';
-import { openSnackbar, openLoader, closeLoader } from '../../features/globalUIManager/globalUIManagerSlice';
+import { addBookmarkAsync, removeBookmarkAsync, selectBookmarks } from '../../features/profile/profileSlice';
+import { openSnackbar } from '../../features/globalUIManager/globalUIManagerSlice';
 import { selectIsLoggedIn } from "../../features/login/loginSlice";
 import { isNullOrUndefined } from '../../util/utils';
-
 
 export default function Gaming() {
   const gamingList = useSelector(selectGamingList);
@@ -101,7 +100,7 @@ export default function Gaming() {
                 <div className="game-card-summary">
                   {card.summary}
                 </div>
-                <a href={card.url} target="_blank">Check it out</a> <Launch fontSize="small" />
+                <a href={card.url} target="_blank" rel="noreferrer">Check it out</a> <Launch fontSize="small" />
               </div>
             )
           })

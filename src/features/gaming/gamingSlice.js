@@ -1,9 +1,7 @@
-import { AcUnitOutlined } from '@material-ui/icons';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
 import { firebaseDB } from '../../services/firebase';
 import { isNullOrUndefined } from '../../util/utils';
-import { openSnackbar, openLoader, closeLoader } from '../../features/globalUIManager/globalUIManagerSlice';
+import { openLoader, closeLoader } from '../../features/globalUIManager/globalUIManagerSlice';
 
 
 const initialState = {
@@ -59,7 +57,7 @@ export const gamingSlice = createSlice({
     },
 });
 
-export const { } = gamingSlice.actions;
+// export const { } = gamingSlice.actions;
 
 export const selectGamingList = (state) => state.gaming.gamingList;
 

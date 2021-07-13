@@ -1,9 +1,5 @@
-import React, { useEffect } from 'react';
-import Login from '../Login/Login';
-import PropTypes from 'prop-types';
-import styles from './Home.scss';
-import { getFirebase } from 'react-redux-firebase';
-import firebase from 'firebase/app';
+import React from 'react';
+import './Home.scss';
 
 export default function Home() {
 
