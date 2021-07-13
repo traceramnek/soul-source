@@ -3,16 +3,21 @@ import './BookmarkList.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from "react-router-dom";
 
-import { removeBookmark, removeBookmarkAsync, selectBookmarks, } from '../profile/profileSlice';
-import { Cancel, CancelOutlined, Launch } from '@material-ui/icons';
-import { IconButton } from '@material-ui/core';
+import { removeBookmark, removeBookmarkAsync, selectBookmarks } from '../profile/profileSlice';
+import { Cancel, CancelOutlined, Launch, Edit } from '@material-ui/icons';
+import { IconButton, Dialog } from '@material-ui/core';
 import { openSnackbar } from '../../features/globalUIManager/globalUIManagerSlice';
 import { isNullOrUndefined } from '../../util/utils';
+import BookmarkListForm from './BookmarkListForm';
+import { useState } from 'react';
 
 
 export default function BookmarkList(props) {
     const bookmarkList = props.bookmarkList;
+    const bookmarks = useSelector(selectBookmarks);
     const dispatch = useDispatch();
+    const [dialogOpen, setDialogOpen] = useState(false);
+
     let hovering = false;
 
     const removeIcon = <CancelOutlined style={{ color: 'ghostwhite' }} />;
@@ -30,6 +35,23 @@ export default function BookmarkList(props) {
         }
     }
 
+    const handleOpenDialog = () => {
+        if(!isNullOrUndefined(bookmarks) && Object.keys(bookmarks).length > 0){
+            setDialogOpen(true);
+        } else {
+            dispatch(openSnackbar({
+                open: true,
+                message: `You need some bookmarks before you can create a bookmark list!`,
+                type: 'warning',
+                duration: 7000
+            }));
+        }
+    };
+
+    const handleClose = () => {
+        setDialogOpen(false);
+    };
+
     return (
         <div>
             <div className="bookmark-list-container"
@@ -39,6 +61,11 @@ export default function BookmarkList(props) {
                 data-aos-once="true">
                 <div className="bookmark-list-title">
                     {bookmarkList.title}
+                    <span className="edit-icon" onClick={() => handleOpenDialog()}>
+                        <span>
+                            <Edit style={{ color: '#a31455' }} />
+                        </span>
+                    </span>
                 </div>
 
                 {!isNullOrUndefined(bookmarkList.bookmarks) &&
@@ -66,6 +93,10 @@ export default function BookmarkList(props) {
                     ))
                 }
             </div>
+
+            <Dialog open={dialogOpen} onClose={handleClose}>
+                <BookmarkListForm isEdit={true} listId={bookmarkList.id} handleClose={handleClose} />
+            </Dialog>
         </div>
     );
 

@@ -5,8 +5,8 @@ import BookmarkList from '../../features/bookmarks/BookmarkList';
 import TextField from '@material-ui/core/TextField';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
-import { useSelector } from 'react-redux';
-import { selectCurrentprofile } from '../../features/profile/profileSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectCurrentprofile, selectBookmarks } from '../../features/profile/profileSlice';
 import { ALL_BOOKMARKS, BOOKMARK_LISTS } from '../../util/constants';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { Fab, Dialog, Tooltip } from '@material-ui/core';
@@ -14,6 +14,7 @@ import BookmarkListForm from '../../features/bookmarks/BookmarkListForm';
 import AddIcon from '@material-ui/icons/Add';
 import BookmarkItem from '../../features/bookmarks/BookmarkItem';
 import { isNullOrUndefined } from '../../util/utils';
+import { openSnackbar } from '../../features/globalUIManager/globalUIManagerSlice';
 
 
 const useStyles = makeStyles(() => ({
@@ -33,11 +34,22 @@ export default function Profile() {
   const [searchValue, setSearchValue] = useState('');
   const profile = useSelector(selectCurrentprofile);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const bookmarks = useSelector(selectBookmarks);
+  const dispatch = useDispatch();
 
   const classes = useStyles();
 
   const handleOpenDialog = () => {
-    setDialogOpen(true);
+    if (!isNullOrUndefined(bookmarks) && Object.keys(bookmarks).length > 0) {
+      setDialogOpen(true);
+    } else {
+      dispatch(openSnackbar({
+        open: true,
+        message: `You need some bookmarks before you can create a bookmark list!`,
+        type: 'warning',
+        duration: 7000
+      }));
+    }
   };
 
   const handleClose = () => {
@@ -96,11 +108,13 @@ export default function Profile() {
           (
             <div>
               {!isNullOrUndefined(profile.bookmarkLists) &&
-                  Object.entries(profile.bookmarkLists).map(([id, bookmarkList], index) => (
-                    <BookmarkList bookmarkList={bookmarkList} />
-                  ))
-                }
-              
+                Object.entries(profile.bookmarkLists).map(([id, bookmarkList], index) => (
+                  <BookmarkList
+                    bookmarkList={bookmarkList}
+                    handleOpenDialog={handleOpenDialog} />
+                ))
+              }
+
 
               <div className="fab-button">
                 <Tooltip arrow classes={classes}

@@ -3,7 +3,7 @@ import './UpcomingEvents.scss';
 import { fetchEventsListAsync, selectEventsList } from '../../features/events/eventsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { Launch, BookmarkBorder, Bookmark } from '@material-ui/icons';
-import { addBookmark, removeBookmark, selectBookmarks } from '../../features/profile/profileSlice';
+import { addBookmarkAsync, selectBookmarks, removeBookmarkAsync } from '../../features/profile/profileSlice';
 import { selectIsLoggedIn } from '../../features/login/loginSlice';
 import { openSnackbar } from '../../features/globalUIManager/globalUIManagerSlice';
 import { IconButton } from '@material-ui/core';
@@ -24,7 +24,7 @@ export default function UpcomingEvents() {
 
   const handleClickBookmark = (bookmarkObj) => {
     if (!isNullOrUndefined(savedBookmarks) && savedBookmarks[bookmarkObj.id]) {
-      dispatch(removeBookmark(bookmarkObj.id));
+      dispatch(removeBookmarkAsync(bookmarkObj.id));
       dispatch(openSnackbar({
         snackbarOpen: true,
         message: `${bookmarkObj.title} removed from bookmarks!`,
@@ -32,7 +32,7 @@ export default function UpcomingEvents() {
         duration: 7000
       }));
     } else {
-      dispatch(addBookmark(bookmarkObj));
+      dispatch(addBookmarkAsync(bookmarkObj));
       dispatch(openSnackbar({
         snackbarOpen: true,
         message: `${bookmarkObj.title} saved to bookmarks!`,

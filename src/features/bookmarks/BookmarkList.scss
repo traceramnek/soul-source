@@ -8,6 +8,7 @@ $bookmark-card-color: #a31455;
 }
 
 .bookmark-list-title{
+    position: relative;
     font-weight: 600;
     font-size: 1.25rem;
     padding: 10px 15px 10px 15px;
@@ -31,4 +32,13 @@ $bookmark-card-color: #a31455;
 
 .bookmark-list-item-title{
     font-weight: 500;
+}
+
+.edit-icon{
+    position: absolute;
+    top: 12px;
+    right: 10px;
+    &:hover{
+        cursor: pointer;
+    }
 }

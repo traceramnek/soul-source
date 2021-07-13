@@ -5,13 +5,13 @@ import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
 
-import { createBookmarkListAsync, removeBookmark, removeBookmarkAsync, selectBookmarks, } from '../profile/profileSlice';
+import { createBookmarkListAsync, removeBookmark, removeBookmarkAsync, selectBookmarkLists, selectBookmarks, updateBookmarkList, updateBookmarkListAsync } from '../profile/profileSlice';
 import { Cancel, CancelOutlined, Launch } from '@material-ui/icons';
 import { IconButton } from '@material-ui/core';
 import { openSnackbar } from '../../features/globalUIManager/globalUIManagerSlice';
 import { isNullOrUndefined } from '../../util/utils';
 import { TextField, Input, InputLabel, MenuItem, Chip, FormControl } from '@material-ui/core';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
@@ -45,45 +45,93 @@ const customStyles = {
 }
 
 export default function BookmarkListForm(props) {
-    const bookmarks = useSelector(selectBookmarks);
-    const bookmarkArray = Object.entries(bookmarks).map(([key, value]) => {
-        return { value: value, label: value.title }
-    });
-    const [listName, setListName] = useState('');
-    let newList = {
-        id: uuidv4(),
-        bookmarks: {}
-    };
     const dispatch = useDispatch();
+    const bookmarks = useSelector(selectBookmarks);
+    const bookmarkLists = useSelector(selectBookmarkLists);
+    let [listName, setListName] = useState('');
+    let [bklist, setBkList] = useState({});
+
+    let bookmarkArray;
+
+    let newList;
+
+    if (!isNullOrUndefined(props.isEdit) && props.isEdit) {
+
+        newList = {
+            id: bookmarkLists[props.listId].id,
+            bookmarks: bookmarkLists[props.listId].bookmarks,
+            title: bookmarkLists[props.listId].title
+        }
+
+        const keys = Object.keys(bookmarkLists[props.listId]);
+        bookmarkArray = Object.entries(bookmarks).map(([key, value]) => {
+            if (!keys.includes(key)) {
+                return { value: value, label: value.title }
+            }
+        });
+    } else {
+        bookmarkArray = Object.entries(bookmarks).map(([key, value]) => {
+            return { value: value, label: value.title }
+        });
+        newList = {
+            id: uuidv4(),
+            bookmarks: {},
+            title: ''
+        };
+    }
 
     const handleNameChange = (event) => {
         setListName(event.target.value);
+
+        if (!isNullOrUndefined(props.isEdit) && props.isEdit) {
+            newList = {
+                ...newList,
+                title: event.target.value,
+            };
+            dispatch(updateBookmarkList(newList))
+        }
     };
-    const handleMultiselectChange = (newArr) => {
-        // newList = {};
-        newArr.forEach(elem => {
-            newList.bookmarks[elem.value.id] = elem.value
+    const handleMultiselectChange = (event) => {
+        let tempBKs = {};
+        event.forEach(elem => {
+            tempBKs[elem.value.id] = elem.value;
         });
+
+        if (!isNullOrUndefined(props.isEdit) && props.isEdit) {
+            newList = {
+                ...newList,
+                bookmarks: tempBKs
+            };
+            dispatch(updateBookmarkList(newList))
+        } else {
+            setBkList(tempBKs);
+        }
+
     };
 
-    const handleCreateList = () => {
-        if (validateList()) {
+    const handleCreateOrUpdateList = () => {
+        if (!isNullOrUndefined(props.isEdit) && props.isEdit) {
+            if (validateList(newList)) {
+                dispatch(updateBookmarkListAsync(newList))
+            }
+        } else {
             newList = {
                 ...newList,
                 title: listName,
+                bookmarks: bklist
             };
+            if (validateList(newList)) {
+                dispatch(createBookmarkListAsync(newList));
+            }
 
-            dispatch(createBookmarkListAsync(newList));
-            // console.log(newList);
-            props.handleClose();
         }
-
+        props.handleClose();
     }
 
-    const validateList = () => {
+    const validateList = (listToCheck) => {
         let isValid = true;
 
-        if (isNullOrUndefined(listName) || listName === '') {
+        if (isNullOrUndefined(listToCheck.title) || listToCheck.title === '') {
             dispatch(openSnackbar({
                 snackbarOpen: true,
                 message: `Your list needs a name!`,
@@ -93,7 +141,7 @@ export default function BookmarkListForm(props) {
             isValid = false;
         }
 
-        if (isNullOrUndefined(newList) || Object.keys(newList.bookmarks).length < 1) {
+        if (isNullOrUndefined(listToCheck) || Object.keys(listToCheck.bookmarks).length < 1) {
             dispatch(openSnackbar({
                 snackbarOpen: true,
                 message: `Your list must contain at least one bookmark!`,
@@ -120,6 +168,7 @@ export default function BookmarkListForm(props) {
                                 <label>List Name</label>
                                 <input className="bookmark-form-input"
                                     placeholder="List Name"
+                                    value={props.isEdit ? newList.title : listName}
                                     onChange={handleNameChange}
                                 >
                                 </input>
@@ -128,6 +177,12 @@ export default function BookmarkListForm(props) {
                             <div className="field-section">
                                 <label>Bookmarks</label>
                                 <Select className="bookmark-form-select"
+                                    value={(props.isEdit) ? Object.entries(newList.bookmarks).map(([key, value]) => {
+                                        return { value: value, label: value.title }
+                                    }) : Object.entries(bklist).map(([key, value]) => {
+                                        return { value: value, label: value.title }
+                                    })}
+                                    closeMenuOnSelect="false"
                                     isMulti
                                     placeholder="Select bookmarks..."
                                     styles={customStyles}
@@ -140,8 +195,8 @@ export default function BookmarkListForm(props) {
                                 <div className="cancel-button" onClick={props.handleClose}>
                                     Cancel
                                 </div>
-                                <div className="create-button" onClick={handleCreateList}>
-                                    Create List
+                                <div className="create-button" onClick={handleCreateOrUpdateList}>
+                                    {props.isEdit ? 'Update List' : 'Create List'}
                                 </div>
                             </div>
 
