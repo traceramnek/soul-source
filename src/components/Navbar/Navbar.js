@@ -63,7 +63,7 @@ export default function Navbar() {
                         </span>
                         <span >
                             <Link className="nav-link" to={!isLoggedIn ? '/login' : '/profile'}>
-                            {/* <Link className="nav-link" onClick={() => handleAuth()}> */}
+                                {/* <Link className="nav-link" onClick={() => handleAuth()}> */}
                                 <AccountCircleIcon />
                             </Link>
                         </span>
@@ -84,8 +84,8 @@ export default function Navbar() {
                     <Route path="/login" render={() => (!isLoggedIn ? <Login /> : <Redirect to='/profile' />)}>
 
                     </Route>
-                    <Route path="/profile" render={() => (!isLoggedIn ? <Redirect to='/home' /> : <Redirect to='/profile' />)}>
-                        <Profile />
+                    <Route path="/profile">
+                        {(!isLoggedIn ? <Redirect to='/home' /> : <Profile />)}
                     </Route>
                     <Route path="/">
                         <Home></Home>

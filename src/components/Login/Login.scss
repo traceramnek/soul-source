@@ -29,6 +29,7 @@
 .login-button{
     display: flex;
     justify-content: center;
+    align-items: center;
     width: 80%;
     padding: 15px 20px;
     margin: 15px;
@@ -39,5 +40,10 @@
         cursor: pointer;
         background-color: #e2e2ea;
     }
+}
+
+.social-icon{
+    height: 20px;
+    margin-right: 10px;
 }
 

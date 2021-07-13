@@ -202,7 +202,7 @@ export const profileSlice = createSlice({
     },
 });
 
-export const { updateCurrentProfile, updateBookmarkList, updateProfilePic} = profileSlice.actions;
+export const { updateCurrentProfile, updateBookmarkList, updateProfilePic } = profileSlice.actions;
 
 export const selectCurrentprofile = (state) => state.profile.currentProfile;
 export const selectBookmarks = (state) => state.profile.currentProfile.bookmarks;

@@ -2,6 +2,7 @@
 import { firebaseAuth } from '../../services/firebase';
 import { useEffect } from 'react';
 import './Login.scss';
+import googleIcon from '../../assets/img/google.png';
 import firebase from 'firebase/app';
 import { div } from '@material-ui/core';
 import { Facebook, GitHub, Twitter } from '@material-ui/icons';
@@ -31,6 +32,7 @@ export default function Login() {
                 <h3>Login with Social Media</h3>
 
                 <div className="login-button" onClick={loginUser(googleProvider)}>
+                    <img className="social-icon" src={googleIcon} />
                     Login with Google
                 </div>
                 {/* <div className="login-button" onClick={loginUser(facebookProvider)}>
@@ -42,7 +44,7 @@ export default function Login() {
                     Login with Twitter
                 </div> */}
                 <div className="login-button" onClick={loginUser(githubProvider)}>
-                    <GitHub />
+                    <GitHub style={{marginRight: 10}} />
                     Login with Github
                 </div>
             </div>
