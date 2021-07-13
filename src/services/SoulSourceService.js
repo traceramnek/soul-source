@@ -36,6 +36,22 @@ export class SoulSourceService {
         }
     }
 
+    static async removeBookmarkFromLists(profile, id) {
+        if (profile.bookmarkLists) {
+            //for each bk list, check if id is present in bklist.bookmarks
+            // if so, remove it
+            for (const listId in profile.bookmarkLists) {
+                let bkList = profile.bookmarkLists[listId]
+                if (bkList.bookmarks && bkList.bookmarks[id]) {
+                    const bookmarkRef = firebaseDB.ref('users/' + profile.id + '/bookmarkLists/' + listId + '/bookmarks');
+                    const snapshot = await bookmarkRef.update({
+                        [id]: null // delete from db
+                    });
+                }
+            }
+        }
+    }
+
     static async createBookmarkList(bkList, profile) {
         //if bookmark list
         if (profile.bookmarkLists) {

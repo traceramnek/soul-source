@@ -46,7 +46,8 @@ export const removeBookmarkAsync = createAsyncThunk(
     async (id, thunkAPI) => {
         thunkAPI.dispatch(openLoader('Removing Bookmark...'));
         const profile = thunkAPI.getState().profile.currentProfile;
-        SoulSourceService.removeBookmark(profile, id);
+        await SoulSourceService.removeBookmark(profile, id);
+        SoulSourceService.removeBookmarkFromLists(profile, id);
         thunkAPI.dispatch(closeLoader());
 
         return id;
@@ -142,6 +143,17 @@ export const profileSlice = createSlice({
             .addCase(removeBookmarkAsync.fulfilled, (state, action) => {
                 //delete bookmark obj
                 delete state.currentProfile.bookmarks[action.payload];
+
+                if (state.currentProfile.bookmarkLists) {
+                    //for each bk list, check if id is present in bklist.bookmarks
+                    // if so, remove it
+                    for (const listId in state.currentProfile.bookmarkLists) {
+                        let bkList = state.currentProfile.bookmarkLists[listId]
+                        if (bkList.bookmarks && bkList.bookmarks[action.payload]) {
+                            delete bkList.bookmarks[action.payload];
+                        }
+                    }
+                }
             })
             .addCase(createBookmarkListAsync.pending, (state) => {
             })

@@ -35,18 +35,6 @@ export default function BookmarkList(props) {
         }
     }
 
-    const handleRemoveBookmark = (bookmarkObj) => {
-        if (!isNullOrUndefined(bookmarkList) && bookmarkList[bookmarkObj.id]) {
-            dispatch(removeBookmarkAsync(bookmarkObj.id));
-            dispatch(openSnackbar({
-                open: true,
-                message: `${bookmarkObj.title} removed from ${bookmarkList.title}!`,
-                type: 'success',
-                duration: 7000
-            }));
-        }
-    }
-
     const handleOpenDialog = () => {
         if (!isNullOrUndefined(bookmarks) && Object.keys(bookmarks).length > 0) {
             setDialogOpen(true);
@@ -90,12 +78,7 @@ export default function BookmarkList(props) {
                         <div>
                             <div className="bookmark-list-item" key={'bookmark_' + index}
                             >
-                                <span className="remove-icon" title="Remove Bookmark" onClick={() => handleRemoveBookmark(bookmark)}>
-                                    <IconButton>
-                                        {hovering ? removeIcon : removeIconHover}
-                                    </IconButton>
-                                </span>
-                                <span className="launch-icon" title={bookmark.title} >
+                                <span className="launch-icon right" title={bookmark.title} >
                                     <a className="nav-link" href={bookmark.url} target="_blank">
                                         <Launch style={{ color: 'ghostwhite' }} />
                                     </a>

@@ -107,7 +107,7 @@ export default function Profile() {
             <div>
               {!isNullOrUndefined(profile.bookmarkLists) &&
                 Object.entries(profile.bookmarkLists).map(([id, bookmarkList], index) => (
-                  <BookmarkList
+                  <BookmarkList key={'bkl' + index}
                     bookmarkList={bookmarkList}
                     handleOpenDialog={handleOpenDialog} />
                 ))
