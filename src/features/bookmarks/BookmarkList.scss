@@ -25,9 +25,9 @@ $bookmark-card-color: #a31455;
     position: relative;
     border-bottom: 1px solid ghostwhite;
 
-    // &:last-child{
-    //     border-bottom: none;
-    // }
+    &.no-border-bottom{
+        border-bottom: none;
+    }
 }
 
 .bookmark-list-item-title{

@@ -1,20 +1,34 @@
 import React from 'react';
 import './BookmarkList.scss';
 import { useSelector, useDispatch } from 'react-redux';
-import {removeBookmarkListAsync, selectBookmarks } from '../profile/profileSlice';
+import { removeBookmarkListAsync, selectBookmarks } from '../profile/profileSlice';
 import { Launch, Edit, Delete } from '@material-ui/icons';
-import { Dialog } from '@material-ui/core';
+import { Dialog, Tooltip } from '@material-ui/core';
 import { openSnackbar } from '../../features/globalUIManager/globalUIManagerSlice';
 import { isNullOrUndefined } from '../../util/utils';
 import BookmarkListForm from './BookmarkListForm';
 import { useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 
+const useStyles = makeStyles(() => ({
+    arrow: {
+        color: 'ghostwhite',
+    },
+    tooltip: {
+        backgroundColor: 'ghostwhite',
+        color: '#a31455',
+        fontWeight: 700,
+        fontSize: 14
+    },
+}));
 
 export default function BookmarkList(props) {
     const bookmarkList = props.bookmarkList;
     const bookmarks = useSelector(selectBookmarks);
     const dispatch = useDispatch();
     const [dialogOpen, setDialogOpen] = useState(false);
+    const classes = useStyles();
+
 
     const handleRemoveBookmarkList = () => {
         if (!isNullOrUndefined(bookmarkList)) {
@@ -54,22 +68,22 @@ export default function BookmarkList(props) {
                 data-aos-once="true">
                 <div className="bookmark-list-title">
                     {bookmarkList.title}
-                    <span className="edit-icon" onClick={() => handleOpenDialog()}>
-                        <span>
-                            <Edit style={{ color: '#a31455' }} />
+                    <Tooltip arrow classes={classes} title="Edit List" placement="top">
+                        <span className="edit-icon" onClick={() => handleOpenDialog()}>
+                            <span> <Edit style={{ color: '#a31455' }} /> </span>
                         </span>
-                    </span>
-                    <span className="delete-icon" onClick={() => handleRemoveBookmarkList()}>
-                        <span>
-                            <Delete style={{ color: '#a31455' }} />
+                    </Tooltip>
+                    <Tooltip arrow classes={classes} title="Delete List" placement="top">
+                        <span className="delete-icon" onClick={() => handleRemoveBookmarkList()}>
+                            <span> <Delete style={{ color: '#a31455' }} /> </span>
                         </span>
-                    </span>
+                    </Tooltip>
                 </div>
 
                 {!isNullOrUndefined(bookmarkList.bookmarks) &&
                     Object.entries(bookmarkList.bookmarks).map(([id, bookmark], index) => (
                         <div>
-                            <div className="bookmark-list-item" key={'bookmark_' + index}
+                            <div className={"bookmark-list-item " + (index === Object.keys(bookmarkList.bookmarks).length - 1 ? 'no-border-bottom' : '')} key={'bookmark_' + index}
                             >
                                 <span className="launch-icon right" title={bookmark.title} >
                                     <a className="nav-link" href={bookmark.url} target="_blank" rel="noreferrer">
@@ -90,7 +104,7 @@ export default function BookmarkList(props) {
             <Dialog open={dialogOpen} onClose={handleClose}>
                 <BookmarkListForm isEdit={true} listId={bookmarkList.id} handleClose={handleClose} />
             </Dialog>
-        </div>
+        </div >
     );
 
 }
