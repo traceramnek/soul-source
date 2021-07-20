@@ -3,7 +3,7 @@ import './BookmarkListForm.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from "uuid";
 import { createBookmarkListAsync, selectBookmarkLists, selectBookmarks, updateBookmarkList, updateBookmarkListAsync } from '../profile/profileSlice';
-import { openSnackbar } from '../../features/globalUIManager/globalUIManagerSlice';
+import { closeDialog, openSnackbar } from '../../features/globalUIManager/globalUIManagerSlice';
 import { isNullOrUndefined } from '../../util/utils';
 import { useState } from 'react';
 import Select from 'react-select';
@@ -119,8 +119,13 @@ export default function BookmarkListForm(props) {
             }
 
         }
-        props.handleClose();
+
+        handleClose();
     }
+
+    const handleClose = () => {
+        dispatch(closeDialog());
+    };
 
     const validateList = (listToCheck) => {
         let isValid = true;
@@ -186,7 +191,7 @@ export default function BookmarkListForm(props) {
                             </div>
 
                             <div className="bkList-form-buttons">
-                                <div className="cancel-button" onClick={props.handleClose}>
+                                <div className="cancel-button" onClick={handleClose}>
                                     Cancel
                                 </div>
                                 <div className="create-button" onClick={handleCreateOrUpdateList}>

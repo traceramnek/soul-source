@@ -23,7 +23,7 @@ export default function Login() {
     return (
         <div className="login-landing">
             <div className="login-container">
-                <h3>Login with Social Media</h3>
+                <h2>Login with Social Media</h2>
 
                 <div className="login-button" onClick={loginUser(googleProvider)}>
                     <img className="social-icon" src={googleIcon} alt="Google Icon" />

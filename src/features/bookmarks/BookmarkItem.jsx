@@ -7,6 +7,8 @@ import { IconButton, Tooltip } from '@material-ui/core';
 import { openSnackbar } from '../globalUIManager/globalUIManagerSlice';
 import { isNullOrUndefined } from '../../util/utils';
 import { makeStyles } from '@material-ui/core/styles';
+import ConfirmModal from '../globalUIManager/confimModal/ConfirmModal';
+import { useState } from 'react';
 
 const useStyles = makeStyles(() => ({
     arrow: {
@@ -29,6 +31,29 @@ export default function BookmarkItem(props) {
     const removeIcon = <CancelOutlined style={{ color: 'ghostwhite' }} />;
     const removeIconHover = <Cancel style={{ color: 'ghostwhite' }} />;
 
+    const [confirmProps, setConfirmProps] = useState({});
+    const [confirmOpen, setConfirmOpen] = useState(false);
+
+    const handleConfirmRemove = (bookmark) => {
+        setConfirmProps({
+            title: 'Confirm Removal',
+            text: `Removing this bookmark will remove it from all bookmark lists it currently belnongs to. Do you still want to remove this bookmark?`,
+            cancelLabel: 'Cancel',
+            proceedLabel: 'Remove',
+            handleClose: handleCloseConfirm,
+            handleProceed: handleRemoveBookmark,
+            extraData: {
+                bookmark: bookmark
+            }
+        });
+
+        setConfirmOpen(true);
+    }
+
+    const handleCloseConfirm = () => {
+        setConfirmOpen(false);
+    }
+
     const handleRemoveBookmark = () => {
         if (!isNullOrUndefined(bookmark) && bookmark.id) {
             dispatch(removeBookmarkAsync(bookmark.id));
@@ -39,6 +64,8 @@ export default function BookmarkItem(props) {
                 duration: 7000
             }));
         }
+
+        handleCloseConfirm();
     }
 
     const handleHover = (value) => {
@@ -56,7 +83,7 @@ export default function BookmarkItem(props) {
                 data-aos-once="true">
 
                 <Tooltip arrow classes={classes} title="Remove Bookmark" placement="top">
-                    <span className="remove-icon" title="Remove Bookmark" onClick={() => handleRemoveBookmark(bookmark)}>
+                    <span className="remove-icon" onClick={() => handleConfirmRemove(bookmark.id)}>
                         <IconButton
                             onMouseEnter={() => handleHover(true)}
                             onMouseLeave={() => handleHover(false)}
@@ -78,6 +105,9 @@ export default function BookmarkItem(props) {
                 </div>
             </div>
 
+            {confirmOpen &&
+                <ConfirmModal open={confirmOpen} {...confirmProps} />
+            }
 
         </div>
     );

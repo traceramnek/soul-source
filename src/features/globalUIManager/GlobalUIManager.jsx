@@ -4,12 +4,38 @@ import {
     closeSnackbar,
     selectSnackbarDuration,
     selectSnackbarMessage,
-    selectSnackbarOpen, selectSnackbarType, selectLoaderOpen, selectLoaderMessage
+    selectSnackbarOpen, selectSnackbarType, selectLoaderOpen,
+    selectLoaderMessage, selectComponentForDialog,
+    closeDialog, selectDialogOpen, selectDialogProps
 } from './globalUIManagerSlice';
-import { Snackbar, CircularProgress } from '@material-ui/core';
+import {
+    Snackbar, CircularProgress, Dialog
+} from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import React from 'react';
 import './GlobalUIManager.scss';
+import BookmarkListForm from '../bookmarks/BookmarkListForm';
+import Login from '../../components/Login/Login';
+import { isNullOrUndefined } from '../../util/utils';
+
+const createCustomComponent = (componentName, componentProps) => {
+    let CustomComponent;
+    switch (componentName) {
+        case 'BookmarkListForm':
+            CustomComponent = React.createElement(BookmarkListForm, {
+                ...componentProps
+            });
+            break;
+        case 'Login':
+            CustomComponent = React.createElement(Login, {
+                ...componentProps
+            });
+            break;
+        default:
+            break;
+    }
+    return CustomComponent;
+}
 
 export default function GlobalUIManager() {
     const dispatch = useDispatch();
@@ -19,11 +45,19 @@ export default function GlobalUIManager() {
     const duration = useSelector(selectSnackbarDuration);
     const loaderOpen = useSelector(selectLoaderOpen);
     const loaderMessage = useSelector(selectLoaderMessage);
+    const dialogOpen = useSelector(selectDialogOpen);
+    const componentName = useSelector(selectComponentForDialog);
+    const dialogProps = useSelector(selectDialogProps);
+    const DialogComponent = createCustomComponent(componentName, dialogProps);
 
     const wrapper = React.createRef();
 
-    function handleClose() {
+    function handleCloseSnackbar() {
         dispatch(closeSnackbar());
+    }
+
+    const handleCloseDialog = () => {
+        dispatch(closeDialog());
     }
 
     return (
@@ -35,9 +69,9 @@ export default function GlobalUIManager() {
                         vertical: "top",
                         horizontal: "right"
                     }}
-                    open={snackbarOpen} autoHideDuration={duration} onClose={handleClose}
+                    open={snackbarOpen} autoHideDuration={duration} onClose={handleCloseSnackbar}
                     aria-describedby="client-snackbar" >
-                    <Alert onClose={handleClose} severity={type}>
+                    <Alert onClose={handleCloseSnackbar} severity={type}>
                         {message}
                     </Alert>
                 </Snackbar>
@@ -53,6 +87,14 @@ export default function GlobalUIManager() {
                     </div>
                 </div>
             }
+
+            {/* Dialog Container */}
+            <Dialog open={dialogOpen} onClose={handleCloseDialog}>
+                {!isNullOrUndefined(DialogComponent) && !isNullOrUndefined(dialogProps) &&
+                    DialogComponent
+                }
+            </Dialog>
+            
         </div>
     );
 }

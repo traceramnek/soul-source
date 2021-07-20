@@ -41,6 +41,7 @@ export const addBookmarkAsync = createAsyncThunk(
 export const removeBookmarkAsync = createAsyncThunk(
     'login/removeBookmark',
     async (id, thunkAPI) => {
+
         thunkAPI.dispatch(openLoader('Removing Bookmark...'));
         const profile = thunkAPI.getState().profile.currentProfile;
         await SoulSourceService.removeBookmark(profile, id);

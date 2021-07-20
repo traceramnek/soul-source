@@ -3,11 +3,9 @@ import './BookmarkList.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeBookmarkListAsync, selectBookmarks } from '../profile/profileSlice';
 import { Launch, Edit, Delete } from '@material-ui/icons';
-import { Dialog, Tooltip } from '@material-ui/core';
-import { openSnackbar } from '../../features/globalUIManager/globalUIManagerSlice';
+import { Tooltip } from '@material-ui/core';
+import { closeDialog, openDialog, openSnackbar } from '../../features/globalUIManager/globalUIManagerSlice';
 import { isNullOrUndefined } from '../../util/utils';
-import BookmarkListForm from './BookmarkListForm';
-import { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() => ({
@@ -26,7 +24,6 @@ export default function BookmarkList(props) {
     const bookmarkList = props.bookmarkList;
     const bookmarks = useSelector(selectBookmarks);
     const dispatch = useDispatch();
-    const [dialogOpen, setDialogOpen] = useState(false);
     const classes = useStyles();
 
 
@@ -44,7 +41,13 @@ export default function BookmarkList(props) {
 
     const handleOpenDialog = () => {
         if (!isNullOrUndefined(bookmarks) && Object.keys(bookmarks).length > 0) {
-            setDialogOpen(true);
+            dispatch(openDialog({
+                componentToLoad: 'BookmarkListForm',
+                dialogProps: {
+                    isEdit: true,
+                    listId: bookmarkList.id,
+                }
+            }))
         } else {
             dispatch(openSnackbar({
                 open: true,
@@ -56,7 +59,7 @@ export default function BookmarkList(props) {
     };
 
     const handleClose = () => {
-        setDialogOpen(false);
+        dispatch(closeDialog());
     };
 
     return (
@@ -82,8 +85,8 @@ export default function BookmarkList(props) {
 
                 {!isNullOrUndefined(bookmarkList.bookmarks) &&
                     Object.entries(bookmarkList.bookmarks).map(([id, bookmark], index) => (
-                        <div>
-                            <div className={"bookmark-list-item " + (index === Object.keys(bookmarkList.bookmarks).length - 1 ? 'no-border-bottom' : '')} key={'bookmark_' + index}
+                        <div key={'bookmark_list_' + index}>
+                            <div className={"bookmark-list-item " + (index === Object.keys(bookmarkList.bookmarks).length - 1 ? 'no-border-bottom' : '')}
                             >
                                 <span className="launch-icon right" title={bookmark.title} >
                                     <a className="nav-link" href={bookmark.url} target="_blank" rel="noreferrer">
@@ -101,9 +104,9 @@ export default function BookmarkList(props) {
                 }
             </div>
 
-            <Dialog open={dialogOpen} onClose={handleClose}>
+            {/* <Dialog open={dialogOpen} onClose={handleClose}>
                 <BookmarkListForm isEdit={true} listId={bookmarkList.id} handleClose={handleClose} />
-            </Dialog>
+            </Dialog> */}
         </div >
     );
 

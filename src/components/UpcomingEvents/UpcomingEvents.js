@@ -60,6 +60,14 @@ export default function UpcomingEvents() {
             Upcoming events for Black/POC gamers and developers
           </div>
         </div>
+
+        <div className="see-more-container">
+          <button className="see-more-button">
+            See more
+            {/* <ArrowDownward fontSize="small" /> */}
+          </button>
+        </div>
+
       </div>
 
       <div className="card-preview-container">
@@ -91,7 +99,10 @@ export default function UpcomingEvents() {
                 <div className="card-summary">
                   {card.summary}
                 </div>
-                <a href={card.url} target="_blank" rel="noreferrer">Check it out</a> <Launch fontSize="small" />
+                <button className="check-it-out-button">
+                  <a href={card.url} target="_blank" rel="noreferrer">Check it out</a>
+                  <Launch fontSize="small" />
+                </button>
               </div>
             )
 

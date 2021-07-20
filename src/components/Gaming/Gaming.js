@@ -100,7 +100,10 @@ export default function Gaming() {
                 <div className="game-card-summary">
                   {card.summary}
                 </div>
-                <a href={card.url} target="_blank" rel="noreferrer">Check it out</a> <Launch fontSize="small" />
+                <div className="check-it-out-button">
+                  <a href={card.url} target="_blank" rel="noreferrer">Check it out</a>
+                  <Launch fontSize="small" />
+                </div>
               </div>
             )
           })

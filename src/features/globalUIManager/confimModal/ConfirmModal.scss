@@ -1,0 +1,17 @@
+@import '../../../assets/stylesheets/variables.scss';
+
+.confirm-dialog-container{
+    background-color: $bookmark-card-color;
+}
+
+.confirm-dialog-title{
+    color: ghostwhite;
+}
+
+.confirm-dialog-text{
+    color: ghostwhite;
+}
+
+.confirm-dialog-buttons{
+    color: $bookmark-card-color;
+}

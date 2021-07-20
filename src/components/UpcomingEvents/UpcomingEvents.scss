@@ -1,3 +1,5 @@
+@import '../../assets/stylesheets/mixins.scss';
+
 .upcoming-events {
     color: ghostwhite;
 }
@@ -44,7 +46,6 @@
         background-color: #7c4560;
     }
     &:nth-child(even){
-        float: right;
         background-color: #426088;
     }
 }
@@ -65,4 +66,57 @@
     position: absolute;
     top: 15px;
     right: 15px;
+}
+
+.see-more-button{
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    border: 1px solid ghostwhite;
+    padding: 10px 15px;
+    font-size: 1.25rem;
+    border-radius: 30px;
+    color: ghostwhite;
+    @include setTransition(.25s);
+
+    &:hover{
+        background-color: ghostwhite;
+        color: #333;
+    }
+}
+
+.check-it-out-button{
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    border: 1px solid ghostwhite;
+    padding: 10px 15px;
+    font-size: 1.25rem;
+    border-radius: 30px;
+    color: ghostwhite;
+    @include setTransition(.25s);
+
+    a{
+        text-decoration: none;
+        color: ghostwhite;
+    }
+
+    &:hover{
+        background-color: ghostwhite;
+        
+        &:nth-child(odd){
+            color: #7c4560;
+
+            a{
+                color: #7c4560;
+            }
+        }
+        &:nth-child(even){
+            color: #426088;
+
+            a{
+                color: #426088;
+            }
+        }
+    }
 }
