@@ -89,7 +89,7 @@ export default function BookmarkList(props) {
                             <div className={"bookmark-list-item " + (index === Object.keys(bookmarkList.bookmarks).length - 1 ? 'no-border-bottom' : '')}
                             >
                                 <span className="launch-icon right" title={bookmark.title} >
-                                    <a className="nav-link" href={bookmark.url} target="_blank" rel="noreferrer">
+                                    <a href={bookmark.url} target="_blank" rel="noreferrer">
                                         <Launch style={{ color: 'ghostwhite' }} />
                                     </a>
                                 </span>

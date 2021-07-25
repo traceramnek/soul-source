@@ -40,7 +40,8 @@
 
 .game-card-preview{
     padding: 15px 20px;
-    height: 33vh;
+    min-height: 33vh;
+    max-height: 50vh;
     position: relative;
 
     &:nth-child(odd){
@@ -59,8 +60,8 @@
 }
 
 .game-card-summary{
-    font-size: 1.25rem;
     font-weight: 400;
+    margin: 20px 0;
 }
 
 .bookmark-icon{
@@ -84,7 +85,6 @@
     background-color: transparent;
     border: 1px solid ghostwhite;
     padding: 10px 15px;
-    font-size: 1.25rem;
     border-radius: 30px;
     color: ghostwhite;
     @include setTransition(.25s);
@@ -98,4 +98,11 @@
         background-color: ghostwhite;
         color: black;
     }
+}
+
+.check-it-out-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
 }

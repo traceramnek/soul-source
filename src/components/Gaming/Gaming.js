@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import './Gaming.scss';
 import { fetchGamingListAsync, selectGamingList } from '../../features/gaming/gamingSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { IconButton } from '@material-ui/core';
+import { Button, IconButton } from '@material-ui/core';
 import { Launch, BookmarkBorder, Bookmark } from '@material-ui/icons';
 import { addBookmarkAsync, removeBookmarkAsync, selectBookmarks } from '../../features/profile/profileSlice';
 import { openSnackbar } from '../../features/globalUIManager/globalUIManagerSlice';
@@ -94,16 +94,27 @@ export default function Gaming() {
             return (
               <div key={'card_' + index} className="game-card-preview">
                 {bookmarkSpan}
-                <div className="game-card-title">
-                  {card.title}
+                <div className="row">
+                  <div className="col-md-9">
+                    <div className="game-card-title">
+                      {card.title}
+                    </div>
+                    <div className="game-card-summary">
+                      {card.summary}
+                    </div>
+                  </div>
+
+                  <div className="check-it-out-container col-md-3">
+                    <button className="check-it-out-button">
+                      <a href={card.url} target="_blank" rel="noreferrer">Check it out</a>
+                      <Launch fontSize="small" />
+                    </button>
+                  </div>
                 </div>
-                <div className="game-card-summary">
-                  {card.summary}
-                </div>
-                <div className="check-it-out-button">
-                  <a href={card.url} target="_blank" rel="noreferrer">Check it out</a>
-                  <Launch fontSize="small" />
-                </div>
+
+
+
+
               </div>
             )
           })

@@ -93,7 +93,7 @@ export default function BookmarkItem(props) {
                     </span>
                 </Tooltip>
                 <span className="launch-icon" title={bookmark.title} >
-                    <a className="nav-link" href={bookmark.url} target="_blank" rel="noreferrer">
+                    <a href={bookmark.url} target="_blank" rel="noreferrer">
                         <Launch style={{ color: 'ghostwhite' }} />
                     </a>
                 </span>

@@ -53,17 +53,16 @@ export default function Navbar() {
                 <div className="nav-div">
                     <nav>
                         <span>
-                            <Link className="nav-link" to="/home">Home</Link>
+                            <Link to="/home">Home</Link>
                         </span>
                         <span>
-                            <Link className="nav-link" to="/gaming">Gaming</Link>
+                            <Link to="/gaming">Gaming</Link>
                         </span>
                         <span>
-                            <Link className="nav-link" to="/events">Events</Link>
+                            <Link to="/events">Events</Link>
                         </span>
                         <span >
-                            <Link className="nav-link" to={!isLoggedIn ? '/login' : '/profile'}>
-                                {/* <Link className="nav-link" onClick={() => handleAuth()}> */}
+                            <Link to={!isLoggedIn ? '/login' : '/profile'}>
                                 <AccountCircleIcon />
                             </Link>
                         </span>
