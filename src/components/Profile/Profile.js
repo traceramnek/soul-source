@@ -5,8 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectCurrentprofile, selectBookmarks } from '../../features/profile/profileSlice';
 import { ALL_BOOKMARKS, BOOKMARK_LISTS } from '../../util/constants';
 import { makeStyles } from '@material-ui/core/styles';
-import { Fab, Dialog, Tooltip } from '@material-ui/core';
-import BookmarkListForm from '../../features/bookmarks/BookmarkListForm';
+import { Fab, Tooltip } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import BookmarkItem from '../../features/bookmarks/BookmarkItem';
 import { isNullOrUndefined } from '../../util/utils';
@@ -29,7 +28,6 @@ export default function Profile() {
   const [filterValue, setFilterValue] = useState(ALL_BOOKMARKS);
   // const [searchValue, setSearchValue] = useState('');
   const profile = useSelector(selectCurrentprofile);
-  const [dialogOpen, setDialogOpen] = useState(false);
   const bookmarks = useSelector(selectBookmarks);
   const dispatch = useDispatch();
 
@@ -51,10 +49,6 @@ export default function Profile() {
         duration: 7000
       }));
     }
-  };
-
-  const handleClose = () => {
-    setDialogOpen(false);
   };
 
   const handleToggleChange = (newValue) => {
@@ -91,6 +85,10 @@ export default function Profile() {
         {filterValue === ALL_BOOKMARKS && // if filter is all bookmarks, show this div
           (
             <div>
+              <div>
+                {Object.keys(profile.bookmarks).length} bookmarks
+              </div>
+
               <div className="bookmark-container">
                 {!isNullOrUndefined(profile.bookmarks) &&
                   Object.entries(profile.bookmarks).map(([id, bookmark], index) => (

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import './UpcomingEvents.scss';
-import { fetchEventsListAsync, selectEventsList } from '../../features/events/eventsSlice';
+import { fetchEventsListAsync, selectEventsList, toggleShowFullSummary } from '../../features/events/eventsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { Launch, BookmarkBorder, Bookmark } from '@material-ui/icons';
 import { addBookmarkAsync, selectBookmarks, removeBookmarkAsync } from '../../features/profile/profileSlice';
@@ -15,9 +15,13 @@ export default function UpcomingEvents() {
   const savedBookmarks = useSelector(selectBookmarks);
   const dispatch = useDispatch();
 
+  
   let bookmarkIcon = (<BookmarkBorder style={{ fill: 'ghostwhite' }} />);
   let bookmarkSpan = (<span></span>);
-
+  
+  const handleToggleText = (index) => {
+    dispatch(toggleShowFullSummary(index));
+  }
   useEffect(() => {
     dispatch(fetchEventsListAsync());
   }, []);
@@ -74,6 +78,10 @@ export default function UpcomingEvents() {
         {
           eventsList.map((card, index) => {
 
+            
+            const shortSummary = card.summary.substr(0, 100) + '...';
+            const longSummary = card.summary;
+
             bookmarkIcon = (!isNullOrUndefined(savedBookmarks) && savedBookmarks[card.id]) ?
               (<Bookmark style={{ fill: 'ghostwhite' }} />) : (<BookmarkBorder style={{ fill: 'ghostwhite' }} />);
 
@@ -98,8 +106,8 @@ export default function UpcomingEvents() {
                     <div className="card-title">
                       {card.title}
                     </div>
-                    <div className="card-summary">
-                      {card.summary}
+                    <div className="card-summary" onClick={() => handleToggleText(index)}>
+                      {card.showFullSummary ? longSummary : shortSummary}
                     </div>
                   </div>
                   <div className="check-it-out-container col-md-3">

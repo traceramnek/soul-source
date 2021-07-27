@@ -30,7 +30,9 @@ export const gamingSlice = createSlice({
     name: 'gaming',
     initialState,
     reducers: {
-        
+        toggleShowFullSummary: (state, action) => {
+            state.gamingList[action.payload]['showFullSummary'] = !state.gamingList[action.payload]['showFullSummary'];
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -48,6 +50,7 @@ export const gamingSlice = createSlice({
                     state.gamingList.forEach((gameItem, index) => {
                         // TODO: change id so it's shorter but still unique
                         gameItem['id'] = `${gameItem.title.split(' ').join('').toLowerCase()}_uuid${index}`;
+                        gameItem['showFullSummary'] = false;
                     });
                     state.loading = false;
                     state.hasError = false;
@@ -57,7 +60,7 @@ export const gamingSlice = createSlice({
     },
 });
 
-// export const { } = gamingSlice.actions;
+export const { toggleShowFullSummary} = gamingSlice.actions;
 
 export const selectGamingList = (state) => state.gaming.gamingList;
 

@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import './Gaming.scss';
-import { fetchGamingListAsync, selectGamingList } from '../../features/gaming/gamingSlice';
+import { fetchGamingListAsync, selectGamingList, toggleShowFullSummary } from '../../features/gaming/gamingSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, IconButton } from '@material-ui/core';
+import {  IconButton } from '@material-ui/core';
 import { Launch, BookmarkBorder, Bookmark } from '@material-ui/icons';
 import { addBookmarkAsync, removeBookmarkAsync, selectBookmarks } from '../../features/profile/profileSlice';
 import { openSnackbar } from '../../features/globalUIManager/globalUIManagerSlice';
@@ -15,6 +15,10 @@ export default function Gaming() {
   const savedBookmarks = useSelector(selectBookmarks);
 
   const dispatch = useDispatch();
+
+  const handleToggleText = (index) => {
+    dispatch(toggleShowFullSummary(index))
+  }
 
   useEffect(() => {
     dispatch(fetchGamingListAsync());
@@ -74,6 +78,9 @@ export default function Gaming() {
 
           gamingList.map((card, index) => {
 
+            const shortSummary = card.summary.substr(0, 100) + '...';
+            const longSummary = card.summary;
+
             bookmarkIcon = (!isNullOrUndefined(savedBookmarks) && savedBookmarks[card.id]) ?
               (<Bookmark style={{ fill: 'ghostwhite' }} />) : (<BookmarkBorder style={{ fill: 'ghostwhite' }} />);
 
@@ -99,8 +106,8 @@ export default function Gaming() {
                     <div className="card-title">
                       {card.title}
                     </div>
-                    <div className="card-summary">
-                      {card.summary}
+                    <div className="card-summary" onClick={() => handleToggleText(index)}>
+                      {card.showFullSummary ? longSummary : shortSummary}
                     </div>
                   </div>
 

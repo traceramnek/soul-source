@@ -20,27 +20,13 @@ import { useState } from "react";
 
 
 export default function Navbar() {
-    const portfolioLink = "https://traceramnek.github.io";
     const isLoggedIn = useSelector(selectIsLoggedIn);
     const [dialogOpen, setDialogOpen] = useState(false);
-    // const history = useHistory();
-
-
-    // const handleOpenDialog = () => {
-    //     setDialogOpen(true);
-    // };
-
+    
     const handleClose = () => {
         setDialogOpen(false);
     };
 
-    // const handleAuth = () => {
-    //     if (!isLoggedIn) {
-    //         handleOpenDialog();
-    //     } else {
-    //         history.push('/profile');
-    //     }
-    // };
 
     return (
         <Router>

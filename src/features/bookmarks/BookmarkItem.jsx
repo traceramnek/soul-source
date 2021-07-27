@@ -87,7 +87,7 @@ export default function BookmarkItem(props) {
 
             <div className="bookmark" key={'bookmark_' + bookmark.id}
                 data-aos="fade-right"
-                data-aos-delay="250"
+                data-aos-delay="100"
                 data-aos-easing="ease-in-out"
                 data-aos-once="true">
 
@@ -109,7 +109,7 @@ export default function BookmarkItem(props) {
                 <div className="bookmark-title">
                     {bookmark.title}
                 </div>
-                <div className="bookmark-summary">
+                <div className="bookmark-summary" onClick={handleToggleText}>
                     {showFullSummary ? longSummary : shortSummary}
                 </div>
             </div>

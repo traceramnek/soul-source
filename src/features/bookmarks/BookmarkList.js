@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { removeBookmarkListAsync, selectBookmarks } from '../profile/profileSlice';
 import { Launch, Edit, Delete } from '@material-ui/icons';
 import { Tooltip } from '@material-ui/core';
-import { closeDialog, openDialog, openSnackbar } from '../../features/globalUIManager/globalUIManagerSlice';
+import { openDialog, openSnackbar } from '../../features/globalUIManager/globalUIManagerSlice';
 import { isNullOrUndefined } from '../../util/utils';
 import { makeStyles } from '@material-ui/core/styles';
 import { useState } from 'react';
@@ -82,10 +82,6 @@ export default function BookmarkList(props) {
                 duration: 7000
             }));
         }
-    };
-
-    const handleClose = () => {
-        dispatch(closeDialog());
     };
 
     return (
