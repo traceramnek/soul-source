@@ -10,7 +10,7 @@ import BookmarkListForm from '../../features/bookmarks/BookmarkListForm';
 import AddIcon from '@material-ui/icons/Add';
 import BookmarkItem from '../../features/bookmarks/BookmarkItem';
 import { isNullOrUndefined } from '../../util/utils';
-import { openSnackbar } from '../../features/globalUIManager/globalUIManagerSlice';
+import { openSnackbar, openDialog } from '../../features/globalUIManager/globalUIManagerSlice';
 
 
 const useStyles = makeStyles(() => ({
@@ -37,7 +37,12 @@ export default function Profile() {
 
   const handleOpenDialog = () => {
     if (!isNullOrUndefined(bookmarks) && Object.keys(bookmarks).length > 0) {
-      setDialogOpen(true);
+      dispatch(openDialog({
+        componentToLoad: 'BookmarkListForm',
+        dialogProps: {
+          isEdit: false
+        }
+      }));
     } else {
       dispatch(openSnackbar({
         open: true,
@@ -121,9 +126,6 @@ export default function Profile() {
                   </Fab>
                 </Tooltip>
               </div>
-              <Dialog open={dialogOpen} onClose={handleClose}>
-                <BookmarkListForm handleClose={handleClose} />
-              </Dialog>
 
             </div>
           )}

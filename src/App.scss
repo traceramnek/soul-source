@@ -1,3 +1,7 @@
+@import './assets/stylesheets/mixins.scss';
+@import './assets/stylesheets/variables.scss';
+@import './assets/stylesheets/global-styles.scss';
+
 
 $overlay-color: rgba(52, 59, 66, 0.25);
 $bg-color: #bd7811;
@@ -9,7 +13,7 @@ $bg-color: #bd7811;
 .overlay{
   background-color: $overlay-color;
   padding: 0 10%;
-  height: calc(100vh - 77px);
+  // height: calc(100vh - 77px);
   overflow-y: auto;
 }
 
@@ -23,7 +27,7 @@ $bg-color: #bd7811;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  font-family: 'Work Sans', sans-serif;
+  font-family: 'Pppins', sans-serif;
   font-weight: 500;
   color: #fff;
   padding-bottom: 30px;

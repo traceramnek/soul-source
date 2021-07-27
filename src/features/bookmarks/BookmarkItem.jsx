@@ -31,8 +31,17 @@ export default function BookmarkItem(props) {
     const removeIcon = <CancelOutlined style={{ color: 'ghostwhite' }} />;
     const removeIconHover = <Cancel style={{ color: 'ghostwhite' }} />;
 
+    const shortSummary = bookmark.summary.substr(0, 100) + '...';
+    const longSummary = bookmark.summary;
+    
+
     const [confirmProps, setConfirmProps] = useState({});
     const [confirmOpen, setConfirmOpen] = useState(false);
+    const [showFullSummary, setShowFullSummary] = useState(false);
+
+    const handleToggleText = () => {
+        setShowFullSummary(!showFullSummary);
+    }
 
     const handleConfirmRemove = (bookmark) => {
         setConfirmProps({
@@ -101,7 +110,7 @@ export default function BookmarkItem(props) {
                     {bookmark.title}
                 </div>
                 <div className="bookmark-summary">
-                    {bookmark.summary}
+                    {showFullSummary ? longSummary : shortSummary}
                 </div>
             </div>
 

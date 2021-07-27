@@ -46,17 +46,17 @@ export default function UpcomingEvents() {
   return (
     <div className="upcoming-events">
 
-      <div className="events-landing">
-        <div className="events-title"
+      <div className="landing">
+        <div className="title"
           data-aos="fade-right"
           data-aos-delay="250"
           data-aos-easing="ease-in-out"
           data-aos-once="true"
         >
-          <div className="events-heading">
+          <div className="heading">
             Events
           </div>
-          <div className="events-sub-heading">
+          <div className="sub-heading">
             Upcoming events for Black/POC gamers and developers
           </div>
         </div>
@@ -93,16 +93,23 @@ export default function UpcomingEvents() {
             return (
               <div key={'card_' + index} className="card-preview">
                 {bookmarkSpan}
-                <div className="card-title">
-                  {card.title}
+                <div className="row">
+                  <div className="col-md-9">
+                    <div className="card-title">
+                      {card.title}
+                    </div>
+                    <div className="card-summary">
+                      {card.summary}
+                    </div>
+                  </div>
+                  <div className="check-it-out-container col-md-3">
+                    <a className="check-it-out-button" href={card.url} target="_blank" rel="noreferrer">
+                      <span>Check it out</span>
+                      <Launch fontSize="small" />
+                    </a>
+                  </div>
                 </div>
-                <div className="card-summary">
-                  {card.summary}
-                </div>
-                <button className="check-it-out-button">
-                  <a href={card.url} target="_blank" rel="noreferrer">Check it out</a>
-                  <Launch fontSize="small" />
-                </button>
+
               </div>
             )
 

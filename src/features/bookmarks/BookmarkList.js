@@ -7,6 +7,9 @@ import { Tooltip } from '@material-ui/core';
 import { closeDialog, openDialog, openSnackbar } from '../../features/globalUIManager/globalUIManagerSlice';
 import { isNullOrUndefined } from '../../util/utils';
 import { makeStyles } from '@material-ui/core/styles';
+import { useState } from 'react';
+import ConfirmModal from '../globalUIManager/confimModal/ConfirmModal';
+
 
 const useStyles = makeStyles(() => ({
     arrow: {
@@ -26,6 +29,29 @@ export default function BookmarkList(props) {
     const dispatch = useDispatch();
     const classes = useStyles();
 
+    const [confirmProps, setConfirmProps] = useState({});
+    const [confirmOpen, setConfirmOpen] = useState(false);
+
+
+    const handleConfirmRemoveBkList = (bookmarkList) => {
+        setConfirmProps({
+            title: 'Confirm Removal',
+            text: `Are you sure you want to remove this list?`,
+            cancelLabel: 'Cancel',
+            proceedLabel: 'Remove List',
+            handleClose: handleCloseConfirm,
+            handleProceed: handleRemoveBookmarkList,
+            extraData: {
+                bookmarkList: bookmarkList
+            }
+        });
+
+        setConfirmOpen(true);
+    }
+
+    const handleCloseConfirm = () => {
+        setConfirmOpen(false);
+    }
 
     const handleRemoveBookmarkList = () => {
         if (!isNullOrUndefined(bookmarkList)) {
@@ -77,7 +103,7 @@ export default function BookmarkList(props) {
                         </span>
                     </Tooltip>
                     <Tooltip arrow classes={classes} title="Delete List" placement="top">
-                        <span className="delete-icon" onClick={() => handleRemoveBookmarkList()}>
+                        <span className="delete-icon" onClick={() => handleConfirmRemoveBkList(bookmarkList.id)}>
                             <span> <Delete style={{ color: '#a31455' }} /> </span>
                         </span>
                     </Tooltip>
@@ -88,7 +114,7 @@ export default function BookmarkList(props) {
                         <div key={'bookmark_list_' + index}>
                             <div className={"bookmark-list-item " + (index === Object.keys(bookmarkList.bookmarks).length - 1 ? 'no-border-bottom' : '')}
                             >
-                                <span className="launch-icon right" title={bookmark.title} >
+                                <span className="list-launch-icon" title={bookmark.title} >
                                     <a href={bookmark.url} target="_blank" rel="noreferrer">
                                         <Launch style={{ color: 'ghostwhite' }} />
                                     </a>
@@ -104,9 +130,9 @@ export default function BookmarkList(props) {
                 }
             </div>
 
-            {/* <Dialog open={dialogOpen} onClose={handleClose}>
-                <BookmarkListForm isEdit={true} listId={bookmarkList.id} handleClose={handleClose} />
-            </Dialog> */}
+            {confirmOpen &&
+                <ConfirmModal open={confirmOpen} {...confirmProps} />
+            }
         </div >
     );
 

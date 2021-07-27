@@ -1,0 +1,104 @@
+.landing{
+    display: flex;
+    justify-content: left;
+    align-items: flex-start;
+    flex-direction: column;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.title{
+    position: absolute;
+    top: 8rem;
+    left: 2rem;
+}
+
+.heading{
+    font-size: 5rem;
+    font-weight: 600;
+}
+
+.sub-heading{
+    font-size: 1.5rem;
+    font-weight: 400;
+}
+
+.card-preview-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.card-preview{
+    padding: 15px 20px;
+    min-height: 33vh;
+    max-height: 50vh;
+    position: relative;
+}
+
+.card-title{
+    font-size: 2rem;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.card-summary{
+    font-weight: 400;
+    margin: 20px 0;
+}
+
+.bookmark-icon{
+    cursor: pointer;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+.see-more-container{
+    position: absolute;
+    bottom: 35px;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.see-more-button, .check-it-out-button{
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    border: 1px solid ghostwhite;
+    padding: 10px 15px;
+    border-radius: 30px;
+    color: ghostwhite;
+    @include setTransition(.25s);
+
+    a{
+        text-decoration: none;
+        color: ghostwhite;
+    }
+
+    &:hover{
+        background-color: ghostwhite;
+        color: black;
+    }
+}
+
+.check-it-out-button{
+    text-decoration: none;
+
+    span{
+        margin-right: 5px;
+    }
+    &:hover{
+        background-color: ghostwhite;
+        color: #333;
+    }
+}
+
+.check-it-out-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+}

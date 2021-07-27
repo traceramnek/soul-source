@@ -44,10 +44,9 @@ export default function Navbar() {
 
     return (
         <Router>
-            <a href={portfolioLink} target="_blank" title="Kwan's Portfolio"
-                rel="noopener noreferrer">
-                <img title="Kwan Holloway's Portfolio" className="nav-logo" src={AfroIcon} alt="Kwan's Logo" />
-            </a>
+            <Link to="/home">
+                <img title="Soul Source" className="nav-logo" src={AfroIcon} alt="Soul Source" />
+            </Link>
 
             <div>
                 <div className="nav-div">

@@ -16,7 +16,7 @@ const customStyles = {
         ...provided,
         border: '2px solid ghostwhite',
         borderRadius: 5,
-        width: 300
+        width: 250
     }),
     control: () => ({
         // none of react-select's styles are passed to <Control />
@@ -183,7 +183,7 @@ export default function BookmarkListForm(props) {
                                     })}
                                     closeMenuOnSelect="false"
                                     isMulti
-                                    placeholder="Select bookmarks..."
+                                    placeholder="Add bookmarks..."
                                     styles={customStyles}
                                     components={animatedComponents}
                                     options={bookmarkArray}

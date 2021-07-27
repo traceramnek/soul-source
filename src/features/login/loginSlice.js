@@ -13,6 +13,7 @@ export const loginUserAsync = createAsyncThunk(
     async (provider, thunkAPI) => {
         // let token;
         thunkAPI.dispatch(openLoader('Logging in...'));
+        let isLoggedIn = false;
 
         await firebaseAuth.signInWithPopup(provider).then(function (result) {
             // The firebase.User instance:
@@ -26,16 +27,18 @@ export const loginUserAsync = createAsyncThunk(
                 thunkAPI.dispatch(fetchProfileByIdAsync(user.id));
                 thunkAPI.dispatch(closeLoader());
             }
+            isLoggedIn = true;
         }, function (error) {
             // The provider's account email, can be used in case of
             // auth/account-exists-with-different-credential to fetch the providers
             // linked to the email:
-            var email = error.email;
+            // var email = error.email;
             // The provider's credential:
-            var credential = error.credential;
-            return {email, credential};
+            // var credential = error.credential;
+            thunkAPI.dispatch(closeLoader());
+            isLoggedIn = false;
         });
-
+        return isLoggedIn;
     }
 );
 
@@ -55,14 +58,6 @@ export const saveUserAsync = createAsyncThunk(
         thunkAPI.dispatch(fetchProfileByIdAsync(user.id));
         thunkAPI.dispatch(closeLoader());
 
-        // "users": {
-        //     "$userId": {
-        //       // grants write access to the owner of this user account
-        //       // whose uid must exactly match the key ($userId)
-        //       ".write": "$userId === auth.uid"
-        //     }
-        //   }
-
     }
 );
 
@@ -81,8 +76,8 @@ export const loginSlice = createSlice({
             .addCase(loginUserAsync.rejected, (state) => {
                 state.isLoggedIn = false
             })
-            .addCase(loginUserAsync.fulfilled, (state) => {
-                state.isLoggedIn = true;
+            .addCase(loginUserAsync.fulfilled, (state, action) => {
+                state.isLoggedIn = action.payload;
             })
             .addCase(saveUserAsync.pending, (state) => {
                 state.isLoggedIn = false

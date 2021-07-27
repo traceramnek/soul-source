@@ -3,15 +3,16 @@
 .bookmark{
     background-color: $bookmark-card-color;
     position: relative;
-    max-width: 40%;
+    max-width: 47%;
     border-radius: 5px;
-    padding: 30px 20px;
+    padding: 20px;
     margin: 15px 30px 15px 0;
 }
 
 .bookmark-title{
     font-weight: 500;
     font-size: 2rem;
+    max-width: 80%;
 }
 
 .bookmark-summary{
@@ -20,16 +21,18 @@
 
 .remove-icon{
     position: absolute;
-    top: 0;
+    top: 18px;
     right: 0;
 }
 
 .launch-icon{
     position: absolute;
-    top: 12px;
+    top: 30px;
     right: 40px;
+}
 
-    &.right{
-        right: 10px;
+@media only screen and (max-width: 480px) {
+    .bookmark{
+        max-width: 100%;
     }
 }

@@ -46,17 +46,17 @@ export default function Gaming() {
   return (
     <div className="gaming">
 
-      <div className="gaming-landing">
-        <div className="gaming-title"
+      <div className="landing">
+        <div className="title"
           data-aos="fade-right"
           data-aos-delay="250"
           data-aos-easing="ease-in-out"
           data-aos-once="true"
         >
-          <div className="gaming-heading">
+          <div className="heading">
             Gaming
           </div>
-          <div className="gaming-sub-heading">
+          <div className="sub-heading">
             The source for Black/POC gaming news
           </div>
         </div>
@@ -69,7 +69,7 @@ export default function Gaming() {
         </div>
       </div>
 
-      <div className="game-card-preview-container">
+      <div className="card-preview-container">
         {!isNullOrUndefined(gamingList) &&
 
           gamingList.map((card, index) => {
@@ -92,23 +92,23 @@ export default function Gaming() {
             }
 
             return (
-              <div key={'card_' + index} className="game-card-preview">
+              <div key={'card_' + index} className="card-preview">
                 {bookmarkSpan}
                 <div className="row">
                   <div className="col-md-9">
-                    <div className="game-card-title">
+                    <div className="card-title">
                       {card.title}
                     </div>
-                    <div className="game-card-summary">
+                    <div className="card-summary">
                       {card.summary}
                     </div>
                   </div>
 
                   <div className="check-it-out-container col-md-3">
-                    <button className="check-it-out-button">
-                      <a href={card.url} target="_blank" rel="noreferrer">Check it out</a>
+                    <a className="check-it-out-button" href={card.url} target="_blank" rel="noreferrer">
+                      <span>Check it out</span>
                       <Launch fontSize="small" />
-                    </button>
+                    </a>
                   </div>
                 </div>
 
