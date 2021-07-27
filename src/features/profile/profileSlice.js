@@ -18,7 +18,7 @@ export const fetchProfileByIdAsync = createAsyncThunk(
     'profile/fetchProfileById',
     async (id, thunkAPI) => {
         thunkAPI.dispatch(openLoader('Fetching profile details...'));
-        const user = SoulSourceService.fetchProfileById(id);
+        const user = await SoulSourceService.fetchProfileById(id);
         thunkAPI.dispatch(closeLoader());
 
         return user;
@@ -113,7 +113,10 @@ export const profileSlice = createSlice({
             .addCase(fetchProfileByIdAsync.rejected, (state) => {
             })
             .addCase(fetchProfileByIdAsync.fulfilled, (state, action) => {
-                state.currentProfile = action.payload;
+                state.currentProfile = {
+                    ...state.currentProfile,
+                    ...action.payload
+                };
             })
             // Add bookmark
             .addCase(addBookmarkAsync.pending, (state) => {

@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { firebaseAuth, firebaseDB } from '../../services/firebase';
 import { closeLoader, openLoader } from '../globalUIManager/globalUIManagerSlice';
 import { fetchProfileByIdAsync } from '../profile/profileSlice';
+import { SoulSourceService } from '../../services/SoulSourceService';
 
 
 const initialState = {
@@ -48,12 +49,7 @@ export const saveUserAsync = createAsyncThunk(
         thunkAPI.dispatch(openLoader('Setting up your profile...'));
 
         //if user doesn't exist, add them to db
-        firebaseDB.ref('users/' + user.id).set({
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            profilePicPath: user.picture
-        });
+        await SoulSourceService.saveUser(user);
 
         thunkAPI.dispatch(fetchProfileByIdAsync(user.id));
         thunkAPI.dispatch(closeLoader());

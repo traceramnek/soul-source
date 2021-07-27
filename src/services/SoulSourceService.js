@@ -2,6 +2,16 @@ import { firebaseDB } from './firebase';
 
 export class SoulSourceService {
 
+    static async saveUser(user){
+        
+        await firebaseDB.ref('users/' + user.id).set({
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            profilePicPath: user.picture
+        });
+    }
+
     static async fetchProfileById(id) {
         const usersResp = firebaseDB.ref('users/' + id);
         const snapshot = await usersResp.once('value');
