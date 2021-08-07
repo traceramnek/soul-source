@@ -7,3 +7,5 @@ export const EVENTS_URL = 'https://soul-source-9fa61-default-rtdb.firebaseio.com
 export const COMPONENTS_MAP = {
     'BookmarkListForm' : 'BookmarkListForm'
 }
+
+export const PORTFOLIO_LINK = "https://traceramnek.github.io/"

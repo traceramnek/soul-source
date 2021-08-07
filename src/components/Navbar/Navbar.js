@@ -10,19 +10,21 @@ import Gaming from '../Gaming/Gaming';
 import UpcomingEvents from '../UpcomingEvents/UpcomingEvents';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AfroIcon from '../../assets/img/afro_icon.png';
-import { Dialog } from '@material-ui/core';
+import { Dialog, Avatar } from '@material-ui/core';
 import Profile from '../Profile/Profile';
 import Login from '../Login/Login';
 import { useSelector } from 'react-redux';
 import { selectIsLoggedIn } from "../../features/login/loginSlice";
 import { useState } from "react";
+import { selectCurrentprofile } from '../../features/profile/profileSlice';
 
 
 
 export default function Navbar() {
     const isLoggedIn = useSelector(selectIsLoggedIn);
+    const profile = useSelector(selectCurrentprofile);
     const [dialogOpen, setDialogOpen] = useState(false);
-    
+
     const handleClose = () => {
         setDialogOpen(false);
     };
@@ -49,6 +51,7 @@ export default function Navbar() {
                         <span >
                             <Link to={!isLoggedIn ? '/login' : '/profile'}>
                                 <AccountCircleIcon />
+                                {/* { !isLoggedIn ? <AccountCircleIcon /> : <Avatar alt={profile.name} src={profile.profilePicPath} /> } */}
                             </Link>
                         </span>
                     </nav>

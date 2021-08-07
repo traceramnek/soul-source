@@ -7,7 +7,7 @@ import { addBookmarkAsync, selectBookmarks, removeBookmarkAsync } from '../../fe
 import { selectIsLoggedIn } from '../../features/login/loginSlice';
 import { openSnackbar } from '../../features/globalUIManager/globalUIManagerSlice';
 import { IconButton } from '@material-ui/core';
-import { isNullOrUndefined } from '../../util/utils';
+import { isNullOrUndefined, scrollElemIntoView } from '../../util/utils';
 
 export default function UpcomingEvents() {
   const eventsList = useSelector(selectEventsList);
@@ -46,6 +46,10 @@ export default function UpcomingEvents() {
     }
   }
 
+  const handleScrollIntoView = (id) => {
+    scrollElemIntoView(id);
+  }
+
 
   return (
     <div className="upcoming-events">
@@ -66,7 +70,7 @@ export default function UpcomingEvents() {
         </div>
 
         <div className="see-more-container">
-          <button className="see-more-button">
+          <button className="see-more-button" onClick={() => handleScrollIntoView('event-previews')}>
             See more
             {/* <ArrowDownward fontSize="small" /> */}
           </button>
@@ -74,7 +78,7 @@ export default function UpcomingEvents() {
 
       </div>
 
-      <div className="card-preview-container">
+      <div id="event-previews" className="card-preview-container">
         {
           eventsList.map((card, index) => {
 

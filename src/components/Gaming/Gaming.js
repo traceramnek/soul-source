@@ -7,7 +7,7 @@ import { Launch, BookmarkBorder, Bookmark } from '@material-ui/icons';
 import { addBookmarkAsync, removeBookmarkAsync, selectBookmarks } from '../../features/profile/profileSlice';
 import { openSnackbar } from '../../features/globalUIManager/globalUIManagerSlice';
 import { selectIsLoggedIn } from "../../features/login/loginSlice";
-import { isNullOrUndefined } from '../../util/utils';
+import { isNullOrUndefined, scrollElemIntoView } from '../../util/utils';
 
 export default function Gaming() {
   const gamingList = useSelector(selectGamingList);
@@ -47,6 +47,10 @@ export default function Gaming() {
     }
   }
 
+  const handleScrollIntoView = (id) => {
+    scrollElemIntoView(id);
+  }
+
   return (
     <div className="gaming">
 
@@ -66,14 +70,14 @@ export default function Gaming() {
         </div>
 
         <div className="see-more-container">
-          <button className="see-more-button">
+          <button className="see-more-button" onClick={() => handleScrollIntoView('gaming-previews')}>
             See more
             {/* <ArrowDownward fontSize="small" /> */}
           </button>
         </div>
       </div>
 
-      <div className="card-preview-container">
+      <div id="gaming-previews" className="card-preview-container">
         {!isNullOrUndefined(gamingList) &&
 
           gamingList.map((card, index) => {
