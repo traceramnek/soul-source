@@ -25,20 +25,19 @@ export default function Home() {
           <div className="home-sub-heading">
             The source for content that enriches the soul
           </div>
+          <div className="home-buttons">
+            <div>
+              <Link to="/gaming" className="home-button">
+                Gaming
+              </Link>
+            </div>
+            <div>
+              <Link to="/events" className="home-button">
+                Events
+              </Link>
+            </div>
+          </div>
         </div>
-
-        {/* <div className="home-buttons">
-          <div>
-            <Link to="/gaming" className="home-button">
-              Gaming
-            </Link>
-          </div>
-          <div>
-            <Link to="/events" className="home-button">
-              Events
-            </Link>
-          </div>
-        </div> */}
       </div>
       {/* <div>
         {

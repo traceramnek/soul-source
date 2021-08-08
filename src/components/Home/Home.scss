@@ -1,4 +1,4 @@
-
+@import '../../assets/stylesheets/variables.scss';
 
 .Home {
     display: flex;
@@ -30,11 +30,11 @@
 
 .home-buttons{
     display: flex;
-    margin-bottom: 15%;
+    margin-top: 20px;
 }
 
 .home-button{
-    margin: 0 15px;
+    margin-right: 30px;
     font-size: 1.5rem;
     text-decoration: none;
 }
@@ -47,7 +47,11 @@
 
     .home-buttons{
         display: flex;
-        margin-bottom: 40%;
+    }
+
+    .home-button{
+        border: none;
+        background-color: $bg-color;
     }
 }
 
@@ -58,11 +62,6 @@
 
     .home-heading{
         font-size: 5rem;
-    }
-
-    .home-buttons{
-        display: flex;
-        margin-bottom: 70%;
     }
 
     .home-sub-heading{

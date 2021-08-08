@@ -60,6 +60,8 @@ export default function Profile() {
   return (
     <div className="profile" data-testid="Profile">
       <div className="profile-overlay">
+        <h3>Profile</h3>
+
         <div
           data-aos="fade-right"
           data-aos-delay="250"
@@ -86,7 +88,7 @@ export default function Profile() {
           (
             <div>
               <div>
-                {Object.keys(profile.bookmarks).length} bookmarks
+                {Object.keys(profile.bookmarks).length} bookmark(s)
               </div>
 
               <div className="bookmark-container">
@@ -104,6 +106,10 @@ export default function Profile() {
         {filterValue === BOOKMARK_LISTS &&
           (
             <div>
+              <div>
+                {Object.keys(profile.bookmarkLists).length} bookmark(s)
+              </div>
+
               {!isNullOrUndefined(profile.bookmarkLists) &&
                 Object.entries(profile.bookmarkLists).map(([id, bookmarkList], index) => (
                   <BookmarkList key={'bkl' + index}

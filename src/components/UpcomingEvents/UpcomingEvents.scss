@@ -11,13 +11,13 @@
     .card-preview{
     
         &:nth-child(1n){
-            background-color: #9d616e
-        }
-        &:nth-child(2n){
             background-color: #5e4361;
         }
-        &:nth-child(3n){
+        &:nth-child(2n){
             background-color: #6c6998;
+        }
+        &:nth-child(3n){
+            background-color: #9d616e
 
         }
     }

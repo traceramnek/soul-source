@@ -24,7 +24,7 @@ export default function Login() {
         <div className="login-landing">
             <div className="login-container">
                 <h4>Login with Social Media</h4>
-
+                <h6>Save bookmarks and create lists of your favorite resources on Soul Source!</h6>
                 <div className="login-button" onClick={loginUser(googleProvider)}>
                     <img className="social-icon" src={googleIcon} alt="Google Icon" />
                     Login with Google
