@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './Home.scss';
 
 export default function Home() {
+  let currScreenWidth;
+
+  useEffect(() => {
+    currScreenWidth = document.getElementById('id-home').clientWidth;
+    console.log(currScreenWidth);
+  }, [])
 
   return (
     <div>
-      <div className="Home" data-testid="Home">
+      <div className="Home" id="id-home">
         <div className="home-title"
           data-aos="fade-right"
           data-aos-delay="250"
@@ -19,7 +26,37 @@ export default function Home() {
             The source for content that enriches the soul
           </div>
         </div>
+
+        {/* <div className="home-buttons">
+          <div>
+            <Link to="/gaming" className="home-button">
+              Gaming
+            </Link>
+          </div>
+          <div>
+            <Link to="/events" className="home-button">
+              Events
+            </Link>
+          </div>
+        </div> */}
       </div>
+      {/* <div>
+        {
+          (
+            <div className="home-extra-container">
+              <div className="home-extra-section gaming">
+                <div className="overlay">
+                  Gaming
+                </div>
+              </div>
+              <div className="home-extra-section events">
+                Events
+              </div>
+            </div>
+          )
+        }
+      </div> */}
+
     </div>
   );
 }

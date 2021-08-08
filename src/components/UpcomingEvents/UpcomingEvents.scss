@@ -4,17 +4,21 @@
     color: ghostwhite;
 
     .landing{
-        background-image: url('../../assets/img/black_women_gaming.jpeg');
+        background-image: url('../../assets/img/black_women_tech.png');
         background-position: right;
     }
     
     .card-preview{
     
-        &:nth-child(odd){
-            background-color: #7c4560;
+        &:nth-child(1n){
+            background-color: #9d616e
         }
-        &:nth-child(even){
-            background-color: #426088;
+        &:nth-child(2n){
+            background-color: #5e4361;
+        }
+        &:nth-child(3n){
+            background-color: #6c6998;
+
         }
     }
 }

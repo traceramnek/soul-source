@@ -7,12 +7,16 @@
     }
     
     .card-preview{
-        &:nth-child(odd){
+        &:nth-child(1n){
             background-color: #9f1065;
         }
-        &:nth-child(even){
+        &:nth-child(2n){
             float: right;
             background-color: #502d7a;
+        }
+        &:nth-child(3n){
+            float: right;
+            background-color: #3b6ea5;
         }
     }
 }

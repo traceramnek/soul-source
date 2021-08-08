@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import './Gaming.scss';
-import { fetchGamingListAsync, selectGamingList, toggleShowFullSummary } from '../../features/gaming/gamingSlice';
+import { fetchGamingListAsync, selectGamingList, toggleShowFullSummary, selectGamingLoading } from '../../features/gaming/gamingSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import {  IconButton } from '@material-ui/core';
 import { Launch, BookmarkBorder, Bookmark } from '@material-ui/icons';
+import { Skeleton } from '@material-ui/lab';
 import { addBookmarkAsync, removeBookmarkAsync, selectBookmarks } from '../../features/profile/profileSlice';
 import { openSnackbar } from '../../features/globalUIManager/globalUIManagerSlice';
 import { selectIsLoggedIn } from "../../features/login/loginSlice";
@@ -11,7 +12,8 @@ import { isNullOrUndefined, scrollElemIntoView } from '../../util/utils';
 
 export default function Gaming() {
   const gamingList = useSelector(selectGamingList);
-  const isLoggedIn = useSelector(selectIsLoggedIn)
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const gamingLoading = useSelector(selectGamingLoading);
   const savedBookmarks = useSelector(selectBookmarks);
 
   const dispatch = useDispatch();
@@ -78,11 +80,26 @@ export default function Gaming() {
       </div>
 
       <div id="gaming-previews" className="card-preview-container">
-        {!isNullOrUndefined(gamingList) &&
+      {gamingLoading &&
+          <div>
+            <div key="card_temp_1" className="card-preview">
+              <Skeleton variant="text" width={'85%'} height={100} />
+              <br></br>
+              <Skeleton variant="rect" width={'75%'} height={225} />
+            </div>
+            <div key="card_temp_2" className="card-preview">
+              <Skeleton variant="text" width={'85%'} height={100} />
+              <Skeleton variant="rect" width={'75%'} height={225} />
+            </div>
+          </div>
+
+        }
+        { !gamingLoading &&
+        !isNullOrUndefined(gamingList) &&
 
           gamingList.map((card, index) => {
 
-            const shortSummary = card.summary.substr(0, 100) + '...';
+            const shortSummary = card.summary.substr(0, 200) + '...';
             const longSummary = card.summary;
 
             bookmarkIcon = (!isNullOrUndefined(savedBookmarks) && savedBookmarks[card.id]) ?

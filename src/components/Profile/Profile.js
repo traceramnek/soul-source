@@ -59,7 +59,7 @@ export default function Profile() {
 
   return (
     <div className="profile" data-testid="Profile">
-      <div className="overlay">
+      <div className="profile-overlay">
         <div
           data-aos="fade-right"
           data-aos-delay="250"

@@ -2,8 +2,8 @@
 
 .Home {
     display: flex;
-    justify-content: left;
-    align-items: flex-start;
+    justify-content: flex-end;
+    align-items: center;
     flex-direction: column;
     height: 100vh;
     background-image: url('../../assets/img/purple-gamer-bg.png');
@@ -28,8 +28,68 @@
     font-weight: 400;
 }
 
+.home-buttons{
+    display: flex;
+    margin-bottom: 15%;
+}
+
+.home-button{
+    margin: 0 15px;
+    font-size: 1.5rem;
+    text-decoration: none;
+}
+
+
 @media only screen and (max-width: 480px) {
     .Home{
         background-position: center;
+    }
+
+    .home-buttons{
+        display: flex;
+        margin-bottom: 40%;
+    }
+}
+
+@media only screen and (min-width: 1024px) {
+    .Home{
+        background-position: center;
+    }
+
+    .home-heading{
+        font-size: 5rem;
+    }
+
+    .home-buttons{
+        display: flex;
+        margin-bottom: 70%;
+    }
+
+    .home-sub-heading{
+        font-size: 1.5rem;
+    }
+
+    .home-extra-container{
+        height: 50vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .home-extra-section{
+        height: 50%;
+        background-color: cadetblue;
+
+        &.gaming{
+            background-image: url('../../assets/img/neon-purple-controller.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        &.events{
+            background-image: url('../../assets/img/black_woman_neon.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
     }
 }

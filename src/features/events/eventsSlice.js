@@ -59,6 +59,7 @@ export const eventsSlice = createSlice({
 export const { toggleShowFullSummary} = eventsSlice.actions;
 
 export const selectEventsList = (state) => state.events.eventsList;
+export const selectEventsLoading = (state) => state.events.loading;
 
 export default eventsSlice.reducer;
 

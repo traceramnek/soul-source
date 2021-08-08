@@ -63,6 +63,7 @@ export const gamingSlice = createSlice({
 export const { toggleShowFullSummary} = gamingSlice.actions;
 
 export const selectGamingList = (state) => state.gaming.gamingList;
+export const selectGamingLoading = (state) => state.gaming.loading;
 
 export default gamingSlice.reducer;
 

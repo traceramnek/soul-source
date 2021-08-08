@@ -10,7 +10,7 @@ export default function Footer() {
 
     return (
         <div className="footer-container">
-            <div class="copyright">
+            <div className="copyright">
                 &copy; Kwan S. Holloway 2021
                 <p>Designed and Developed by Kwan S. Holloway </p>
             </div>

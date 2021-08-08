@@ -1,24 +1,26 @@
 import React, { useEffect } from 'react';
 import './UpcomingEvents.scss';
-import { fetchEventsListAsync, selectEventsList, toggleShowFullSummary } from '../../features/events/eventsSlice';
+import { fetchEventsListAsync, selectEventsList, toggleShowFullSummary, selectEventsLoading } from '../../features/events/eventsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { Launch, BookmarkBorder, Bookmark } from '@material-ui/icons';
 import { addBookmarkAsync, selectBookmarks, removeBookmarkAsync } from '../../features/profile/profileSlice';
 import { selectIsLoggedIn } from '../../features/login/loginSlice';
 import { openSnackbar } from '../../features/globalUIManager/globalUIManagerSlice';
 import { IconButton } from '@material-ui/core';
+import { Skeleton } from '@material-ui/lab';
 import { isNullOrUndefined, scrollElemIntoView } from '../../util/utils';
 
 export default function UpcomingEvents() {
   const eventsList = useSelector(selectEventsList);
-  const isLoggedIn = useSelector(selectIsLoggedIn)
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const eventsLoading = useSelector(selectEventsLoading);
   const savedBookmarks = useSelector(selectBookmarks);
   const dispatch = useDispatch();
 
-  
+
   let bookmarkIcon = (<BookmarkBorder style={{ fill: 'ghostwhite' }} />);
   let bookmarkSpan = (<span></span>);
-  
+
   const handleToggleText = (index) => {
     dispatch(toggleShowFullSummary(index));
   }
@@ -65,7 +67,7 @@ export default function UpcomingEvents() {
             Events
           </div>
           <div className="sub-heading">
-            Upcoming events for Black/POC gamers and developers
+            Upcoming events for Black/POC people in tech
           </div>
         </div>
 
@@ -79,11 +81,34 @@ export default function UpcomingEvents() {
       </div>
 
       <div id="event-previews" className="card-preview-container">
-        {
+        {/* <div key="card_temp_1" className="card-preview">
+          <Skeleton variant="text" width={'85%'} height={100} />
+          <br></br>
+          <Skeleton variant="rect" width={'75%'} height={225} />
+        </div>
+        <div key="card_temp_2" className="card-preview">
+          <Skeleton variant="text" width={'85%'} height={100} />
+          <Skeleton variant="rect" width={'75%'} height={225} />
+        </div> */}
+        {eventsLoading &&
+          <div>
+            <div key="card_temp_1" className="card-preview">
+              <Skeleton variant="text" width={'85%'} height={100} />
+              <br></br>
+              <Skeleton variant="rect" width={'75%'} height={225} />
+            </div>
+            <div key="card_temp_2" className="card-preview">
+              <Skeleton variant="text" width={'85%'} height={100} />
+              <Skeleton variant="rect" width={'75%'} height={225} />
+            </div>
+          </div>
+
+        }
+        { !eventsLoading &&
           eventsList.map((card, index) => {
 
-            
-            const shortSummary = card.summary.substr(0, 100) + '...';
+
+            const shortSummary = card.summary.substr(0, 200) + '...';
             const longSummary = card.summary;
 
             bookmarkIcon = (!isNullOrUndefined(savedBookmarks) && savedBookmarks[card.id]) ?

@@ -32,9 +32,9 @@ export default function Navbar() {
 
     return (
         <Router>
-            <Link to="/home">
+            {/* <Link to="/home">
                 <img title="Soul Source" className="nav-logo" src={AfroIcon} alt="Soul Source" />
-            </Link>
+            </Link> */}
 
             <div>
                 <div className="nav-div">
@@ -79,6 +79,7 @@ export default function Navbar() {
                     </Route>
                 </Switch>
             </div>
+
 
             <Dialog open={dialogOpen} onClose={handleClose}>
                 <Login />
