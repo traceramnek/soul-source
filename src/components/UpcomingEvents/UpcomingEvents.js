@@ -73,7 +73,7 @@ export default function UpcomingEvents() {
 
         <div className="see-more-container">
           <button className="see-more-button" onClick={() => handleScrollIntoView('event-previews')}>
-            See more
+            Explore
             {/* <ArrowDownward fontSize="small" /> */}
           </button>
         </div>
