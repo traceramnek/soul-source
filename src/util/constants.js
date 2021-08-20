@@ -8,4 +8,6 @@ export const COMPONENTS_MAP = {
     'BookmarkListForm' : 'BookmarkListForm'
 }
 
-export const PORTFOLIO_LINK = "https://traceramnek.github.io/"
+export const PORTFOLIO_LINK = 'https://traceramnek.github.io/';
+export const GITHUB_LINK = 'https://github.com/traceramnek';
+export const LINKEDIN_LINK = 'https://www.linkedin.com/in/kwanholloway/';
